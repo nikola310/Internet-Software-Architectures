@@ -12,23 +12,23 @@
 <link rel="shortcut icon" href="images/icon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
-<%@ page import="beans.*"%>
-<%@ page import="servlets.*"%>
+<%@ page import="com.isa.isa.jsp.domain.*"%>
+<%@ page import="com.isa.isa.jsp.controller.*"%>
 <body>
-	<jsp:useBean id="forum" class="beans.Forum" scope="application"></jsp:useBean>
+	<jsp:useBean id="forum" class="com.isa.isa.jsp.domain.Cinema" scope="application"></jsp:useBean>
 
 	<div id="header">
 		<div id="header_inner" class="fixed">
 			<div id="logo">
 				<h1>
-					<span>open</span>Forum
+					<span>open</span>Cinema
 				</h1>
-				<h2>Be open minded.</h2>
+				<h2>Watch movies with us.</h2>
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="index.jsp" class="active">Home</a></li>
-					<li><a href="peoples.jsp" class="active">Peoples</a></li>
+					<li><a href="jsp/index.jsp" class="active">Home</a></li>
+					<li><a href="/jsp/peoples.jsp" class="active">Peoples</a></li>
 					<li><a href="#" class="active">About </a></li>
 				</ul>
 			</div>
