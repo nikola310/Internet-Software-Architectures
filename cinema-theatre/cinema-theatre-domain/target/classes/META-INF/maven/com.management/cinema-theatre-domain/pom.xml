@@ -7,4 +7,12 @@
   </parent>
   <artifactId>cinema-theatre-domain</artifactId>
   <packaging>jar</packaging>
+  
+  <dependencies>
+  		<dependency>
+      	<groupId>com.management</groupId>
+      	<artifactId>cinema-theatre-persistence</artifactId>
+      	<version>0.0.1-SNAPSHOT</version>
+     	 </dependency>
+  	</dependencies>
 </project>
