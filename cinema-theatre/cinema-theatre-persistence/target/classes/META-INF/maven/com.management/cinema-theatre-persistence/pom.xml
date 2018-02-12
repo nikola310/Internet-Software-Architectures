@@ -21,5 +21,12 @@
 			<version>1.5.10.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+    		<groupId>com.microsoft.sqlserver</groupId>
+			 <artifactId>mssql-jdbc</artifactId>
+    		<version>6.3.6.jre8-preview</version>
+		</dependency>
+
   </dependencies>
 </project>
