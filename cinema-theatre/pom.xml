@@ -8,7 +8,12 @@
   	<module>cinema-theatre-domain</module>
   	<module>cinema-theatre-persistence</module>
   	<module>cinema-theatre-web</module>
+  	<module>test</module>
   </modules>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   
   <dependencies>
   	<dependency>
