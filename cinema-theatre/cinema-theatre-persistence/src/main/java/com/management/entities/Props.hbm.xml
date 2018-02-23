@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Feb 23, 2018 5:00:47 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Props" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="props">
+        <id name="propsId" type="int">
+            <column name="PROPS_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="com.management.entities.FanZone" embed-xml="true" fetch="select" insert="true" name="fanZone" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="FAN_ZONE_ID" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="user" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="USER_ID" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="propsName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="PROPS_NAME" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="propsUsed" optimistic-lock="true" type="boolean" unique="false">
+            <column name="PROPS_USED" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="propsType" optimistic-lock="true" type="char" unique="false">
+            <column length="1" name="PROPS_TYPE" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="propsDeadline" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="PROPS_DEADLINE" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="propsPrice" optimistic-lock="true" type="float" unique="false">
+            <column name="PROPS_PRICE" not-null="true" precision="8"/>
+        </property>
+        <property generated="never" lazy="false" name="propsImage" optimistic-lock="true" type="binary" unique="false">
+            <column name="PROPS_IMAGE"/>
+        </property>
+        <property generated="never" lazy="false" name="propsDesc" optimistic-lock="true" type="string" unique="false">
+            <column length="120" name="PROPS_DESC"/>
+        </property>
+    </class>
+</hibernate-mapping>
