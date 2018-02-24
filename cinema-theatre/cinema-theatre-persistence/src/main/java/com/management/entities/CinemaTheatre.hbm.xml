@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Feb 23, 2018 5:00:47 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.CinemaTheatre" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cinema_theatre">
+        <id name="ctId" type="int">
+            <column name="CT_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="ctName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="CT_NAME"/>
+        </property>
+        <property generated="never" lazy="false" name="ctPhone" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="CT_PHONE"/>
+        </property>
+        <property generated="never" lazy="false" name="ctAdress" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="CT_ADRESS"/>
+        </property>
+        <property generated="never" lazy="false" name="ctDescription" optimistic-lock="true" type="string" unique="false">
+            <column length="200" name="CT_DESCRIPTION"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="halls" optimistic-lock="true" sort="unsorted" table="hall">
+            <key on-delete="noaction">
+                <column name="CT_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.management.entities.Hall" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
