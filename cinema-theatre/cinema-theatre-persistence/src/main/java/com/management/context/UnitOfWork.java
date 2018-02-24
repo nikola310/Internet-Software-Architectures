@@ -21,6 +21,11 @@ import com.management.interfaces.UserRepositoryInterface;
 import com.management.repositories.FriendsListRepository;
 import com.management.repositories.UserRepository;
 
+/**
+ * 
+ * @author Zivko Stanisic
+ *
+ */
 public class UnitOfWork implements UnitOfWorkInterface {
 
 	private Session session;

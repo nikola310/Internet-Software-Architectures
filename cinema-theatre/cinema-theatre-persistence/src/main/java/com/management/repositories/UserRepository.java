@@ -24,9 +24,9 @@ public class UserRepository implements UserRepositoryInterface {
 
 	}
 
-	public void Read(int id) {
+	public User Read(int id) {
 		session.beginTransaction();
-		session.get(User.class, id);
+		return (User) session.get(User.class, id);
 
 	}
 

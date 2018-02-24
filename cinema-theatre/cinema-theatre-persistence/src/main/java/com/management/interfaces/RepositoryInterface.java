@@ -1,10 +1,16 @@
 package com.management.interfaces;
 
+/**
+ * 
+ * @author Zivko Stanisic
+ *
+ * @param <T>
+ */
 public interface RepositoryInterface<T> {
 	
 	public void Add(T entity);
 	
-	public void Read(int id);
+	public T Read(int id);
 	
 	public void Update(T entity);
 	

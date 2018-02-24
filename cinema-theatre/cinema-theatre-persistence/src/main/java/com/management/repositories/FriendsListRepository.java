@@ -22,9 +22,9 @@ public class FriendsListRepository implements FriendsListRepositoryInterface {
 		session.save(entity);
 	}
 
-	public void Read(int id) {
+	public Friendslist Read(int id) {
 		session.beginTransaction();
-		session.get(Friendslist.class, id);
+		return (Friendslist) session.get(Friendslist.class, id);
 	}
 
 	public void Update(Friendslist entity) {
