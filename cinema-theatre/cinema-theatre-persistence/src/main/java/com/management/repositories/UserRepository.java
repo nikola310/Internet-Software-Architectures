@@ -26,13 +26,13 @@ public class UserRepository implements UserRepositoryInterface {
 
 	public User Read(int id) {
 		session.beginTransaction();
-		return (User) session.get(User.class, id);
+		return (User) session.load(User.class, id);
 
 	}
 
-	public void Update(User entity) {
+	public void Update() {
 		session.beginTransaction();
-		session.update(entity);
+
 
 	}
 

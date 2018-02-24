@@ -51,15 +51,16 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Update(UserDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		@SuppressWarnings("unused")
+		User tmp;
 
 		try {
-			user = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, User.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update(user);
+		uow.getUserRepository().Update();
 
 		return true;
 	}

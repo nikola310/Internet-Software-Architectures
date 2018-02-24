@@ -26,8 +26,7 @@ public class FriendsListRepositoryFake implements FriendsListRepositoryInterface
 		return list.get(id);
 	}
 
-	public void Update(Friendslist entity) {
-		list.set(list.indexOf(entity), entity);
+	public void Update() {
 	}
 
 	public void Delete(int id) {

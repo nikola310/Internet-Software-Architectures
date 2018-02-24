@@ -24,12 +24,11 @@ public class FriendsListRepository implements FriendsListRepositoryInterface {
 
 	public Friendslist Read(int id) {
 		session.beginTransaction();
-		return (Friendslist) session.get(Friendslist.class, id);
+		return (Friendslist) session.load(Friendslist.class, id);
 	}
 
-	public void Update(Friendslist entity) {
+	public void Update() {
 		session.beginTransaction();
-		session.update(entity);
 	}
 
 	public void Delete(int id) {

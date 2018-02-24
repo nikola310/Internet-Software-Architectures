@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.User" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="user">
         <id name="userId" type="int">
             <column name="USER_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <property generated="never" lazy="false" name="userEmail" optimistic-lock="true" type="string" unique="false">
             <column length="50" name="USER_EMAIL" not-null="true"/>

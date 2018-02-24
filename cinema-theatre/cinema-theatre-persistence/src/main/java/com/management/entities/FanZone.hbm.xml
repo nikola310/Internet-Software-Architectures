@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.FanZone" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="fan_zone">
         <id name="fanZoneId" type="int">
             <column name="FAN_ZONE_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <property generated="never" lazy="false" name="fanZoneName" optimistic-lock="true" type="string" unique="false">
             <column length="50" name="FAN_ZONE_NAME"/>

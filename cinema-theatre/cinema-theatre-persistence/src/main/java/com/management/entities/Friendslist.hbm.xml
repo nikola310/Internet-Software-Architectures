@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Friendslist" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="friendslist">
         <id name="friendsId" type="int">
             <column name="FRIENDS_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="userByUseUserId2" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="USE_USER_ID2" not-null="true"/>

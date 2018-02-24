@@ -2,7 +2,6 @@ package com.management.context;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import com.management.entities.CinemaTheatre;
@@ -48,9 +47,7 @@ public class UnitOfWork implements UnitOfWorkInterface {
 		cf.configure();
 
 		try {
-			StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder()
-					.applySettings(cf.getProperties());
-			SessionFactory sessionFactory = cf.buildSessionFactory(ssrb.build());
+			SessionFactory sessionFactory = cf.buildSessionFactory();
 			session = sessionFactory.openSession();
 
 		} catch (Exception e) {

@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.History" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="history">
         <id name="historyId" type="int">
             <column name="HISTORY_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <many-to-one class="com.management.entities.Event" embed-xml="true" fetch="select" insert="true" name="event" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="EVENT_ID" not-null="true"/>

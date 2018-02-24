@@ -12,7 +12,7 @@ public interface RepositoryInterface<T> {
 	
 	public T Read(int id);
 	
-	public void Update(T entity);
+	public void Update();
 	
 	public void Delete(int id);
 	
