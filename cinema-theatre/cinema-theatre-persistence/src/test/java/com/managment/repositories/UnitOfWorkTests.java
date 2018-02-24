@@ -5,21 +5,22 @@ import java.util.Date;
 import org.jmock.Mockery;
 import org.junit.Test;
 
+import com.management.context.UnitOfWork;
 import com.management.entities.User;
-import com.management.repositories.UserRepository;
+
 /**
  * 
  * @author Zivko Stanisic
  *
  */
-public class BaseRepositoryTests {
-	
+public class UnitOfWorkTests {
+
 	@Test
-	public void BaseRepositoryTest() {
+	public void AddingNewUserTest() {
 		Mockery mock = new Mockery();
-		
-		UserRepository repository = new UserRepository();
-		
+
+		UnitOfWork uow = new UnitOfWork();
+
 		User user = new User();
 		user.setUserActive(true);
 		user.setUserName("Pero");
@@ -32,11 +33,10 @@ public class BaseRepositoryTests {
 		user.setUserRank(0);
 		user.setUserPhone(123456);
 		user.setUserStateid((short) 1);
-		
+
 		user.setUserId(1);
-		
-		
-		repository.Add(user);
+
+		uow.getUserRepository().Add(user);
 		mock.assertIsSatisfied();
 	}
 

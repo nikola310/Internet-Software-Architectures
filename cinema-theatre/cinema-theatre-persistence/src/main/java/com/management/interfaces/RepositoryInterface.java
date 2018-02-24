@@ -1,6 +1,6 @@
 package com.management.interfaces;
 
-public interface BaseReposytoryInterface<T> {
+public interface RepositoryInterface<T> {
 	
 	public void Add(T entity);
 	
