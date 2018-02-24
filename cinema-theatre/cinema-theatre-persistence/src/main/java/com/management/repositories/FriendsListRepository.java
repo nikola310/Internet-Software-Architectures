@@ -32,8 +32,8 @@ public class FriendsListRepository implements FriendsListRepositoryInterface {
 		session.update(entity);
 	}
 
-	public void Delete(Friendslist entity) {
+	public void Delete(int id) {
 		session.beginTransaction();
-		session.delete(entity);
+		session.delete(session.get(Friendslist.class, id));
 	}
 }

@@ -13,5 +13,5 @@ public interface ManagerInterface<T> {
 	
 	public boolean Update(T dto);
 	
-	public boolean Delete(T dto);
+	public boolean Delete(int id);
 }

@@ -36,9 +36,9 @@ public class UserRepository implements UserRepositoryInterface {
 
 	}
 
-	public void Delete(User entity) {
+	public void Delete(int id) {
 		session.beginTransaction();
-		session.delete(entity);
+		session.delete(session.get(User.class, id));
 	}
 
 }
