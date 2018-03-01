@@ -14,9 +14,11 @@ import com.management.entities.Performance;
 import com.management.entities.Props;
 import com.management.entities.Seat;
 import com.management.entities.User;
+import com.management.interfaces.CinemaTheatreRepositoryInterface;
 import com.management.interfaces.FriendsListRepositoryInterface;
 import com.management.interfaces.UnitOfWorkInterface;
 import com.management.interfaces.UserRepositoryInterface;
+import com.management.repositories.CinemaTheatreRepository;
 import com.management.repositories.FriendsListRepository;
 import com.management.repositories.UserRepository;
 
@@ -30,6 +32,7 @@ public class UnitOfWork implements UnitOfWorkInterface {
 	private Session session;
 	private UserRepositoryInterface userRepository;
 	private FriendsListRepositoryInterface friendsListRepository;
+	private CinemaTheatreRepositoryInterface cinemaTheatre;
 
 	public UnitOfWork() {
 		Configuration cf = new Configuration();
@@ -56,6 +59,7 @@ public class UnitOfWork implements UnitOfWorkInterface {
 
 		userRepository = new UserRepository(session);
 		friendsListRepository = new FriendsListRepository(session);
+		cinemaTheatre = new CinemaTheatreRepository(session);
 	}
 
 	public void commitChanges() {
@@ -69,6 +73,10 @@ public class UnitOfWork implements UnitOfWorkInterface {
 
 	public FriendsListRepositoryInterface getFriendsListRepository() {
 		return friendsListRepository;
+	}
+
+	public CinemaTheatreRepositoryInterface getCinemaTheatreRepository() {
+		return cinemaTheatre;
 	}
 
 }

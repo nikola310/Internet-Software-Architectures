@@ -25,6 +25,7 @@ public class UserRepositoryTests {
 	public void AddingNewUserTest() {
 		Mockery mock = new Mockery();
 
+		//Arrange
 		User user = new User();
 		user.setUserActive(true);
 		user.setUserName("Zivko");
@@ -38,8 +39,11 @@ public class UserRepositoryTests {
 		user.setUserPhone(123456);
 		user.setUserStateid((short) 1);
 
+		//Act
 		uow.getUserRepository().Add(user);
 		uow.commitChanges();
+		
+		//Assert
 		mock.assertIsSatisfied();
 	}
 
@@ -47,9 +51,11 @@ public class UserRepositoryTests {
 	public void ReadExistingUserTest() {
 		Mockery mock = new Mockery();
 
+		//Arrange and act
 		User user = uow.getUserRepository().Read(1);
 		uow.commitChanges();
 
+		//Assert
 		Assert.assertNotNull(user);
 
 		Assert.assertTrue(user.isUserActive());
@@ -70,6 +76,7 @@ public class UserRepositoryTests {
 	public void UpdateAndDeleteExistingUserTest() {
 		Mockery mock = new Mockery();
 
+		//Arrange
 		User user = uow.getUserRepository().Read(1);
 		uow.commitChanges();
 
@@ -77,12 +84,14 @@ public class UserRepositoryTests {
 
 		user.setUserRank(11);
 
+		//Act
 		uow.getUserRepository().Update();
 		uow.commitChanges();
 		
 		uow.getUserRepository().Delete(1);
 		uow.commitChanges();
 
+		//Assert
 		mock.assertIsSatisfied();
 	}
 }

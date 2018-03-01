@@ -10,4 +10,5 @@ public interface UnitOfWorkInterface {
 	
 	public UserRepositoryInterface getUserRepository();
 	public FriendsListRepositoryInterface getFriendsListRepository();
+	public CinemaTheatreRepositoryInterface getCinemaTheatreRepository();
 }

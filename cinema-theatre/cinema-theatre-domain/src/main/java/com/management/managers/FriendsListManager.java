@@ -2,45 +2,45 @@ package com.management.managers;
 
 import org.modelmapper.ModelMapper;
 
-import com.management.dto.UserDTO;
-import com.management.entities.User;
+import com.management.dto.FriendslistDTO;
+import com.management.entities.Friendslist;
+import com.management.interfaces.FriendsListManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
-import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class UserManager implements UserManagerInterface {
-
+public class FriendsListManager implements FriendsListManagerInterface{
+	
 	private UnitOfWorkInterface uow;
 
-	public UserManager(UnitOfWorkInterface uow) {
+	public FriendsListManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
-
-	public boolean Create(UserDTO dto) {
+	
+	public boolean Create(FriendslistDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		Friendslist list;
 
 		try {
-			user = mapper.map(dto, User.class);
+			list = mapper.map(dto, Friendslist.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		uow.getFriendsListRepository().Add(list);
 
 		return true;
 	}
 
-	public UserDTO Read(int id) {
+	public FriendslistDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		UserDTO dto;
+		FriendslistDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
-			dto = mapper.map(user, UserDTO.class);
+			Friendslist list = uow.getFriendsListRepository().Read(id);
+			dto = mapper.map(list, FriendslistDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -49,18 +49,18 @@ public class UserManager implements UserManagerInterface {
 		return dto;
 	}
 
-	public boolean Update(UserDTO dto) {
+	public boolean Update(FriendslistDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		@SuppressWarnings("unused")
-		User tmp;
+		Friendslist tmp;
 
 		try {
-			tmp = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, Friendslist.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
+		uow.getFriendsListRepository().Update();
 		uow.commitChanges();
 		
 		return true;
@@ -68,7 +68,7 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			uow.getFriendsListRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
