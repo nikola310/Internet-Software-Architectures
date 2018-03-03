@@ -20,6 +20,17 @@ public class UserRepositoryTests {
 	public UserRepositoryTests() {
 		uow = new UnitOfWork();
 	}
+	
+//	@Test
+//	public void DeleteAllUsersTest() {
+//		Mockery mock = new Mockery();
+//		
+//		//Arrange
+//		uow.getUserRepository().Delete(3);
+//		uow.commitChanges();
+//		
+//		mock.assertIsSatisfied();
+//	}
 
 	@Test
 	public void AddingNewUserTest() {
