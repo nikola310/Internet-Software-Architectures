@@ -34,28 +34,28 @@ public class FriendsListRepositoryTests {
 		user1.setUserActive(true);
 		user1.setUserName("Zivko");
 		user1.setUserSurname("Stanisic");
-		user1.setUserAdmin('O');
+		user1.setUserAdmin('N');
 		user1.setUserCity("Novi Sad");
 		user1.setUserCreationDate(new Date());
 		user1.setUserEmail("zivko@gmail.com");
 		user1.setUserPassword("123");
 		user1.setUserRank(0);
 		user1.setUserPhone(123456);
-		user1.setUserStateid((short) 1);
+		user1.setUserStateid("381");
 		
 
 		User user2 = new User();
 		user2.setUserActive(true);
 		user2.setUserName("Nikola");
 		user2.setUserSurname("Stojanovic");
-		user2.setUserAdmin('O');
+		user2.setUserAdmin('N');
 		user2.setUserCity("Novi Sad");
 		user2.setUserCreationDate(new Date());
 		user2.setUserEmail("nidzo@gmail.com");
 		user2.setUserPassword("123");
 		user2.setUserRank(0);
 		user2.setUserPhone(1234563232);
-		user2.setUserStateid((short) 1);
+		user2.setUserStateid("381");
 		
 		list.setUserByUserId(user1);
 		list.setUserByUseUserId(user1);

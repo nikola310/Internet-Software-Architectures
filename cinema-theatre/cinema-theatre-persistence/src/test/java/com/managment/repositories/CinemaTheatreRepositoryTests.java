@@ -31,7 +31,8 @@ public class CinemaTheatreRepositoryTests {
 		cinemaTheatre.setCtAdress("Bulevar oslobodjenja 11");
 		cinemaTheatre.setCtDescription("Ovo je opis.");
 		cinemaTheatre.setCtName("Bioskop");
-		cinemaTheatre.setCtPhone("1234567890");
+		cinemaTheatre.setCtPhone(123456789);
+		cinemaTheatre.setCtStateid("381");
 
 		//Act
 		uow.getCinemaTheatreRepository().Add(cinemaTheatre);

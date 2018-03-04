@@ -77,7 +77,8 @@ public class CinemaTheatreManagerTests {
 		cinemaTheatre.setCtAdress("Bulevar oslobodjenja 11");
 		cinemaTheatre.setCtDescription("Ovo je opis.");
 		cinemaTheatre.setCtName("Bioskop");
-		cinemaTheatre.setCtPhone("1234567890");
+		cinemaTheatre.setCtPhone(1234567890);
+		cinemaTheatre.setCtStateid("381");
 		
 		// expectations
         mock.checking(new Expectations() {{

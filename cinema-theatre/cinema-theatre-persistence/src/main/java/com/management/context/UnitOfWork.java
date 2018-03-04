@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.management.entities.Actor;
+import com.management.entities.Actorperformances;
 import com.management.entities.CinemaTheatre;
 import com.management.entities.Event;
 import com.management.entities.FanZone;
@@ -46,6 +48,8 @@ public class UnitOfWork implements UnitOfWorkInterface {
 		cf.addClass(Performance.class);
 		cf.addClass(Props.class);
 		cf.addClass(Seat.class);
+		cf.addClass(Actor.class);
+		cf.addClass(Actorperformances.class);
 
 		cf.configure();
 

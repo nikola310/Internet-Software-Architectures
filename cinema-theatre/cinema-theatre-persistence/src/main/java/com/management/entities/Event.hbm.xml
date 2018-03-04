@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Feb 23, 2018 5:00:47 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 4, 2018 4:33:08 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Event" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="event">
         <id name="eventId" type="int">
             <column name="EVENT_ID"/>
-            <generator class="increment"/>
+            <generator class="assigned"/>
         </id>
         <many-to-one class="com.management.entities.Hall" embed-xml="true" fetch="select" insert="true" name="hall" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="HALL_ID" not-null="true"/>

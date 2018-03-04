@@ -36,7 +36,7 @@ public class UserManagerTest {
 		dto.setUserPassword("123");
 		dto.setUserRank(0);
 		dto.setUserPhone(123456);
-		dto.setUserStateid((short) 1);
+		dto.setUserStateid("381");
 
 		UserManager manager = new UserManager(uow);
 
@@ -98,7 +98,7 @@ public class UserManagerTest {
 		user.setUserPassword("123");
 		user.setUserRank(0);
 		user.setUserPhone(123456);
-		user.setUserStateid((short) 1);
+		user.setUserStateid("381");
 		
 		// expectations
         mock.checking(new Expectations() {{

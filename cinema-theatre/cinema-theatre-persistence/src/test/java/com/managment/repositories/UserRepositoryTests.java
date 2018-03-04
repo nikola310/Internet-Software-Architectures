@@ -41,14 +41,14 @@ public class UserRepositoryTests {
 		user.setUserActive(true);
 		user.setUserName("Zivko");
 		user.setUserSurname("Stanisic");
-		user.setUserAdmin('O');
+		user.setUserAdmin('N');
 		user.setUserCity("Novi Sad");
 		user.setUserCreationDate(new Date());
 		user.setUserEmail("zivko@gmail.com");
 		user.setUserPassword("123");
 		user.setUserRank(0);
 		user.setUserPhone(123456);
-		user.setUserStateid((short) 1);
+		user.setUserStateid("381");
 
 		//Act
 		uow.getUserRepository().Add(user);

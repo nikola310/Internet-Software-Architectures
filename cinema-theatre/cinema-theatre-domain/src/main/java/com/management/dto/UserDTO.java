@@ -17,7 +17,7 @@ public class UserDTO {
 	private boolean userActive;
 	private Date userCreationDate;
 	private char userAdmin;
-	private Short userStateid;
+	private String userStateid;
 	private Integer userPhone;
 	private Integer userRank;
 	
@@ -75,10 +75,10 @@ public class UserDTO {
 	public void setUserAdmin(char userAdmin) {
 		this.userAdmin = userAdmin;
 	}
-	public Short getUserStateid() {
+	public String getUserStateid() {
 		return userStateid;
 	}
-	public void setUserStateid(Short userStateid) {
+	public void setUserStateid(String userStateid) {
 		this.userStateid = userStateid;
 	}
 	public Integer getUserPhone() {

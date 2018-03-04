@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Mar 4, 2018 4:33:08 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Actorperformances" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="actorperformances">
+        <id name="apId" type="int">
+            <column name="AP_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="com.management.entities.Actor" embed-xml="true" fetch="select" insert="true" name="actor" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="AC_ID" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="com.management.entities.Performance" embed-xml="true" fetch="select" insert="true" name="performance" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="PER_ID" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

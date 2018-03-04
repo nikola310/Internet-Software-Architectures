@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Mar 4, 2018 4:33:08 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Actor" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="actor">
+        <id name="acId" type="int">
+            <column name="AC_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="acName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="AC_NAME" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="acSurname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="AC_SURNAME" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="actorperformanceses" optimistic-lock="true" sort="unsorted" table="actorperformances">
+            <key on-delete="noaction">
+                <column name="AC_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.management.entities.Actorperformances" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
