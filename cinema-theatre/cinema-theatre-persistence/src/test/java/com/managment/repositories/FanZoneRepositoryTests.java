@@ -9,6 +9,7 @@ import com.management.context.UnitOfWork;
  */
 public class FanZoneRepositoryTests {
 
+	@SuppressWarnings("unused")
 	private UnitOfWork uow;
 
 	public FanZoneRepositoryTests() {

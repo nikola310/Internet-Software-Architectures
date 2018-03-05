@@ -4,45 +4,45 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 
-import com.management.dto.UserDTO;
-import com.management.entities.User;
+import com.management.dto.HallDTO;
+import com.management.entities.Hall;
+import com.management.interfaces.HallManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
-import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class UserManager implements UserManagerInterface {
-
+public class HallManager implements HallManagerInterface{
+	
 	private UnitOfWorkInterface uow;
 
-	public UserManager(UnitOfWorkInterface uow) {
+	public HallManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
-	public boolean Create(UserDTO dto) {
+	public boolean Create(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		Hall Hall;
 
 		try {
-			user = mapper.map(dto, User.class);
+			Hall = mapper.map(dto, Hall.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		uow.getHallRepository().Add(Hall);
 
 		return true;
 	}
 
-	public UserDTO Read(int id) {
+	public HallDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		UserDTO dto;
+		HallDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
-			dto = mapper.map(user, UserDTO.class);
+			Hall Hall = uow.getHallRepository().Read(id);
+			dto = mapper.map(Hall, HallDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -50,15 +50,15 @@ public class UserManager implements UserManagerInterface {
 
 		return dto;
 	}
-	
-	public ArrayList<UserDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = uow.getUserRepository().ReadAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
-		for (User tmp : listEntities) {
+	public ArrayList<HallDTO> ReadAll() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Hall> listEntities = uow.getHallRepository().ReadAll();
+		ArrayList<HallDTO> listDTO = new ArrayList<HallDTO>();
+
+		for (Hall tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				HallDTO dto = mapper.map(tmp, HallDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -69,31 +69,31 @@ public class UserManager implements UserManagerInterface {
 		return listDTO;
 	}
 
-	public boolean Update(UserDTO dto) {
+	public boolean Update(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		@SuppressWarnings("unused")
-		User tmp;
+		Hall tmp;
 
 		try {
-			tmp = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, Hall.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
+		uow.getHallRepository().Update();
 		uow.commitChanges();
-		
+
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			uow.getHallRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 }

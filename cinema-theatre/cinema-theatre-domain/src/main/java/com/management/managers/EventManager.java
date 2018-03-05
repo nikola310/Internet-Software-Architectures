@@ -4,45 +4,45 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 
-import com.management.dto.UserDTO;
-import com.management.entities.User;
+import com.management.dto.EventDTO;
+import com.management.entities.Event;
+import com.management.interfaces.EventManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
-import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class UserManager implements UserManagerInterface {
-
+public class EventManager implements EventManagerInterface{
+	
 	private UnitOfWorkInterface uow;
 
-	public UserManager(UnitOfWorkInterface uow) {
+	public EventManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
-	public boolean Create(UserDTO dto) {
+	public boolean Create(EventDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		Event Event;
 
 		try {
-			user = mapper.map(dto, User.class);
+			Event = mapper.map(dto, Event.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		uow.getEventRepository().Add(Event);
 
 		return true;
 	}
 
-	public UserDTO Read(int id) {
+	public EventDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		UserDTO dto;
+		EventDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
-			dto = mapper.map(user, UserDTO.class);
+			Event Event = uow.getEventRepository().Read(id);
+			dto = mapper.map(Event, EventDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -51,14 +51,14 @@ public class UserManager implements UserManagerInterface {
 		return dto;
 	}
 	
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<EventDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = uow.getUserRepository().ReadAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Event> listEntities = uow.getEventRepository().ReadAll();
+		ArrayList<EventDTO> listDTO = new ArrayList<EventDTO>();
 
-		for (User tmp : listEntities) {
+		for (Event tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				EventDTO dto = mapper.map(tmp, EventDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -69,18 +69,18 @@ public class UserManager implements UserManagerInterface {
 		return listDTO;
 	}
 
-	public boolean Update(UserDTO dto) {
+	public boolean Update(EventDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		@SuppressWarnings("unused")
-		User tmp;
+		Event tmp;
 
 		try {
-			tmp = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, Event.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
+		uow.getEventRepository().Update();
 		uow.commitChanges();
 		
 		return true;
@@ -88,7 +88,7 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			uow.getEventRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

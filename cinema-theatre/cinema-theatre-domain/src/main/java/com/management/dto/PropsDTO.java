@@ -2,9 +2,6 @@ package com.management.dto;
 
 import java.util.Date;
 
-import com.management.entities.FanZone;
-import com.management.entities.User;
-
 /**
  * @author Zivko Stanisic
  *
@@ -12,8 +9,6 @@ import com.management.entities.User;
 public class PropsDTO {
 	
 	private int propsId;
-	private FanZone fanZone;
-	private User user;
 	private String propsName;
 	private boolean propsUsed;
 	private char propsType;
@@ -28,18 +23,7 @@ public class PropsDTO {
 	public void setPropsId(int propsId) {
 		this.propsId = propsId;
 	}
-	public FanZone getFanZone() {
-		return fanZone;
-	}
-	public void setFanZone(FanZone fanZone) {
-		this.fanZone = fanZone;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
 	public String getPropsName() {
 		return propsName;
 	}

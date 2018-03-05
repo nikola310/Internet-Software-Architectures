@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class PerformanceDTO {
 	
+
 	private int perId;
 	private char perType;
 	private String perGenre;
@@ -15,6 +16,7 @@ public class PerformanceDTO {
 	private int perDuration;
 	private Date perCreationDate;
 	private float perPrice;
+	private int perRank;
 	private byte[] perPoster;
 	private String perDescription;
 	
@@ -71,5 +73,11 @@ public class PerformanceDTO {
 	}
 	public void setPerDescription(String perDescription) {
 		this.perDescription = perDescription;
+	}
+	public int getPerRank() {
+		return perRank;
+	}
+	public void setPerRank(int perRank) {
+		this.perRank = perRank;
 	}
 }

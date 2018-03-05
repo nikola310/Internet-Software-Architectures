@@ -4,45 +4,45 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 
-import com.management.dto.UserDTO;
-import com.management.entities.User;
+import com.management.dto.HistoryDTO;
+import com.management.entities.History;
+import com.management.interfaces.HistoryManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
-import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class UserManager implements UserManagerInterface {
-
+public class HistoryManager implements HistoryManagerInterface{
+	
 	private UnitOfWorkInterface uow;
 
-	public UserManager(UnitOfWorkInterface uow) {
+	public HistoryManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
-	public boolean Create(UserDTO dto) {
+	public boolean Create(HistoryDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		History History;
 
 		try {
-			user = mapper.map(dto, User.class);
+			History = mapper.map(dto, History.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		uow.getHistoryRepository().Add(History);
 
 		return true;
 	}
 
-	public UserDTO Read(int id) {
+	public HistoryDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		UserDTO dto;
+		HistoryDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
-			dto = mapper.map(user, UserDTO.class);
+			History History = uow.getHistoryRepository().Read(id);
+			dto = mapper.map(History, HistoryDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -51,14 +51,14 @@ public class UserManager implements UserManagerInterface {
 		return dto;
 	}
 	
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<HistoryDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = uow.getUserRepository().ReadAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<History> listEntities = uow.getHistoryRepository().ReadAll();
+		ArrayList<HistoryDTO> listDTO = new ArrayList<HistoryDTO>();
 
-		for (User tmp : listEntities) {
+		for (History tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				HistoryDTO dto = mapper.map(tmp, HistoryDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -69,18 +69,18 @@ public class UserManager implements UserManagerInterface {
 		return listDTO;
 	}
 
-	public boolean Update(UserDTO dto) {
+	public boolean Update(HistoryDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		@SuppressWarnings("unused")
-		User tmp;
+		History tmp;
 
 		try {
-			tmp = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, History.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
+		uow.getHistoryRepository().Update();
 		uow.commitChanges();
 		
 		return true;
@@ -88,7 +88,7 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			uow.getHistoryRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

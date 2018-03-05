@@ -1,5 +1,7 @@
 package com.management.managers;
 
+import java.util.ArrayList;
+
 import org.modelmapper.ModelMapper;
 
 import com.management.dto.FriendslistDTO;
@@ -47,6 +49,24 @@ public class FriendsListManager implements FriendsListManagerInterface{
 		}
 
 		return dto;
+	}
+	
+	public ArrayList<FriendslistDTO> ReadAll() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Friendslist> listEntities = uow.getFriendsListRepository().ReadAll();
+		ArrayList<FriendslistDTO> listDTO = new ArrayList<FriendslistDTO>();
+
+		for (Friendslist tmp : listEntities) {
+			try {
+				FriendslistDTO dto = mapper.map(tmp, FriendslistDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
 	}
 
 	public boolean Update(FriendslistDTO dto) {

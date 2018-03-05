@@ -30,7 +30,7 @@ public class CinemaTheatreManagerTests {
 		dto.setCtAdress("Bulevar oslobodjenja 11");
 		dto.setCtDescription("Ovo je opis.");
 		dto.setCtName("Bioskop");
-		dto.setCtPhone("1234567890");
+		dto.setCtPhone(1234567890);
 
 		CinemaTheatreManager manager = new CinemaTheatreManager(uow);
 

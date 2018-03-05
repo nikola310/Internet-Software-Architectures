@@ -4,45 +4,45 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 
-import com.management.dto.UserDTO;
-import com.management.entities.User;
+import com.management.dto.SeatDTO;
+import com.management.entities.Seat;
+import com.management.interfaces.SeatManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
-import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class UserManager implements UserManagerInterface {
-
+public class SeatManager implements SeatManagerInterface{
+	
 	private UnitOfWorkInterface uow;
 
-	public UserManager(UnitOfWorkInterface uow) {
+	public SeatManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
-	public boolean Create(UserDTO dto) {
+	public boolean Create(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		User user;
+		Seat Seat;
 
 		try {
-			user = mapper.map(dto, User.class);
+			Seat = mapper.map(dto, Seat.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		uow.getSeatRepository().Add(Seat);
 
 		return true;
 	}
 
-	public UserDTO Read(int id) {
+	public SeatDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		UserDTO dto;
+		SeatDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
-			dto = mapper.map(user, UserDTO.class);
+			Seat Seat = uow.getSeatRepository().Read(id);
+			dto = mapper.map(Seat, SeatDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -51,14 +51,14 @@ public class UserManager implements UserManagerInterface {
 		return dto;
 	}
 	
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<SeatDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = uow.getUserRepository().ReadAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Seat> listEntities = uow.getSeatRepository().ReadAll();
+		ArrayList<SeatDTO> listDTO = new ArrayList<SeatDTO>();
 
-		for (User tmp : listEntities) {
+		for (Seat tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				SeatDTO dto = mapper.map(tmp, SeatDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -69,18 +69,18 @@ public class UserManager implements UserManagerInterface {
 		return listDTO;
 	}
 
-	public boolean Update(UserDTO dto) {
+	public boolean Update(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		@SuppressWarnings("unused")
-		User tmp;
+		Seat tmp;
 
 		try {
-			tmp = mapper.map(dto, User.class);
+			tmp = mapper.map(dto, Seat.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
+		uow.getSeatRepository().Update();
 		uow.commitChanges();
 		
 		return true;
@@ -88,7 +88,7 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			uow.getSeatRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

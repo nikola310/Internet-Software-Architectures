@@ -9,6 +9,7 @@ import com.management.context.UnitOfWork;
  */
 public class PropsRepositoryTests {
 
+	@SuppressWarnings("unused")
 	private UnitOfWork uow;
 	
 	public PropsRepositoryTests() {

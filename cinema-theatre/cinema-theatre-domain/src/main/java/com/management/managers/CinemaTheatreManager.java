@@ -1,5 +1,7 @@
 package com.management.managers;
 
+import java.util.ArrayList;
+
 import org.modelmapper.ModelMapper;
 
 import com.management.dto.CinemaTheatreDTO;
@@ -11,14 +13,14 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Zivko Stanisic
  *
  */
-public class CinemaTheatreManager implements CinemaTheatreManagerInterface{
-	
+public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
+
 	private UnitOfWorkInterface uow;
 
 	public CinemaTheatreManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
-	
+
 	public boolean Create(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		CinemaTheatre cinemaTheatre;
@@ -48,6 +50,24 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface{
 
 		return dto;
 	}
+	
+	public ArrayList<CinemaTheatreDTO> ReadAll() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<CinemaTheatre> listEntities = uow.getCinemaTheatreRepository().ReadAll();
+		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+			try {
+				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 
 	public boolean Update(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -62,7 +82,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface{
 		}
 		uow.getCinemaTheatreRepository().Update();
 		uow.commitChanges();
-		
+
 		return true;
 	}
 
@@ -73,8 +93,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
-
 }
