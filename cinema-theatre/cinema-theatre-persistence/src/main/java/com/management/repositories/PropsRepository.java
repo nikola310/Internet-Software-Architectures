@@ -2,7 +2,7 @@ package com.management.repositories;
 
 import java.util.ArrayList;
 
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import com.management.entities.Props;
 import com.management.interfaces.PropsRepositoryInterface;

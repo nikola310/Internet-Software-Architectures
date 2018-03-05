@@ -1,7 +1,6 @@
-/**
- * 
- */
 package com.managment.repositories;
+
+import java.util.ArrayList;
 
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -21,12 +20,13 @@ public class CinemaTheatreRepositoryTests {
 	public CinemaTheatreRepositoryTests() {
 		uow = new UnitOfWork();
 	}
-	
+
 	@Test
 	public void AddingNewCinemaTheatreTest() {
 		Mockery mock = new Mockery();
 
-		//Arrange
+		// Arrange
+		int key = 0;
 		CinemaTheatre cinemaTheatre = new CinemaTheatre();
 		cinemaTheatre.setCtAdress("Bulevar oslobodjenja 11");
 		cinemaTheatre.setCtDescription("Ovo je opis.");
@@ -34,53 +34,48 @@ public class CinemaTheatreRepositoryTests {
 		cinemaTheatre.setCtPhone(123456789);
 		cinemaTheatre.setCtStateid("381");
 
-		//Act
+		// Act
 		uow.getCinemaTheatreRepository().Add(cinemaTheatre);
 		uow.commitChanges();
-		
-		//Assert
-		mock.assertIsSatisfied();
-	}
 
-	@Test
-	public void ReadExistingCinemaTheatreTest() {
-		Mockery mock = new Mockery();
-
-		//Arrange and act
-		CinemaTheatre cinemaTheatre = uow.getCinemaTheatreRepository().Read(1);
+		// Arrange and act
+		cinemaTheatre = uow.getCinemaTheatreRepository().Read(1);
 		uow.commitChanges();
 
-		//Assert
+		// Assert
 		Assert.assertNotNull(cinemaTheatre);
 
 		Assert.assertEquals("Bulevar oslobodjenja 11", cinemaTheatre.getCtAdress());
 		Assert.assertEquals("Ovo je opis.", cinemaTheatre.getCtDescription());
 		Assert.assertEquals("Bioskop", cinemaTheatre.getCtName());
-		Assert.assertEquals("1234567890",cinemaTheatre.getCtPhone());
-		
-		mock.assertIsSatisfied();
-	}
+		Assert.assertEquals(new Integer(1234567890), cinemaTheatre.getCtPhone());
+		Assert.assertEquals("381", cinemaTheatre.getCtStateid());
 
-	@Test
-	public void UpdateAndDeleteExistingCinemaTheatreTest() {
-		Mockery mock = new Mockery();
-		
-		//Arrange
-		CinemaTheatre cinemaTheatre = uow.getCinemaTheatreRepository().Read(1);
+		// Arrange
+		ArrayList<CinemaTheatre> list = uow.getCinemaTheatreRepository().ReadAll();
+		for (CinemaTheatre tmp : list) {
+			if (tmp.getCtName().equals("Bioskop") && tmp.getCtDescription().equals("Ovo je opis.")
+					&& tmp.getCtAdress().equals("Bulevar oslobodjenja 11")) {
+				key = tmp.getCtId();
+				break;
+			}
+		}
+
+		cinemaTheatre = uow.getCinemaTheatreRepository().Read(key);
 		uow.commitChanges();
 
 		Assert.assertNotNull(cinemaTheatre);
 
 		cinemaTheatre.setCtDescription("Promena.");
 
-		//Act
+		// Act
 		uow.getCinemaTheatreRepository().Update();
 		uow.commitChanges();
-		
-		uow.getCinemaTheatreRepository().Delete(1);
+
+		uow.getCinemaTheatreRepository().Delete(key);
 		uow.commitChanges();
 
-		//Assert
+		// Assert
 		mock.assertIsSatisfied();
 	}
 }
