@@ -1,5 +1,7 @@
 package com.management.repositories;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 
 import com.management.entities.User;
@@ -28,6 +30,12 @@ public class UserRepository implements UserRepositoryInterface {
 		session.beginTransaction();
 		return (User) session.load(User.class, id);
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<User> ReadAll() {
+		session.beginTransaction();
+		return (ArrayList<User>) session.createCriteria(User.class).list();
 	}
 
 	public void Update() {

@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Actor" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="actor">
         <id name="acId" type="int">
             <column name="AC_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <property generated="never" lazy="false" name="acName" optimistic-lock="true" type="string" unique="false">
             <column length="50" name="AC_NAME" not-null="true"/>

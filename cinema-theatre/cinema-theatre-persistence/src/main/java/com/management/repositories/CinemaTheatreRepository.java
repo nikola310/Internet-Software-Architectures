@@ -1,5 +1,7 @@
 package com.management.repositories;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 
 import com.management.entities.CinemaTheatre;
@@ -27,6 +29,12 @@ public class CinemaTheatreRepository implements CinemaTheatreRepositoryInterface
 		return (CinemaTheatre) session.load(CinemaTheatre.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<CinemaTheatre> ReadAll() {
+		session.beginTransaction();
+		return (ArrayList<CinemaTheatre>) session.createCriteria(CinemaTheatre.class).list();
+	}
+
 	public void Update() {
 		session.beginTransaction();
 	}
@@ -35,5 +43,4 @@ public class CinemaTheatreRepository implements CinemaTheatreRepositoryInterface
 		session.beginTransaction();
 		session.delete(session.get(CinemaTheatre.class, id));
 	}
-
 }

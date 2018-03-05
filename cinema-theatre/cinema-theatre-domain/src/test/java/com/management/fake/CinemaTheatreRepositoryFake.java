@@ -34,4 +34,12 @@ public class CinemaTheatreRepositoryFake implements CinemaTheatreRepositoryInter
 		list.remove(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.management.interfaces.RepositoryInterface#ReadAll()
+	 */
+	public ArrayList<CinemaTheatre> ReadAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

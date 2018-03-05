@@ -1,5 +1,6 @@
 package com.managment.repositories;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.jmock.Mockery;
@@ -20,23 +21,13 @@ public class UserRepositoryTests {
 	public UserRepositoryTests() {
 		uow = new UnitOfWork();
 	}
-	
-//	@Test
-//	public void DeleteAllUsersTest() {
-//		Mockery mock = new Mockery();
-//		
-//		//Arrange
-//		uow.getUserRepository().Delete(3);
-//		uow.commitChanges();
-//		
-//		mock.assertIsSatisfied();
-//	}
 
 	@Test
-	public void AddingNewUserTest() {
+	public void CRUD_UserTest() {
 		Mockery mock = new Mockery();
 
-		//Arrange
+		// Arrange
+		int key = 0;
 		User user = new User();
 		user.setUserActive(true);
 		user.setUserName("Zivko");
@@ -50,59 +41,52 @@ public class UserRepositoryTests {
 		user.setUserPhone(123456);
 		user.setUserStateid("381");
 
-		//Act
+		// Act
 		uow.getUserRepository().Add(user);
 		uow.commitChanges();
-		
-		//Assert
-		mock.assertIsSatisfied();
-	}
 
-	@Test
-	public void ReadExistingUserTest() {
-		Mockery mock = new Mockery();
+		// Arrange and act
+		ArrayList<User> list = uow.getUserRepository().ReadAll();
 
-		//Arrange and act
-		User user = uow.getUserRepository().Read(1);
-		uow.commitChanges();
+		for (User tmp : list) {
+			if (tmp.getUserName().equals("Zivko") && tmp.getUserSurname().equals("Stanisic")) {
+				key = tmp.getUserId();
+				break;
+			}
+		}
 
-		//Assert
+		user = uow.getUserRepository().Read(key);
+
+		// Assert
 		Assert.assertNotNull(user);
 
 		Assert.assertTrue(user.isUserActive());
 		Assert.assertEquals("Zivko", user.getUserName());
 		Assert.assertEquals("Stanisic", user.getUserSurname());
-		Assert.assertEquals('O', user.getUserAdmin());
+		Assert.assertEquals('N', user.getUserAdmin());
 		Assert.assertEquals("Novi Sad", user.getUserCity());
 		Assert.assertEquals("zivko@gmail.com", user.getUserEmail());
 		Assert.assertEquals("123", user.getUserPassword());
 		Assert.assertEquals(new Integer(0), user.getUserRank());
 		Assert.assertEquals(new Integer(123456), user.getUserPhone());
-		Assert.assertEquals(new Short((short) 1), user.getUserStateid());
+		Assert.assertEquals("381", user.getUserStateid());
 
-		mock.assertIsSatisfied();
-	}
-
-	@Test
-	public void UpdateAndDeleteExistingUserTest() {
-		Mockery mock = new Mockery();
-
-		//Arrange
-		User user = uow.getUserRepository().Read(1);
+		// Arrange
+		user = uow.getUserRepository().Read(key);
 		uow.commitChanges();
 
 		Assert.assertNotNull(user);
 
 		user.setUserRank(11);
 
-		//Act
+		// Act
 		uow.getUserRepository().Update();
 		uow.commitChanges();
-		
-		uow.getUserRepository().Delete(1);
+
+		uow.getUserRepository().Delete(key);
 		uow.commitChanges();
 
-		//Assert
+		// Assert
 		mock.assertIsSatisfied();
 	}
 }

@@ -1,5 +1,7 @@
 package com.management.repositories;
 
+import java.util.ArrayList;
+
 import org.hibernate.classic.Session;
 
 import com.management.entities.FanZone;
@@ -28,6 +30,12 @@ public class FanZoneRepository implements FanZoneRepositoryInterface {
 		return (FanZone) session.load(FanZone.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<FanZone> ReadAll() {
+		session.beginTransaction();
+		return (ArrayList<FanZone>) session.createCriteria(FanZone.class).list();
+	}
+
 	public void Update() {
 		session.beginTransaction();
 	}
@@ -36,5 +44,4 @@ public class FanZoneRepository implements FanZoneRepositoryInterface {
 		session.beginTransaction();
 		session.delete(session.get(FanZone.class, id));
 	}
-
 }

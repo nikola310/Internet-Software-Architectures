@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Props" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="props">
         <id name="propsId" type="int">
             <column name="PROPS_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <many-to-one class="com.management.entities.FanZone" embed-xml="true" fetch="select" insert="true" name="fanZone" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="FAN_ZONE_ID" not-null="true"/>

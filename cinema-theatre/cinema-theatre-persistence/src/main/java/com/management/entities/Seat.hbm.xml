@@ -4,7 +4,7 @@
     <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Seat" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="seat">
         <id name="seatId" type="int">
             <column name="SEAT_ID"/>
-            <generator class="assigned"/>
+            <generator class="increment"/>
         </id>
         <many-to-one class="com.management.entities.Hall" embed-xml="true" fetch="select" insert="true" name="hall" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="HALL_ID" not-null="true"/>

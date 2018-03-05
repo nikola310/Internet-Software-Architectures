@@ -1,5 +1,7 @@
 package com.management.repositories;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 
 import com.management.entities.Friendslist;
@@ -25,6 +27,12 @@ public class FriendsListRepository implements FriendsListRepositoryInterface {
 	public Friendslist Read(int id) {
 		session.beginTransaction();
 		return (Friendslist) session.load(Friendslist.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Friendslist> ReadAll() {
+		session.beginTransaction();
+		return (ArrayList<Friendslist>) session.createCriteria(Friendslist.class).list();
 	}
 
 	public void Update() {

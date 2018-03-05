@@ -1,5 +1,7 @@
 package com.management.repositories;
 
+import java.util.ArrayList;
+
 import org.hibernate.classic.Session;
 
 import com.management.entities.Props;
@@ -23,6 +25,12 @@ public class PropsRepository implements PropsRepositoryInterface {
 		return (Props) session.load(Props.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Props> ReadAll() {
+		session.beginTransaction();
+		return (ArrayList<Props>) session.createCriteria(Props.class).list();
+	}
+
 	public void Update() {
 		session.beginTransaction();
 	}
@@ -31,5 +39,4 @@ public class PropsRepository implements PropsRepositoryInterface {
 		session.beginTransaction();
 		session.delete(session.get(Props.class, id));
 	}
-
 }
