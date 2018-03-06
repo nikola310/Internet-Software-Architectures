@@ -32,12 +32,8 @@ public class UserRepositoryFake implements UserRepositoryInterface{
 	public void Delete(int id) {
 		list.remove(id);
 	}
-	/* (non-Javadoc)
-	 * @see com.management.interfaces.RepositoryInterface#ReadAll()
-	 */
-	public ArrayList<User> ReadAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+	public ArrayList<User> ReadAll() {
+		return list;
+	}
 }

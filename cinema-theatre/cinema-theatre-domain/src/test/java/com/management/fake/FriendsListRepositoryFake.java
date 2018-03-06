@@ -33,12 +33,7 @@ public class FriendsListRepositoryFake implements FriendsListRepositoryInterface
 		list.remove(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.management.interfaces.RepositoryInterface#ReadAll()
-	 */
 	public ArrayList<Friendslist> ReadAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return list;
 	}
-
 }

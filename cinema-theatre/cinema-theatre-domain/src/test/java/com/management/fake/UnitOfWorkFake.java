@@ -30,11 +30,19 @@ public class UnitOfWorkFake implements UnitOfWorkInterface{
 	private HistoryRepositoryInterface historyRepository;
 	private PerformanceRepositoryInterface performanceRepository;
 	private SeatRepositoryInterface seatRepository;
+	private FanZoneRepositoryInterface fanZoneRepository;
+	private PropsRepositoryInterface propsRepository;
 	
 	public UnitOfWorkFake() {
 		userRepository = new UserRepositoryFake();
 		friendsListRepository = new FriendsListRepositoryFake();
 		cinemaTheatreRepository = new CinemaTheatreRepositoryFake();
+		actorPerformancesRepository = new ActorPerformancesRepositoryFake();
+		actorRepository = new ActorRepositoryFake();
+		eventRepository = new EventRepositoryFake();
+		hallRepository = new HallRepositoryFake();
+		performanceRepository = new PerformanceRepositoryFake();
+		seatRepository = new SeatRepositoryFake();
 	}
 	
 	public void commitChanges() {
@@ -48,7 +56,6 @@ public class UnitOfWorkFake implements UnitOfWorkInterface{
 	public FriendsListRepositoryInterface getFriendsListRepository() {
 		return friendsListRepository;
 	}
-
 	
 	public CinemaTheatreRepositoryInterface getCinemaTheatreRepository() {
 		return cinemaTheatreRepository;
@@ -83,11 +90,10 @@ public class UnitOfWorkFake implements UnitOfWorkInterface{
 	}
 
 	public FanZoneRepositoryInterface getFanZoneRepository() {
-		return null;
+		return fanZoneRepository;
 	}
 
 	public PropsRepositoryInterface getPropsRepository() {
-		return null;
+		return propsRepository;
 	}
-
 }
