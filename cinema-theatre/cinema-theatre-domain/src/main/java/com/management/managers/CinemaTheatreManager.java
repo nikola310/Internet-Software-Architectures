@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
@@ -17,6 +18,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public CinemaTheatreManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

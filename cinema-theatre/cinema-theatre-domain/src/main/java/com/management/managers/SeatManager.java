@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
@@ -17,6 +18,7 @@ public class SeatManager implements SeatManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public SeatManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

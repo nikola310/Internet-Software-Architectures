@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.EventDTO;
 import com.management.entities.Event;
@@ -17,6 +18,7 @@ public class EventManager implements EventManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public EventManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

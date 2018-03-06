@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.ActorPerformancesDTO;
 import com.management.entities.Actorperformances;
@@ -21,6 +22,7 @@ public class ActorPerformancesManager implements ActorPerformancesManagerInterfa
 		this.uow = uow;
 	}
 
+	@Autowired
 	public boolean Create(ActorPerformancesDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Actorperformances ActorPerformances;

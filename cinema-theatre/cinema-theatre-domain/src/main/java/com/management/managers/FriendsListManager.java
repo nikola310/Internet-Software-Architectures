@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
@@ -17,6 +18,7 @@ public class FriendsListManager implements FriendsListManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public FriendsListManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

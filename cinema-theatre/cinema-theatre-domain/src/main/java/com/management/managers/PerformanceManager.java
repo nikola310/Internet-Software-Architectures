@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.PerformanceDTO;
 import com.management.entities.Performance;
@@ -17,6 +18,7 @@ public class PerformanceManager implements PerformanceManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public PerformanceManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

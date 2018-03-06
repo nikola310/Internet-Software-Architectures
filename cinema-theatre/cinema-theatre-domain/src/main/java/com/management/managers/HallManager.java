@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
@@ -17,6 +18,7 @@ public class HallManager implements HallManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public HallManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

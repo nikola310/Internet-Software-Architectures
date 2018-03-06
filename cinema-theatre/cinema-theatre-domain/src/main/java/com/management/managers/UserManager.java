@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.UserDTO;
 import com.management.entities.User;
@@ -17,6 +18,7 @@ public class UserManager implements UserManagerInterface {
 
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public UserManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

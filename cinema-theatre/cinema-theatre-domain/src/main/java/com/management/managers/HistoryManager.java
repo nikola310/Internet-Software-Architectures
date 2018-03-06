@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.HistoryDTO;
 import com.management.entities.History;
@@ -17,6 +18,7 @@ public class HistoryManager implements HistoryManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public HistoryManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}

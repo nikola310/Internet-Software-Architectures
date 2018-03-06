@@ -3,6 +3,7 @@ package com.management.managers;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.management.dto.ActorDTO;
 import com.management.entities.Actor;
@@ -17,6 +18,7 @@ public class ActorManager implements ActorManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public ActorManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
