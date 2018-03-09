@@ -65,6 +65,7 @@ public class ActorPerformancesRepositoryTests {
 			}
 		}
 
+		System.err.println(key);
 		ap = uow.getActorPerformancesRepository().Read(key);
 
 		// Assert
@@ -76,9 +77,9 @@ public class ActorPerformancesRepositoryTests {
 		Assert.assertEquals(ap.getPerformance().getPerDirector(), "Nikola Stojanovic");
 		Assert.assertEquals(ap.getPerformance().getPerDuration(), 11);
 		Assert.assertEquals(ap.getPerformance().getPerGenre(), "Komedija");
-		Assert.assertEquals(ap.getPerformance().getPerPoster(), new byte[] {121});
+		Assert.assertArrayEquals(ap.getPerformance().getPerPoster(), new byte[] {121});
 		Assert.assertEquals((int)ap.getPerformance().getPerPrice(), 100);
-		Assert.assertEquals(ap.getPerformance().getPerRank(), 0);
+		Assert.assertEquals(ap.getPerformance().getPerRank(), 11);
 		Assert.assertEquals(ap.getPerformance().getPerType(), 'M');
 		
 		// Arrange

@@ -61,7 +61,7 @@ public class PerformanceRepositoryTests {
 		Assert.assertEquals(per.getPerDirector(), "Nikola Stojanovic");
 		Assert.assertEquals(per.getPerDuration(), 11);
 		Assert.assertEquals(per.getPerGenre(), "Komedija");
-		Assert.assertEquals(per.getPerPoster(), new byte[] {121});
+		Assert.assertArrayEquals(per.getPerPoster(), new byte[] {121});
 		Assert.assertEquals((int)per.getPerPrice(), 100);
 		Assert.assertEquals(per.getPerRank(), 0);
 		Assert.assertEquals(per.getPerType(), 'M');
