@@ -1,7 +1,12 @@
 package com.managment.repositories;
 
+import java.awt.image.DataBufferByte;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
 
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -57,55 +62,69 @@ public class PropsRepositoryTests {
 		float t = 200;
 		props.setPropsPrice(t);
 
-		props.setPropsName("Ime rekvizita");
-		props.setFanZone(fz);
+		String filePath = "C:\\Users\\Nikola\\Desktop\\test.png";
+		try {
+			byte[] byteArray = ((DataBufferByte) ImageIO
+					.read(new File(filePath)).getData().getDataBuffer())
+					.getData();
+			System.out.println(byteArray);
+			props.setPropsImage(byteArray);
+			props.setPropsName("Ime rekvizita");
+			props.setFanZone(fz);
 
-		// Act
-		uow.getFanZoneRepository().Add(fz);
-		uow.getUserRepository().Add(user);
-		uow.getPropsRepository().Add(props);
-		uow.commitChanges();
+			// Act
+			uow.getFanZoneRepository().Add(fz);
+			uow.getUserRepository().Add(user);
+			uow.getPropsRepository().Add(props);
+			uow.commitChanges();
 
-		// Arrange and act
-		ArrayList<Props> lista = uow.getPropsRepository().ReadAll();
+			// Arrange and act
+			ArrayList<Props> lista = uow.getPropsRepository().ReadAll();
 
-		for (Props tmp : lista) {
-			if (tmp.getPropsName().equals("Ime rekvizita")
-					&& props.getUser().equals(user)
-					&& props.getFanZone().equals(fz)
-					&& props.getPropsId() == tmp.getPropsId()) {
-				key = tmp.getPropsId();
-				break;
+			for (Props tmp : lista) {
+				if (tmp.getPropsName().equals("Ime rekvizita")
+						&& props.getUser().equals(user)
+						&& props.getFanZone().equals(fz)
+						&& props.getPropsId() == tmp.getPropsId()) {
+					key = tmp.getPropsId();
+					break;
+				}
 			}
+
+			props = uow.getPropsRepository().Read(key);
+
+			// Assert
+			Assert.assertNotNull(props);
+
+			Assert.assertEquals(t, props.getPropsPrice(), 0.1);
+			Assert.assertEquals("Opis rekvizita", props.getPropsDesc());
+			Assert.assertEquals("Ime rekvizita", props.getPropsName());
+			Assert.assertArrayEquals(byteArray, props.getPropsImage());
+
+			// Arrange
+			props = uow.getPropsRepository().Read(key);
+			uow.commitChanges();
+
+			Assert.assertNotNull(props);
+
+			props.setPropsPrice(500);
+
+			// Act
+			uow.getPropsRepository().Update();
+			uow.commitChanges();
+
+			uow.getPropsRepository().Delete(key);
+			uow.getUserRepository().Delete(user.getUserId());
+			uow.getFanZoneRepository().Delete(fz.getFanZoneId());
+			uow.commitChanges();
+
+			// Assert
+			mock.assertIsSatisfied();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Image file not found.");
+			e.printStackTrace();
 		}
 
-		props = uow.getPropsRepository().Read(key);
-
-		// Assert
-		Assert.assertNotNull(props);
-
-		Assert.assertEquals(t, props.getPropsPrice(), 0.1);
-		Assert.assertEquals("Opis rekvizita", props.getPropsDesc());
-		Assert.assertEquals("Ime rekvizita", props.getPropsName());
-
-		// Arrange
-		props = uow.getPropsRepository().Read(key);
-		uow.commitChanges();
-
-		Assert.assertNotNull(props);
-
-		props.setPropsPrice(500);
-
-		// Act
-		uow.getPropsRepository().Update();
-		uow.commitChanges();
-
-		uow.getPropsRepository().Delete(key);
-		uow.getUserRepository().Delete(user.getUserId());
-		uow.getFanZoneRepository().Delete(fz.getFanZoneId());
-		uow.commitChanges();
-
-		// Assert
-		mock.assertIsSatisfied();
 	}
 }
