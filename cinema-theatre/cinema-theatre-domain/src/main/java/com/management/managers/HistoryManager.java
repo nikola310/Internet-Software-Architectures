@@ -29,11 +29,12 @@ public class HistoryManager implements HistoryManagerInterface{
 
 		try {
 			History = mapper.map(dto, History.class);
+			uow.getHistoryRepository().Add(History);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHistoryRepository().Add(History);
+		
 
 		return true;
 	}

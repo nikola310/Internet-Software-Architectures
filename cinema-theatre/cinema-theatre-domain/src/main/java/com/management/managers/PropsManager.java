@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.management.context.UnitOfWork;
 import com.management.dto.PropsDTO;
 import com.management.entities.Props;
 import com.management.interfaces.PropsManagerInterface;
+import com.management.interfaces.UnitOfWorkInterface;
 
 public class PropsManager implements PropsManagerInterface {
 
-	private UnitOfWork uow;
+	private UnitOfWorkInterface uow;
 
 	@Autowired
-	public PropsManager(UnitOfWork uow) {
+	public PropsManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
@@ -86,7 +86,7 @@ public class PropsManager implements PropsManagerInterface {
 
 	public boolean Delete(int id) {
 		try {
-			uow.getHistoryRepository().Delete(id);
+			uow.getPropsRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

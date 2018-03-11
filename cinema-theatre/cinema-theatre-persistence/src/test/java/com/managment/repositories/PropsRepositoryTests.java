@@ -67,7 +67,6 @@ public class PropsRepositoryTests {
 			byte[] byteArray = ((DataBufferByte) ImageIO
 					.read(new File(filePath)).getData().getDataBuffer())
 					.getData();
-			System.out.println(byteArray);
 			props.setPropsImage(byteArray);
 			props.setPropsName("Ime rekvizita");
 			props.setFanZone(fz);

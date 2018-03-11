@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.management.context.UnitOfWork;
 import com.management.dto.FanZoneDTO;
 import com.management.entities.FanZone;
 import com.management.interfaces.FanZoneManagerInterface;
+import com.management.interfaces.UnitOfWorkInterface;
 
 /**
  * 
@@ -17,25 +17,24 @@ import com.management.interfaces.FanZoneManagerInterface;
  */
 public class FanZoneManager implements FanZoneManagerInterface {
 
-	private UnitOfWork uow;
+	private UnitOfWorkInterface uow;
 
 	@Autowired
-	public FanZoneManager(UnitOfWork uow) {
+	public FanZoneManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
 	public boolean Create(FanZoneDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		FanZone fanzone;
+		FanZone fanzone = new FanZone();
 
 		try {
 			fanzone = mapper.map(dto, FanZone.class);
+			uow.getFanZoneRepository().Add(fanzone);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		uow.getFanZoneRepository().Add(fanzone);
-
 		return true;
 	}
 
@@ -85,18 +84,18 @@ public class FanZoneManager implements FanZoneManagerInterface {
 		}
 		uow.getHistoryRepository().Update();
 		uow.commitChanges();
-		
+
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getHistoryRepository().Delete(id);
+			uow.getFanZoneRepository().Delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 

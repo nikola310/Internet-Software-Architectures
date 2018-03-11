@@ -43,6 +43,9 @@ public class UnitOfWorkFake implements UnitOfWorkInterface{
 		hallRepository = new HallRepositoryFake();
 		performanceRepository = new PerformanceRepositoryFake();
 		seatRepository = new SeatRepositoryFake();
+		propsRepository = new PropsRepositoryFake();
+		fanZoneRepository = new FanZoneRepositoryFake();
+		historyRepository = new HistoryRepositoryFake();
 	}
 	
 	public void commitChanges() {
