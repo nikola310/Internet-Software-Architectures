@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.User;
 import com.management.interfaces.UserRepositoryInterface;
@@ -12,6 +13,7 @@ import com.management.interfaces.UserRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class UserRepository implements UserRepositoryInterface {
 	private Session session;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
@@ -14,6 +15,7 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Zivko Stanisic
  *
  */
+@Service
 public class HallManager implements HallManagerInterface{
 	
 	private UnitOfWorkInterface uow;

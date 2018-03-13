@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.CinemaTheatre;
 import com.management.interfaces.CinemaTheatreRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.CinemaTheatreRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class CinemaTheatreRepository implements CinemaTheatreRepositoryInterface {
 
 	private Session session;

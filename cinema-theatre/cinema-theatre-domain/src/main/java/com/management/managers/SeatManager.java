@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
@@ -14,6 +15,7 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Zivko Stanisic
  *
  */
+@Service
 public class SeatManager implements SeatManagerInterface{
 	
 	private UnitOfWorkInterface uow;

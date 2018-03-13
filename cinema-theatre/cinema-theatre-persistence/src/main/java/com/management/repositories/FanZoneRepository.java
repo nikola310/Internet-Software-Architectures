@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.FanZone;
 import com.management.interfaces.FanZoneRepositoryInterface;
@@ -12,6 +13,7 @@ import com.management.interfaces.FanZoneRepositoryInterface;
  * @author Nikola Stojanovic
  *
  */
+@Repository
 public class FanZoneRepository implements FanZoneRepositoryInterface {
 
 	private Session session;

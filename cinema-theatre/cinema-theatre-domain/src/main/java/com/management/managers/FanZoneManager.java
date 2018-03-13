@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.FanZoneDTO;
 import com.management.entities.FanZone;
@@ -15,6 +16,7 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Nikola Stojanovic
  *
  */
+@Service
 public class FanZoneManager implements FanZoneManagerInterface {
 
 	private UnitOfWorkInterface uow;

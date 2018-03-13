@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.UserDTO;
 import com.management.entities.User;
@@ -14,6 +15,7 @@ import com.management.interfaces.UserManagerInterface;
  * @author Zivko Stanisic
  *
  */
+@Service
 public class UserManager implements UserManagerInterface {
 
 	private UnitOfWorkInterface uow;

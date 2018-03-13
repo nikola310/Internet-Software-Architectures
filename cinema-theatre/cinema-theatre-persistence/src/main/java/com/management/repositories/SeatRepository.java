@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Seat;
 import com.management.interfaces.SeatRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.SeatRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class SeatRepository implements SeatRepositoryInterface{
 	private Session session;
 

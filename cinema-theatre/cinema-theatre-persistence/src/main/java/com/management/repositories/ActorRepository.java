@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Actor;
 import com.management.interfaces.ActorRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.ActorRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class ActorRepository implements ActorRepositoryInterface{
 	private Session session;
 

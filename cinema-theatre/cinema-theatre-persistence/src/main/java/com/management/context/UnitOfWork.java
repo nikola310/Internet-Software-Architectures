@@ -3,6 +3,8 @@ package com.management.context;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.management.entities.Actor;
 import com.management.entities.Actorperformances;
@@ -47,6 +49,8 @@ import com.management.repositories.UserRepository;
  * @author Zivko Stanisic
  *
  */
+@Component
+@Scope(value = "singleton")
 public class UnitOfWork implements UnitOfWorkInterface {
 
 	private Session session;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.ActorPerformancesDTO;
 import com.management.entities.Actorperformances;
@@ -14,15 +15,16 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Zivko Stanisic
  *
  */
+@Service
 public class ActorPerformancesManager implements ActorPerformancesManagerInterface{
 	
 	private UnitOfWorkInterface uow;
 
+	@Autowired
 	public ActorPerformancesManager(UnitOfWorkInterface uow) {
 		this.uow = uow;
 	}
 
-	@Autowired
 	public boolean Create(ActorPerformancesDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Actorperformances ActorPerformances;

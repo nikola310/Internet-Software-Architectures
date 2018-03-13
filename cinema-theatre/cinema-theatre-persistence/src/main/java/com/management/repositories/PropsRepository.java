@@ -3,10 +3,12 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Props;
 import com.management.interfaces.PropsRepositoryInterface;
 
+@Repository
 public class PropsRepository implements PropsRepositoryInterface {
 
 	private Session session;

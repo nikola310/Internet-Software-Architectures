@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Hall;
 import com.management.interfaces.HallRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.HallRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class HallRepository implements HallRepositoryInterface{
 	private Session session;
 

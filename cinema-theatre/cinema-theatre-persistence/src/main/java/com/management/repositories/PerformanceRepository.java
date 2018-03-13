@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Performance;
 import com.management.interfaces.PerformanceRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.PerformanceRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class PerformanceRepository implements PerformanceRepositoryInterface{
 	private Session session;
 

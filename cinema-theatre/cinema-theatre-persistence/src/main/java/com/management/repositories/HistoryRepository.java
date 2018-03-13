@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.History;
 import com.management.interfaces.HistoryRepositoryInterface;
@@ -11,6 +12,7 @@ import com.management.interfaces.HistoryRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class HistoryRepository implements HistoryRepositoryInterface{
 	private Session session;
 

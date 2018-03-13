@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.PropsDTO;
 import com.management.entities.Props;
 import com.management.interfaces.PropsManagerInterface;
 import com.management.interfaces.UnitOfWorkInterface;
 
+@Service
 public class PropsManager implements PropsManagerInterface {
 
 	private UnitOfWorkInterface uow;

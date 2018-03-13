@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.management.dto.HistoryDTO;
 import com.management.entities.History;
@@ -14,6 +15,7 @@ import com.management.interfaces.UnitOfWorkInterface;
  * @author Zivko Stanisic
  *
  */
+@Service
 public class HistoryManager implements HistoryManagerInterface{
 	
 	private UnitOfWorkInterface uow;

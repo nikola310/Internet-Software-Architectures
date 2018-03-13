@@ -3,6 +3,7 @@ package com.management.repositories;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.management.entities.Friendslist;
 import com.management.interfaces.FriendsListRepositoryInterface;
@@ -12,6 +13,7 @@ import com.management.interfaces.FriendsListRepositoryInterface;
  * @author Zivko Stanisic
  *
  */
+@Repository
 public class FriendsListRepository implements FriendsListRepositoryInterface {
 	private Session session;
 
