@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.EventDTO;
 import com.management.entities.Event;
 import com.management.interfaces.EventManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.EventRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,24 +18,20 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class EventManager implements EventManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public EventManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private EventRepository eventRepository;
 
 	public boolean Create(EventDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Event Event;
+		Event event;
 
 		try {
-			Event = mapper.map(dto, Event.class);
+			event = mapper.map(dto, Event.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getEventRepository().Add(Event);
+		eventRepository.save(event);
 
 		return true;
 	}
@@ -45,8 +41,8 @@ public class EventManager implements EventManagerInterface{
 		EventDTO dto;
 
 		try {
-			Event Event = uow.getEventRepository().Read(id);
-			dto = mapper.map(Event, EventDTO.class);
+			Event event = eventRepository.findOne(id);
+			dto = mapper.map(event, EventDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -57,7 +53,7 @@ public class EventManager implements EventManagerInterface{
 	
 	public ArrayList<EventDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Event> listEntities = uow.getEventRepository().ReadAll();
+		ArrayList<Event> listEntities = (ArrayList<Event>) eventRepository.findAll();
 		ArrayList<EventDTO> listDTO = new ArrayList<EventDTO>();
 
 		for (Event tmp : listEntities) {
@@ -75,7 +71,6 @@ public class EventManager implements EventManagerInterface{
 
 	public boolean Update(EventDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Event tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class EventManager implements EventManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getEventRepository().Update();
-		uow.commitChanges();
+		eventRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getEventRepository().Delete(id);
+			eventRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

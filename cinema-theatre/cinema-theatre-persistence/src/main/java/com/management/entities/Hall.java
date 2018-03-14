@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +24,8 @@ public class Hall implements java.io.Serializable {
 	private int hallId;
 	private CinemaTheatre cinemaTheatre;
 	private String hallName;
-	@SuppressWarnings("rawtypes")
-	private Set events = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set seats = new HashSet(0);
+	private Set<Event> events = new HashSet<Event>(0);
+	private Set<Seat> seats = new HashSet<Seat>(0);
 
 	public Hall() {
 	}
@@ -38,8 +36,7 @@ public class Hall implements java.io.Serializable {
 		this.hallName = hallName;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName, Set events, Set seats) {
+	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName, Set<Event> events, Set<Seat> seats) {
 		this.hallId = hallId;
 		this.cinemaTheatre = cinemaTheatre;
 		this.hallName = hallName;
@@ -77,25 +74,21 @@ public class Hall implements java.io.Serializable {
 		this.hallName = hallName;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
-	public Set getEvents() {
+	public Set<Event> getEvents() {
 		return this.events;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setEvents(Set events) {
+	public void setEvents(Set<Event> events) {
 		this.events = events;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
-	public Set getSeats() {
+	public Set<Seat> getSeats() {
 		return this.seats;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setSeats(Set seats) {
+	public void setSeats(Set<Seat> seats) {
 		this.seats = seats;
 	}
 

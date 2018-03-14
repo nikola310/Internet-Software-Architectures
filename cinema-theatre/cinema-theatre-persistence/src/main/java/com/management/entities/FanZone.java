@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +21,7 @@ public class FanZone implements java.io.Serializable {
 
 	private int fanZoneId;
 	private String fanZoneName;
-	@SuppressWarnings("rawtypes")
-	private Set propses = new HashSet(0);
+	private Set<Props> propses = new HashSet<Props>(0);
 
 	public FanZone() {
 	}
@@ -31,8 +30,7 @@ public class FanZone implements java.io.Serializable {
 		this.fanZoneId = fanZoneId;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public FanZone(int fanZoneId, String fanZoneName, Set propses) {
+	public FanZone(int fanZoneId, String fanZoneName, Set<Props> propses) {
 		this.fanZoneId = fanZoneId;
 		this.fanZoneName = fanZoneName;
 		this.propses = propses;
@@ -58,14 +56,12 @@ public class FanZone implements java.io.Serializable {
 		this.fanZoneName = fanZoneName;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fanZone")
-	public Set getPropses() {
+	public Set<Props> getPropses() {
 		return this.propses;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setPropses(Set propses) {
+	public void setPropses(Set<Props> propses) {
 		this.propses = propses;
 	}
 

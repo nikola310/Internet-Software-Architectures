@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,10 +32,8 @@ public class Performance implements java.io.Serializable {
 	private int perRank;
 	private byte[] perPoster;
 	private String perDescription;
-	@SuppressWarnings("rawtypes")
-	private Set actorperformanceses = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set events = new HashSet(0);
+	private Set<Actorperformances> actorperformanceses = new HashSet<Actorperformances>(0);
+	private Set<Event> events = new HashSet<Event>(0);
 
 	public Performance() {
 	}
@@ -52,10 +50,9 @@ public class Performance implements java.io.Serializable {
 		this.perRank = perRank;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public Performance(int perId, char perType, String perGenre, String perDirector, int perDuration,
 			Date perCreationDate, float perPrice, int perRank, byte[] perPoster, String perDescription,
-			Set actorperformanceses, Set events) {
+			Set<Actorperformances> actorperformanceses, Set<Event> events) {
 		this.perId = perId;
 		this.perType = perType;
 		this.perGenre = perGenre;
@@ -163,25 +160,21 @@ public class Performance implements java.io.Serializable {
 		this.perDescription = perDescription;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "performance")
-	public Set getActorperformanceses() {
+	public Set<Actorperformances> getActorperformanceses() {
 		return this.actorperformanceses;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setActorperformanceses(Set actorperformanceses) {
+	public void setActorperformanceses(Set<Actorperformances> actorperformanceses) {
 		this.actorperformanceses = actorperformanceses;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "performance")
-	public Set getEvents() {
+	public Set<Event> getEvents() {
 		return this.events;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setEvents(Set events) {
+	public void setEvents(Set<Event> events) {
 		this.events = events;
 	}
 

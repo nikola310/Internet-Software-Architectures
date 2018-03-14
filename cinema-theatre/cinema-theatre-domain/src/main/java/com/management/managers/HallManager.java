@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
 import com.management.interfaces.HallManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.HallRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,24 +18,20 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class HallManager implements HallManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public HallManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private HallRepository hallRepository;
 
 	public boolean Create(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Hall Hall;
+		Hall hall;
 
 		try {
-			Hall = mapper.map(dto, Hall.class);
+			hall = mapper.map(dto, Hall.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHallRepository().Add(Hall);
+		hallRepository.save(hall);
 
 		return true;
 	}
@@ -45,8 +41,8 @@ public class HallManager implements HallManagerInterface{
 		HallDTO dto;
 
 		try {
-			Hall Hall = uow.getHallRepository().Read(id);
-			dto = mapper.map(Hall, HallDTO.class);
+			Hall hall = hallRepository.findOne(id);
+			dto = mapper.map(hall, HallDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -57,7 +53,7 @@ public class HallManager implements HallManagerInterface{
 
 	public ArrayList<HallDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Hall> listEntities = uow.getHallRepository().ReadAll();
+		ArrayList<Hall> listEntities = (ArrayList<Hall>) hallRepository.findAll();
 		ArrayList<HallDTO> listDTO = new ArrayList<HallDTO>();
 
 		for (Hall tmp : listEntities) {
@@ -75,7 +71,6 @@ public class HallManager implements HallManagerInterface{
 
 	public boolean Update(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Hall tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class HallManager implements HallManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHallRepository().Update();
-		uow.commitChanges();
+		hallRepository.save(tmp);
 
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getHallRepository().Delete(id);
+			hallRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

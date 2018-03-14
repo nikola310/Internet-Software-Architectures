@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.ActorPerformancesDTO;
 import com.management.entities.Actorperformances;
 import com.management.interfaces.ActorPerformancesManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.ActorPerformancesRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,24 +18,20 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class ActorPerformancesManager implements ActorPerformancesManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public ActorPerformancesManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private ActorPerformancesRepository actorPerformancesRepository;
 
 	public boolean Create(ActorPerformancesDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Actorperformances ActorPerformances;
+		Actorperformances actorPerformances;
 
 		try {
-			ActorPerformances = mapper.map(dto, Actorperformances.class);
+			actorPerformances = mapper.map(dto, Actorperformances.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getActorPerformancesRepository().Add(ActorPerformances);
+		actorPerformancesRepository.save(actorPerformances);
 
 		return true;
 	}
@@ -45,8 +41,8 @@ public class ActorPerformancesManager implements ActorPerformancesManagerInterfa
 		ActorPerformancesDTO dto;
 
 		try {
-			Actorperformances ActorPerformances = uow.getActorPerformancesRepository().Read(id);
-			dto = mapper.map(ActorPerformances, ActorPerformancesDTO.class);
+			Actorperformances actorPerformances = actorPerformancesRepository.findOne(id);
+			dto = mapper.map(actorPerformances, ActorPerformancesDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -57,7 +53,7 @@ public class ActorPerformancesManager implements ActorPerformancesManagerInterfa
 	
 	public ArrayList<ActorPerformancesDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Actorperformances> listEntities = uow.getActorPerformancesRepository().ReadAll();
+		ArrayList<Actorperformances> listEntities = (ArrayList<Actorperformances>) actorPerformancesRepository.findAll();
 		ArrayList<ActorPerformancesDTO> listDTO = new ArrayList<ActorPerformancesDTO>();
 
 		for (Actorperformances tmp : listEntities) {
@@ -75,7 +71,6 @@ public class ActorPerformancesManager implements ActorPerformancesManagerInterfa
 
 	public boolean Update(ActorPerformancesDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Actorperformances tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class ActorPerformancesManager implements ActorPerformancesManagerInterfa
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getActorPerformancesRepository().Update();
-		uow.commitChanges();
+		actorPerformancesRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getActorPerformancesRepository().Delete(id);
+			actorPerformancesRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

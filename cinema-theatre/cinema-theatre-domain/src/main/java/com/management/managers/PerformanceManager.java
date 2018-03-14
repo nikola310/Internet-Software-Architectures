@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.PerformanceDTO;
 import com.management.entities.Performance;
 import com.management.interfaces.PerformanceManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.PerformanceRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,24 +18,20 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class PerformanceManager implements PerformanceManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public PerformanceManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private PerformanceRepository performanceRepository;
 
 	public boolean Create(PerformanceDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Performance Performance;
+		Performance performance;
 
 		try {
-			Performance = mapper.map(dto, Performance.class);
+			performance = mapper.map(dto, Performance.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getPerformanceRepository().Add(Performance);
+		performanceRepository.save(performance);
 
 		return true;
 	}
@@ -45,8 +41,8 @@ public class PerformanceManager implements PerformanceManagerInterface{
 		PerformanceDTO dto;
 
 		try {
-			Performance Performance = uow.getPerformanceRepository().Read(id);
-			dto = mapper.map(Performance, PerformanceDTO.class);
+			Performance performance = performanceRepository.findOne(id);
+			dto = mapper.map(performance, PerformanceDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -57,7 +53,7 @@ public class PerformanceManager implements PerformanceManagerInterface{
 	
 	public ArrayList<PerformanceDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Performance> listEntities = uow.getPerformanceRepository().ReadAll();
+		ArrayList<Performance> listEntities = (ArrayList<Performance>) performanceRepository.findAll();
 		ArrayList<PerformanceDTO> listDTO = new ArrayList<PerformanceDTO>();
 
 		for (Performance tmp : listEntities) {
@@ -75,7 +71,6 @@ public class PerformanceManager implements PerformanceManagerInterface{
 
 	public boolean Update(PerformanceDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Performance tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class PerformanceManager implements PerformanceManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getPerformanceRepository().Update();
-		uow.commitChanges();
+		performanceRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getPerformanceRepository().Delete(id);
+			performanceRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

@@ -19,17 +19,13 @@ import com.management.interfaces.EventManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/event")
+@RequestMapping(value = "/event")
 public class EventController {
 	
-	private EventManagerInterface manager;
-	
 	@Autowired
-	public EventController(EventManagerInterface manager) {
-		this.manager = manager;
-	}
+	private EventManagerInterface manager;
 
-	@RequestMapping(value="getEvents", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<EventDTO>> getEvents() {
 
 		List<EventDTO> list = manager.ReadAll();

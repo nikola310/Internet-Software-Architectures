@@ -19,17 +19,13 @@ import com.management.interfaces.PerformanceManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/performance")
+@RequestMapping(value = "/performance")
 public class PerformanceController {
 	
-	private PerformanceManagerInterface manager;
-	
 	@Autowired
-	public PerformanceController(PerformanceManagerInterface manager) {
-		this.manager = manager;
-	}
+	private PerformanceManagerInterface manager;
 
-	@RequestMapping(value="getPerformances", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PerformanceDTO>> getPerformances() {
 
 		List<PerformanceDTO> list = manager.ReadAll();

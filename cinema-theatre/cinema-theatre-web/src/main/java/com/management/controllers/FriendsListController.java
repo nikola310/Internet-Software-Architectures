@@ -19,17 +19,13 @@ import com.management.interfaces.FriendsListManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/friends-list")
+@RequestMapping(value = "/friends-list")
 public class FriendsListController {
 	
-	private FriendsListManagerInterface manager;
-	
 	@Autowired
-	public FriendsListController(FriendsListManagerInterface manager) {
-		this.manager = manager;
-	}
+	private FriendsListManagerInterface manager;
 
-	@RequestMapping(value="getFriendslists", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<FriendslistDTO>> getFriendslists() {
 
 		List<FriendslistDTO> list = manager.ReadAll();

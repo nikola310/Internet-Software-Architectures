@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,8 +28,7 @@ public class Event implements java.io.Serializable {
 	private Hall hall;
 	private Performance performance;
 	private Date eventDate;
-	@SuppressWarnings("rawtypes")
-	private Set histories = new HashSet(0);
+	private Set<History> histories = new HashSet<History>(0);
 
 	public Event() {
 	}
@@ -41,8 +40,7 @@ public class Event implements java.io.Serializable {
 		this.eventDate = eventDate;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public Event(int eventId, Hall hall, Performance performance, Date eventDate, Set histories) {
+	public Event(int eventId, Hall hall, Performance performance, Date eventDate, Set<History> histories) {
 		this.eventId = eventId;
 		this.hall = hall;
 		this.performance = performance;
@@ -91,14 +89,12 @@ public class Event implements java.io.Serializable {
 		this.eventDate = eventDate;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
-	public Set getHistories() {
+	public Set<History> getHistories() {
 		return this.histories;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setHistories(Set histories) {
+	public void setHistories(Set<History> histories) {
 		this.histories = histories;
 	}
 

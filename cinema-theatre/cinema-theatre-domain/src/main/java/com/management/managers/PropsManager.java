@@ -9,18 +9,14 @@ import org.springframework.stereotype.Service;
 import com.management.dto.PropsDTO;
 import com.management.entities.Props;
 import com.management.interfaces.PropsManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.PropsRepository;
 
 @Service
 public class PropsManager implements PropsManagerInterface {
 
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public PropsManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
-
+	private PropsRepository propsRepository;
+	
 	public boolean Create(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Props props;
@@ -31,7 +27,7 @@ public class PropsManager implements PropsManagerInterface {
 			e.printStackTrace();
 			return false;
 		}
-		uow.getPropsRepository().Add(props);
+		propsRepository.save(props);
 
 		return true;
 	}
@@ -41,7 +37,7 @@ public class PropsManager implements PropsManagerInterface {
 		PropsDTO dto;
 
 		try {
-			Props props = uow.getPropsRepository().Read(id);
+			Props props = propsRepository.findOne(id);
 			dto = mapper.map(props, PropsDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -53,7 +49,7 @@ public class PropsManager implements PropsManagerInterface {
 
 	public ArrayList<PropsDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Props> listEntities = uow.getPropsRepository().ReadAll();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository.findAll();
 		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
 
 		for (Props tmp : listEntities) {
@@ -71,7 +67,6 @@ public class PropsManager implements PropsManagerInterface {
 
 	public boolean Update(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Props tmp;
 
 		try {
@@ -80,15 +75,14 @@ public class PropsManager implements PropsManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHistoryRepository().Update();
-		uow.commitChanges();
+		propsRepository.save(tmp);
 
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getPropsRepository().Delete(id);
+			propsRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

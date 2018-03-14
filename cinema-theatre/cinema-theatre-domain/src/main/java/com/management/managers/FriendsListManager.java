@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
 import com.management.interfaces.FriendsListManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.FriendsListRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,12 +18,8 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class FriendsListManager implements FriendsListManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public FriendsListManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private FriendsListRepository friendsListRepository;
 	
 	public boolean Create(FriendslistDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -35,7 +31,7 @@ public class FriendsListManager implements FriendsListManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getFriendsListRepository().Add(list);
+		friendsListRepository.save(list);
 
 		return true;
 	}
@@ -45,7 +41,7 @@ public class FriendsListManager implements FriendsListManagerInterface{
 		FriendslistDTO dto;
 
 		try {
-			Friendslist list = uow.getFriendsListRepository().Read(id);
+			Friendslist list = friendsListRepository.findOne(id);
 			dto = mapper.map(list, FriendslistDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -57,7 +53,7 @@ public class FriendsListManager implements FriendsListManagerInterface{
 	
 	public ArrayList<FriendslistDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Friendslist> listEntities = uow.getFriendsListRepository().ReadAll();
+		ArrayList<Friendslist> listEntities = (ArrayList<Friendslist>) friendsListRepository.findAll();
 		ArrayList<FriendslistDTO> listDTO = new ArrayList<FriendslistDTO>();
 
 		for (Friendslist tmp : listEntities) {
@@ -75,7 +71,6 @@ public class FriendsListManager implements FriendsListManagerInterface{
 
 	public boolean Update(FriendslistDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Friendslist tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class FriendsListManager implements FriendsListManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getFriendsListRepository().Update();
-		uow.commitChanges();
+		friendsListRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getFriendsListRepository().Delete(id);
+			friendsListRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

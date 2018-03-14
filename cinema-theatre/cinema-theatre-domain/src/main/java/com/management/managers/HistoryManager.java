@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.HistoryDTO;
 import com.management.entities.History;
 import com.management.interfaces.HistoryManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.HistoryRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,20 +18,16 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class HistoryManager implements HistoryManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public HistoryManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private HistoryRepository historyRepository;
 
 	public boolean Create(HistoryDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		History History;
+		History history;
 
 		try {
-			History = mapper.map(dto, History.class);
-			uow.getHistoryRepository().Add(History);
+			history = mapper.map(dto, History.class);
+			historyRepository.save(history);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
@@ -46,8 +42,8 @@ public class HistoryManager implements HistoryManagerInterface{
 		HistoryDTO dto;
 
 		try {
-			History History = uow.getHistoryRepository().Read(id);
-			dto = mapper.map(History, HistoryDTO.class);
+			History history = historyRepository.findOne(id);
+			dto = mapper.map(history, HistoryDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -58,7 +54,7 @@ public class HistoryManager implements HistoryManagerInterface{
 	
 	public ArrayList<HistoryDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<History> listEntities = uow.getHistoryRepository().ReadAll();
+		ArrayList<History> listEntities = (ArrayList<History>) historyRepository.findAll();
 		ArrayList<HistoryDTO> listDTO = new ArrayList<HistoryDTO>();
 
 		for (History tmp : listEntities) {
@@ -76,7 +72,6 @@ public class HistoryManager implements HistoryManagerInterface{
 
 	public boolean Update(HistoryDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		History tmp;
 
 		try {
@@ -85,15 +80,14 @@ public class HistoryManager implements HistoryManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHistoryRepository().Update();
-		uow.commitChanges();
+		historyRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getHistoryRepository().Delete(id);
+			historyRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,18 +34,12 @@ public class User implements java.io.Serializable {
 	private String userStateid;
 	private Integer userPhone;
 	private Integer userRank;
-	@SuppressWarnings("rawtypes")
-	private Set histories = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set friendslistsForUseUserId2 = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set propses = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set seats = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set friendslistsForUseUserId = new HashSet(0);
-	@SuppressWarnings("rawtypes")
-	private Set friendslistsForUserId = new HashSet(0);
+	private Set<History> histories = new HashSet<History>(0);
+	private Set<Friendslist> friendslistsForUseUserId2 = new HashSet<Friendslist>(0);
+	private Set<Props> propses = new HashSet<Props>(0);
+	private Set<Seat> seats = new HashSet<Seat>(0);
+	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(0);
+	private Set<Friendslist> friendslistsForUserId = new HashSet<Friendslist>(0);
 
 	public User() {
 	}
@@ -63,11 +57,10 @@ public class User implements java.io.Serializable {
 		this.userAdmin = userAdmin;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public User(int userId, String userEmail, String userName, String userSurname, String userPassword, String userCity,
 			boolean userActive, Date userCreationDate, char userAdmin, String userStateid, Integer userPhone,
-			Integer userRank, Set histories, Set friendslistsForUseUserId2, Set propses, Set seats,
-			Set friendslistsForUseUserId, Set friendslistsForUserId) {
+			Integer userRank, Set<History> histories, Set<Friendslist> friendslistsForUseUserId2, Set<Props> propses,
+			Set<Seat> seats, Set<Friendslist> friendslistsForUseUserId, Set<Friendslist> friendslistsForUserId) {
 		this.userId = userId;
 		this.userEmail = userEmail;
 		this.userName = userName;
@@ -199,69 +192,57 @@ public class User implements java.io.Serializable {
 		this.userRank = userRank;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getHistories() {
+	public Set<History> getHistories() {
 		return this.histories;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setHistories(Set histories) {
+	public void setHistories(Set<History> histories) {
 		this.histories = histories;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByUseUserId2")
-	public Set getFriendslistsForUseUserId2() {
+	public Set<Friendslist> getFriendslistsForUseUserId2() {
 		return this.friendslistsForUseUserId2;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setFriendslistsForUseUserId2(Set friendslistsForUseUserId2) {
+	public void setFriendslistsForUseUserId2(Set<Friendslist> friendslistsForUseUserId2) {
 		this.friendslistsForUseUserId2 = friendslistsForUseUserId2;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getPropses() {
+	public Set<Props> getPropses() {
 		return this.propses;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setPropses(Set propses) {
+	public void setPropses(Set<Props> propses) {
 		this.propses = propses;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getSeats() {
+	public Set<Seat> getSeats() {
 		return this.seats;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setSeats(Set seats) {
+	public void setSeats(Set<Seat> seats) {
 		this.seats = seats;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByUseUserId")
-	public Set getFriendslistsForUseUserId() {
+	public Set<Friendslist> getFriendslistsForUseUserId() {
 		return this.friendslistsForUseUserId;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setFriendslistsForUseUserId(Set friendslistsForUseUserId) {
+	public void setFriendslistsForUseUserId(Set<Friendslist> friendslistsForUseUserId) {
 		this.friendslistsForUseUserId = friendslistsForUseUserId;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByUserId")
-	public Set getFriendslistsForUserId() {
+	public Set<Friendslist> getFriendslistsForUserId() {
 		return this.friendslistsForUserId;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setFriendslistsForUserId(Set friendslistsForUserId) {
+	public void setFriendslistsForUserId(Set<Friendslist> friendslistsForUserId) {
 		this.friendslistsForUserId = friendslistsForUserId;
 	}
 

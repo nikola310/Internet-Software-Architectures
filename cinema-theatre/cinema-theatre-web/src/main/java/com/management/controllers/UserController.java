@@ -19,17 +19,13 @@ import com.management.interfaces.UserManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/user")
+@RequestMapping(value = "/user")
 public class UserController {
 	
-	private UserManagerInterface manager;
-	
 	@Autowired
-	public UserController(UserManagerInterface manager) {
-		this.manager = manager;
-	}
+	private UserManagerInterface manager;
 
-	@RequestMapping(value="getUsers", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsers() {
 
 		List<UserDTO> list = manager.ReadAll();

@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,8 +25,7 @@ public class CinemaTheatre implements java.io.Serializable {
 	private Integer ctPhone;
 	private String ctAdress;
 	private String ctDescription;
-	@SuppressWarnings("rawtypes")
-	private Set halls = new HashSet(0);
+	private Set<Hall> halls = new HashSet<Hall>(0);
 
 	public CinemaTheatre() {
 	}
@@ -35,9 +34,8 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctId = ctId;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public CinemaTheatre(int ctId, String ctName, String ctStateid, Integer ctPhone, String ctAdress,
-			String ctDescription, Set halls) {
+			String ctDescription, Set<Hall> halls) {
 		this.ctId = ctId;
 		this.ctName = ctName;
 		this.ctStateid = ctStateid;
@@ -103,14 +101,12 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctDescription = ctDescription;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cinemaTheatre")
-	public Set getHalls() {
+	public Set<Hall> getHalls() {
 		return this.halls;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setHalls(Set halls) {
+	public void setHalls(Set<Hall> halls) {
 		this.halls = halls;
 	}
 

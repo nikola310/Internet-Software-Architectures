@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.FanZoneDTO;
 import com.management.entities.FanZone;
 import com.management.interfaces.FanZoneManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.FanZoneRepository;
 
 /**
  * 
@@ -19,12 +19,8 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class FanZoneManager implements FanZoneManagerInterface {
 
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public FanZoneManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private FanZoneRepository fanZoneRepository;
 
 	public boolean Create(FanZoneDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -32,7 +28,7 @@ public class FanZoneManager implements FanZoneManagerInterface {
 
 		try {
 			fanzone = mapper.map(dto, FanZone.class);
-			uow.getFanZoneRepository().Add(fanzone);
+			fanZoneRepository.save(fanzone);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -45,7 +41,7 @@ public class FanZoneManager implements FanZoneManagerInterface {
 		FanZoneDTO dto;
 
 		try {
-			FanZone fanzone = uow.getFanZoneRepository().Read(id);
+			FanZone fanzone = fanZoneRepository.findOne(id);
 			dto = mapper.map(fanzone, FanZoneDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -57,7 +53,7 @@ public class FanZoneManager implements FanZoneManagerInterface {
 
 	public ArrayList<FanZoneDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<FanZone> listEntities = uow.getFanZoneRepository().ReadAll();
+		ArrayList<FanZone> listEntities = (ArrayList<FanZone>) fanZoneRepository.findAll();
 		ArrayList<FanZoneDTO> listDTO = new ArrayList<FanZoneDTO>();
 
 		for (FanZone tmp : listEntities) {
@@ -75,7 +71,6 @@ public class FanZoneManager implements FanZoneManagerInterface {
 
 	public boolean Update(FanZoneDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		FanZone tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class FanZoneManager implements FanZoneManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getHistoryRepository().Update();
-		uow.commitChanges();
+		fanZoneRepository.save(tmp);
 
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getFanZoneRepository().Delete(id);
+			fanZoneRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

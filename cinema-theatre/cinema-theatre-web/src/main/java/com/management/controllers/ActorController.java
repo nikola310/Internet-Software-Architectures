@@ -19,17 +19,13 @@ import com.management.interfaces.ActorManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/actor")
+@RequestMapping(value = "/actor")
 public class ActorController {
 	
+	@Autowired	
 	private ActorManagerInterface manager;
-	
-	@Autowired
-	public ActorController(ActorManagerInterface manager) {
-		this.manager = manager;
-	}
 
-	@RequestMapping(value="getActors", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ActorDTO>> getActors() {
 
 		List<ActorDTO> list = manager.ReadAll();
@@ -38,7 +34,7 @@ public class ActorController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<ActorDTO> getActor(@PathVariable int id) {
+	public ResponseEntity<ActorDTO> getActor(@PathVariable("id") int id) {
 		ActorDTO dto = manager.Read(id);
 		if (dto == null) {
 			return new ResponseEntity<ActorDTO>(HttpStatus.NOT_FOUND);

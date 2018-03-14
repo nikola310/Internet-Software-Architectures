@@ -19,17 +19,13 @@ import com.management.interfaces.HistoryManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/history")
+@RequestMapping(value = "/history")
 public class HistoryController {
 	
-	private HistoryManagerInterface manager;
-	
 	@Autowired
-	public HistoryController(HistoryManagerInterface manager) {
-		this.manager = manager;
-	}
+	private HistoryManagerInterface manager;
 
-	@RequestMapping(value="getHistorys", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<HistoryDTO>> getHistorys() {
 
 		List<HistoryDTO> list = manager.ReadAll();

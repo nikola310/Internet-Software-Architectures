@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ public class Props implements java.io.Serializable {
 	private User user;
 	private String propsName;
 	private boolean propsUsed;
-	//private char propsType;
+	private char propsType;
 	private Date propsDeadline;
 	private float propsPrice;
 	private byte[] propsImage;
@@ -42,7 +42,7 @@ public class Props implements java.io.Serializable {
 		this.user = user;
 		this.propsName = propsName;
 		this.propsUsed = propsUsed;
-		//this.propsType = propsType;
+		this.propsType = propsType;
 		this.propsDeadline = propsDeadline;
 		this.propsPrice = propsPrice;
 	}
@@ -54,7 +54,7 @@ public class Props implements java.io.Serializable {
 		this.user = user;
 		this.propsName = propsName;
 		this.propsUsed = propsUsed;
-		//this.propsType = propsType;
+		this.propsType = propsType;
 		this.propsDeadline = propsDeadline;
 		this.propsPrice = propsPrice;
 		this.propsImage = propsImage;
@@ -110,14 +110,14 @@ public class Props implements java.io.Serializable {
 		this.propsUsed = propsUsed;
 	}
 
-//	@Column(name = "PROPS_TYPE", nullable = false, length = 1)
-//	public char getPropsType() {
-//		return this.propsType;
-//	}
-//
-//	public void setPropsType(char propsType) {
-//		this.propsType = propsType;
-//	}
+	@Column(name = "PROPS_TYPE", nullable = false, length = 1)
+	public char getPropsType() {
+		return this.propsType;
+	}
+
+	public void setPropsType(char propsType) {
+		this.propsType = propsType;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "PROPS_DEADLINE", nullable = false, length = 19)

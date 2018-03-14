@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
 import com.management.interfaces.SeatManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.SeatRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,24 +18,20 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class SeatManager implements SeatManagerInterface{
 	
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public SeatManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private SeatRepository seatRepository;
 
 	public boolean Create(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Seat Seat;
+		Seat seat;
 
 		try {
-			Seat = mapper.map(dto, Seat.class);
+			seat = mapper.map(dto, Seat.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getSeatRepository().Add(Seat);
+		seatRepository.save(seat);
 
 		return true;
 	}
@@ -45,8 +41,8 @@ public class SeatManager implements SeatManagerInterface{
 		SeatDTO dto;
 
 		try {
-			Seat Seat = uow.getSeatRepository().Read(id);
-			dto = mapper.map(Seat, SeatDTO.class);
+			Seat seat = seatRepository.findOne(id);
+			dto = mapper.map(seat, SeatDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -57,7 +53,7 @@ public class SeatManager implements SeatManagerInterface{
 	
 	public ArrayList<SeatDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Seat> listEntities = uow.getSeatRepository().ReadAll();
+		ArrayList<Seat> listEntities = (ArrayList<Seat>) seatRepository.findAll();
 		ArrayList<SeatDTO> listDTO = new ArrayList<SeatDTO>();
 
 		for (Seat tmp : listEntities) {
@@ -75,7 +71,6 @@ public class SeatManager implements SeatManagerInterface{
 
 	public boolean Update(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		Seat tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class SeatManager implements SeatManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getSeatRepository().Update();
-		uow.commitChanges();
+		seatRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getSeatRepository().Delete(id);
+			seatRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

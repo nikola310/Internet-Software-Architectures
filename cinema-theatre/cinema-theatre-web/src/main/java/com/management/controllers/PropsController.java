@@ -20,16 +20,13 @@ import com.management.interfaces.PropsManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "management/props")
+@RequestMapping(value = "/props")
 public class PropsController {
+	
+	@Autowired
 	private PropsManagerInterface manager;
 
-	@Autowired
-	public PropsController(PropsManagerInterface manager) {
-		this.manager = manager;
-	}
-
-	@RequestMapping(value = "getProps", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PropsDTO>> getProps() {
 		List<PropsDTO> list = manager.ReadAll();
 

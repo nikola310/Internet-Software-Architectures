@@ -20,17 +20,13 @@ import com.management.interfaces.FanZoneManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "management/fan-zone")
+@RequestMapping(value = "/fan-zone")
 public class FanZoneController {
 
+	@Autowired
 	private FanZoneManagerInterface manager;
 
-	@Autowired
-	public FanZoneController(FanZoneManagerInterface manager) {
-		this.manager = manager;
-	}
-
-	@RequestMapping(value = "getFanZones", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<FanZoneDTO>> getFanZone() {
 		List<FanZoneDTO> list = manager.ReadAll();
 

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.management.dto.UserDTO;
 import com.management.entities.User;
-import com.management.interfaces.UnitOfWorkInterface;
 import com.management.interfaces.UserManagerInterface;
+import com.management.repositories.UserRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,12 +18,8 @@ import com.management.interfaces.UserManagerInterface;
 @Service
 public class UserManager implements UserManagerInterface {
 
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public UserManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private UserRepository userRepository;
 
 	public boolean Create(UserDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -35,7 +31,7 @@ public class UserManager implements UserManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Add(user);
+		userRepository.save(user);
 
 		return true;
 	}
@@ -45,7 +41,7 @@ public class UserManager implements UserManagerInterface {
 		UserDTO dto;
 
 		try {
-			User user = uow.getUserRepository().Read(id);
+			User user = userRepository.findOne(id);
 			dto = mapper.map(user, UserDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -57,7 +53,7 @@ public class UserManager implements UserManagerInterface {
 	
 	public ArrayList<UserDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = uow.getUserRepository().ReadAll();
+		ArrayList<User> listEntities = (ArrayList<User>) userRepository.findAll();
 		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
 		for (User tmp : listEntities) {
@@ -75,7 +71,6 @@ public class UserManager implements UserManagerInterface {
 
 	public boolean Update(UserDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		User tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class UserManager implements UserManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getUserRepository().Update();
-		uow.commitChanges();
+		userRepository.save(tmp);
 		
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getUserRepository().Delete(id);
+			userRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

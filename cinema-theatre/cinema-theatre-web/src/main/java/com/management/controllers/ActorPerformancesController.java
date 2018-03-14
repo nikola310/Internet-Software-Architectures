@@ -19,18 +19,14 @@ import com.management.interfaces.ActorPerformancesManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/actor-performances")
+@RequestMapping(value = "/actor-performances")
 public class ActorPerformancesController {
 	
-	private ActorPerformancesManagerInterface manager;
-	
 	@Autowired
-	public ActorPerformancesController(ActorPerformancesManagerInterface manager) {
-		this.manager = manager;
-	}
+	private ActorPerformancesManagerInterface manager;
 
-	@RequestMapping(value="getActorPerformancess", method = RequestMethod.GET)
-	public ResponseEntity<List<ActorPerformancesDTO>> getActorPerformancess() {
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<ActorPerformancesDTO>> getActorPerformances() {
 
 		List<ActorPerformancesDTO> list = manager.ReadAll();
 

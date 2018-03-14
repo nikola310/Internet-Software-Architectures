@@ -19,17 +19,13 @@ import com.management.interfaces.HallManagerInterface;
  *
  */
 @RestController
-@RequestMapping(value = "/management/hall")
+@RequestMapping(value = "/hall")
 public class HallController {
 	
-	private HallManagerInterface manager;
-	
 	@Autowired
-	public HallController(HallManagerInterface manager) {
-		this.manager = manager;
-	}
+	private HallManagerInterface manager;
 
-	@RequestMapping(value="getHalls", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<HallDTO>> getHalls() {
 
 		List<HallDTO> list = manager.ReadAll();

@@ -1,5 +1,5 @@
 package com.management.entities;
-// Generated Mar 4, 2018 4:33:07 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +22,7 @@ public class Actor implements java.io.Serializable {
 	private int acId;
 	private String acName;
 	private String acSurname;
-	@SuppressWarnings("rawtypes")
-	private Set actorperformanceses = new HashSet(0);
+	private Set<Actorperformances> actorperformanceses = new HashSet<Actorperformances>(0);
 
 	public Actor() {
 	}
@@ -34,8 +33,7 @@ public class Actor implements java.io.Serializable {
 		this.acSurname = acSurname;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public Actor(int acId, String acName, String acSurname, Set actorperformanceses) {
+	public Actor(int acId, String acName, String acSurname, Set<Actorperformances> actorperformanceses) {
 		this.acId = acId;
 		this.acName = acName;
 		this.acSurname = acSurname;
@@ -71,14 +69,12 @@ public class Actor implements java.io.Serializable {
 		this.acSurname = acSurname;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
-	public Set getActorperformanceses() {
+	public Set<Actorperformances> getActorperformanceses() {
 		return this.actorperformanceses;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setActorperformanceses(Set actorperformanceses) {
+	public void setActorperformanceses(Set<Actorperformances> actorperformanceses) {
 		this.actorperformanceses = actorperformanceses;
 	}
 

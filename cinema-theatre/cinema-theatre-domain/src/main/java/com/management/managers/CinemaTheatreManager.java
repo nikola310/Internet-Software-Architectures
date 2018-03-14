@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
 import com.management.interfaces.CinemaTheatreManagerInterface;
-import com.management.interfaces.UnitOfWorkInterface;
+import com.management.repositories.CinemaTheatreRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,12 +18,8 @@ import com.management.interfaces.UnitOfWorkInterface;
 @Service
 public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
-	private UnitOfWorkInterface uow;
-
 	@Autowired
-	public CinemaTheatreManager(UnitOfWorkInterface uow) {
-		this.uow = uow;
-	}
+	private CinemaTheatreRepository cinemaTheatreRepository;
 
 	public boolean Create(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -35,7 +31,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getCinemaTheatreRepository().Add(cinemaTheatre);
+		cinemaTheatreRepository.save(cinemaTheatre);
 
 		return true;
 	}
@@ -45,7 +41,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 		CinemaTheatreDTO dto;
 
 		try {
-			CinemaTheatre cinemaTheatre = uow.getCinemaTheatreRepository().Read(id);
+			CinemaTheatre cinemaTheatre = cinemaTheatreRepository.findOne(id);
 			dto = mapper.map(cinemaTheatre, CinemaTheatreDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -57,7 +53,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 	
 	public ArrayList<CinemaTheatreDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<CinemaTheatre> listEntities = uow.getCinemaTheatreRepository().ReadAll();
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
 		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
 
 		for (CinemaTheatre tmp : listEntities) {
@@ -75,7 +71,6 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 	public boolean Update(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		@SuppressWarnings("unused")
 		CinemaTheatre tmp;
 
 		try {
@@ -84,15 +79,14 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		uow.getCinemaTheatreRepository().Update();
-		uow.commitChanges();
+		cinemaTheatreRepository.save(tmp);
 
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			uow.getCinemaTheatreRepository().Delete(id);
+			cinemaTheatreRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
