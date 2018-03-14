@@ -13,7 +13,8 @@ import com.management.interfaces.CinemaTheatreRepositoryInterface;
  *
  */
 @Repository
-public class CinemaTheatreRepository implements CinemaTheatreRepositoryInterface {
+public class CinemaTheatreRepository implements
+		CinemaTheatreRepositoryInterface {
 
 	private Session session;
 
@@ -22,27 +23,38 @@ public class CinemaTheatreRepository implements CinemaTheatreRepositoryInterface
 	}
 
 	public void Add(CinemaTheatre entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public CinemaTheatre Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (CinemaTheatre) session.load(CinemaTheatre.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<CinemaTheatre> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<CinemaTheatre>) session.createCriteria(CinemaTheatre.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<CinemaTheatre>) session.createCriteria(
+				CinemaTheatre.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.get(CinemaTheatre.class, id));
 	}
 }

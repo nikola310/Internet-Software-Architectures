@@ -19,35 +19,41 @@ public class UserRepository implements UserRepositoryInterface {
 
 	public UserRepository(Session session) {
 		this.session = session;
-
 	}
 
 	public void Add(User entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
-
 	}
 
 	public User Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (User) session.load(User.class, id);
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<User> ReadAll() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (ArrayList<User>) session.createCriteria(User.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
-
-
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.get(User.class, id));
 	}
 

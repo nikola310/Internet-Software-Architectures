@@ -22,27 +22,37 @@ public class EventRepository implements EventRepositoryInterface {
 	}
 
 	public void Add(Event entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 
 	}
 
 	public Event Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Event) session.load(Event.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Event> ReadAll() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (ArrayList<Event>) session.createCriteria(Event.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.delete(session.load(Event.class, id));
+		if (!session.getTransaction().isActive()) {
+			session.delete(session.load(Event.class, id));
+		}
 	}
 }

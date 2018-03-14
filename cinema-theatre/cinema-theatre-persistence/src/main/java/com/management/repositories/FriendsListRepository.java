@@ -22,27 +22,38 @@ public class FriendsListRepository implements FriendsListRepositoryInterface {
 	}
 
 	public void Add(Friendslist entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public Friendslist Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Friendslist) session.load(Friendslist.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Friendslist> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<Friendslist>) session.createCriteria(Friendslist.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<Friendslist>) session.createCriteria(
+				Friendslist.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.get(Friendslist.class, id));
 	}
 }

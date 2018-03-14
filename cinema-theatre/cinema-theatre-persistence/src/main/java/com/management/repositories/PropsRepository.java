@@ -2,6 +2,9 @@ package com.management.repositories;
 
 import java.util.ArrayList;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -18,27 +21,37 @@ public class PropsRepository implements PropsRepositoryInterface {
 	}
 
 	public void Add(Props entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public Props Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Props) session.load(Props.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Props> ReadAll() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (ArrayList<Props>) session.createCriteria(Props.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.get(Props.class, id));
 	}
 }

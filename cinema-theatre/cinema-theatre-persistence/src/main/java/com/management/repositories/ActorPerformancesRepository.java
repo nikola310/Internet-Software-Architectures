@@ -13,41 +13,49 @@ import com.management.interfaces.ActorPerformancesRepositoryInterface;
  *
  */
 @Repository
-public class ActorPerformancesRepository implements ActorPerformancesRepositoryInterface{
+public class ActorPerformancesRepository implements
+		ActorPerformancesRepositoryInterface {
 	private Session session;
 
 	public ActorPerformancesRepository(Session session) {
 		this.session = session;
 
 	}
-	
+
 	public void Add(Actorperformances entity) {
 		session.beginTransaction();
 		session.save(entity);
-		
+
 	}
 
 	public Actorperformances Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Actorperformances) session.load(Actorperformances.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Actorperformances> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<Actorperformances>) session.createCriteria(Actorperformances.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<Actorperformances>) session.getCriteriaBuilder()
+				.createQuery(Actorperformances.class);
 	}
-
 
 	public void Update() {
-		session.beginTransaction();
-		
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+
 	}
 
-
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.load(Actorperformances.class, id));
-		
+
 	}
 }

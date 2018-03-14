@@ -23,27 +23,38 @@ public class FanZoneRepository implements FanZoneRepositoryInterface {
 	}
 
 	public void Add(FanZone entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public FanZone Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (FanZone) session.load(FanZone.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<FanZone> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<FanZone>) session.createCriteria(FanZone.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<FanZone>) session.createCriteria(FanZone.class)
+				.list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.get(FanZone.class, id));
 	}
 }

@@ -13,35 +13,46 @@ import com.management.interfaces.HistoryRepositoryInterface;
  *
  */
 @Repository
-public class HistoryRepository implements HistoryRepositoryInterface{
+public class HistoryRepository implements HistoryRepositoryInterface {
 	private Session session;
 
 	public HistoryRepository(Session session) {
 		this.session = session;
 
 	}
-	
+
 	public void Add(History entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public History Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (History) session.load(History.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<History> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<History>) session.createCriteria(History.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<History>) session.createCriteria(History.class)
+				.list();
 	}
 
 	public void Update() {
-		session.beginTransaction();	
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.delete(session.load(History.class, id));	
+		if (!session.getTransaction().isActive()) {
+			session.delete(session.load(History.class, id));
+		}
 	}
 }

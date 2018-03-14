@@ -13,36 +13,46 @@ import com.management.interfaces.SeatRepositoryInterface;
  *
  */
 @Repository
-public class SeatRepository implements SeatRepositoryInterface{
+public class SeatRepository implements SeatRepositoryInterface {
 	private Session session;
 
 	public SeatRepository(Session session) {
 		this.session = session;
 
 	}
-	
+
 	public void Add(Seat entity) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.save(entity);
 	}
 
 	public Seat Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Seat) session.load(Seat.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Seat> ReadAll() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (ArrayList<Seat>) session.createCriteria(Seat.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.load(Seat.class, id));
 	}
 }

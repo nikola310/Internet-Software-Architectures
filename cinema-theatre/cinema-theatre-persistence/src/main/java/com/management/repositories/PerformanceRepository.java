@@ -13,36 +13,45 @@ import com.management.interfaces.PerformanceRepositoryInterface;
  *
  */
 @Repository
-public class PerformanceRepository implements PerformanceRepositoryInterface{
+public class PerformanceRepository implements PerformanceRepositoryInterface {
 	private Session session;
 
 	public PerformanceRepository(Session session) {
 		this.session = session;
 
 	}
-	
+
 	public void Add(Performance entity) {
 		session.beginTransaction();
 		session.save(entity);
 	}
 
 	public Performance Read(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		return (Performance) session.load(Performance.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Performance> ReadAll() {
-		session.beginTransaction();
-		return (ArrayList<Performance>) session.createCriteria(Performance.class).list();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
+		return (ArrayList<Performance>) session.createCriteria(
+				Performance.class).list();
 	}
 
 	public void Update() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 	}
 
 	public void Delete(int id) {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();
+		}
 		session.delete(session.load(Performance.class, id));
 	}
 }

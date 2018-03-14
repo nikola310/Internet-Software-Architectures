@@ -30,7 +30,7 @@ public class UserRepositoryTests {
 		int key = 0;
 		User user = new User();
 		user.setUserActive(true);
-		user.setUserName("Zivko");
+		user.setUserName("Zixxx");
 		user.setUserSurname("Stanisic");
 		user.setUserAdmin('N');
 		user.setUserCity("Novi Sad");
@@ -49,7 +49,7 @@ public class UserRepositoryTests {
 		ArrayList<User> list = uow.getUserRepository().ReadAll();
 
 		for (User tmp : list) {
-			if (tmp.getUserName().equals("Zivko") && tmp.getUserSurname().equals("Stanisic")) {
+			if (tmp.getUserName().equals("Zixxx") && tmp.getUserSurname().equals("Stanisic")) {
 				key = tmp.getUserId();
 				break;
 			}
@@ -61,7 +61,7 @@ public class UserRepositoryTests {
 		Assert.assertNotNull(user);
 
 		Assert.assertTrue(user.isUserActive());
-		Assert.assertEquals("Zivko", user.getUserName());
+		Assert.assertEquals("Zixxx", user.getUserName());
 		Assert.assertEquals("Stanisic", user.getUserSurname());
 		Assert.assertEquals('N', user.getUserAdmin());
 		Assert.assertEquals("Novi Sad", user.getUserCity());
