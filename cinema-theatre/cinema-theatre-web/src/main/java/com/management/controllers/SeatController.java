@@ -22,8 +22,12 @@ import com.management.interfaces.SeatManagerInterface;
 @RequestMapping(value = "/seat")
 public class SeatController {
 
-	@Autowired
 	private SeatManagerInterface manager;
+
+	@Autowired
+	public SeatController(SeatManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<SeatDTO>> getSeats() {

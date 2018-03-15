@@ -20,8 +20,16 @@ import com.management.repositories.ActorRepository;
 @Transactional
 public class ActorManager implements ActorManagerInterface{
 	
-	@Autowired
+	
 	private ActorRepository actorRepository;
+	
+	/**
+	 * 
+	 */
+	@Autowired
+	public ActorManager(ActorRepository actorRepository) {
+		this.actorRepository = actorRepository;
+	}
 
 	public boolean Create(ActorDTO dto) {
 		ModelMapper mapper = new ModelMapper();

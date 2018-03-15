@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
@@ -16,10 +17,15 @@ import com.management.repositories.CinemaTheatreRepository;
  *
  */
 @Service
+@Transactional
 public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
-	@Autowired
 	private CinemaTheatreRepository cinemaTheatreRepository;
+
+	@Autowired
+	public CinemaTheatreManager(CinemaTheatreRepository cinemaTheatreRepository) {
+		this.cinemaTheatreRepository = cinemaTheatreRepository;
+	}
 
 	public boolean Create(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();

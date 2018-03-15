@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.UserDTO;
 import com.management.entities.User;
@@ -16,10 +17,15 @@ import com.management.repositories.UserRepository;
  *
  */
 @Service
+@Transactional
 public class UserManager implements UserManagerInterface {
 
-	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	public UserManager(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public boolean Create(UserDTO dto) {
 		ModelMapper mapper = new ModelMapper();

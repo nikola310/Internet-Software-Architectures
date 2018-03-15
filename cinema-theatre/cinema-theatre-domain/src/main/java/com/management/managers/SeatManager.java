@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
@@ -16,10 +17,15 @@ import com.management.repositories.SeatRepository;
  *
  */
 @Service
+@Transactional
 public class SeatManager implements SeatManagerInterface{
 	
-	@Autowired
 	private SeatRepository seatRepository;
+
+	@Autowired
+	public SeatManager(SeatRepository seatRepository) {
+		this.seatRepository = seatRepository;
+	}
 
 	public boolean Create(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();

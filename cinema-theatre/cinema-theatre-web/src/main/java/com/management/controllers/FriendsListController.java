@@ -22,8 +22,12 @@ import com.management.interfaces.FriendsListManagerInterface;
 @RequestMapping(value = "/friends-list")
 public class FriendsListController {
 	
-	@Autowired
 	private FriendsListManagerInterface manager;
+	
+	@Autowired
+	public FriendsListController(FriendsListManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<FriendslistDTO>> getFriendslists() {

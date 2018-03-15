@@ -22,8 +22,12 @@ import com.management.interfaces.CinemaTheatreManagerInterface;
 @RequestMapping(value = "/cinema-theatre")
 public class CinemaTheatreController {
 	
-	@Autowired
 	private CinemaTheatreManagerInterface manager;
+
+	@Autowired
+	public CinemaTheatreController(CinemaTheatreManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CinemaTheatreDTO>> getCinemaTheatres() {

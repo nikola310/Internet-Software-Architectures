@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
@@ -16,10 +17,15 @@ import com.management.repositories.HallRepository;
  *
  */
 @Service
+@Transactional
 public class HallManager implements HallManagerInterface{
 	
-	@Autowired
 	private HallRepository hallRepository;
+
+	@Autowired
+	public HallManager(HallRepository hallRepository) {
+		this.hallRepository = hallRepository;
+	}
 
 	public boolean Create(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();

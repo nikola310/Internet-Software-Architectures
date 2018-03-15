@@ -22,8 +22,12 @@ import com.management.interfaces.ActorManagerInterface;
 @RequestMapping(value = "/actor")
 public class ActorController {
 	
-	@Autowired	
 	private ActorManagerInterface manager;
+
+	@Autowired	
+	public ActorController(ActorManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ActorDTO>> getActors() {

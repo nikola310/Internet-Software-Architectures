@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.HistoryDTO;
 import com.management.entities.History;
@@ -16,10 +17,15 @@ import com.management.repositories.HistoryRepository;
  *
  */
 @Service
+@Transactional
 public class HistoryManager implements HistoryManagerInterface{
 	
-	@Autowired
 	private HistoryRepository historyRepository;
+
+	@Autowired
+	public HistoryManager(HistoryRepository historyRepository) {
+		this.historyRepository = historyRepository;
+	}
 
 	public boolean Create(HistoryDTO dto) {
 		ModelMapper mapper = new ModelMapper();

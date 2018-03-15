@@ -22,8 +22,12 @@ import com.management.interfaces.HallManagerInterface;
 @RequestMapping(value = "/hall")
 public class HallController {
 	
-	@Autowired
 	private HallManagerInterface manager;
+
+	@Autowired
+	public HallController(HallManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<HallDTO>> getHalls() {

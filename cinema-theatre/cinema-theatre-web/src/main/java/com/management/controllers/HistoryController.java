@@ -22,8 +22,12 @@ import com.management.interfaces.HistoryManagerInterface;
 @RequestMapping(value = "/history")
 public class HistoryController {
 	
-	@Autowired
 	private HistoryManagerInterface manager;
+
+	@Autowired
+	public HistoryController(HistoryManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<HistoryDTO>> getHistorys() {

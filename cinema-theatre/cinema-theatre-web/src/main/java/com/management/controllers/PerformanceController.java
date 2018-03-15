@@ -22,8 +22,12 @@ import com.management.interfaces.PerformanceManagerInterface;
 @RequestMapping(value = "/performance")
 public class PerformanceController {
 	
-	@Autowired
 	private PerformanceManagerInterface manager;
+
+	@Autowired
+	public PerformanceController(PerformanceManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PerformanceDTO>> getPerformances() {

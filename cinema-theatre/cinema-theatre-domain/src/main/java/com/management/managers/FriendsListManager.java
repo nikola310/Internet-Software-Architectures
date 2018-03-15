@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
@@ -16,10 +17,15 @@ import com.management.repositories.FriendsListRepository;
  *
  */
 @Service
+@Transactional
 public class FriendsListManager implements FriendsListManagerInterface{
 	
-	@Autowired
 	private FriendsListRepository friendsListRepository;
+
+	@Autowired
+	public FriendsListManager(FriendsListRepository friendsListRepository) {
+		this.friendsListRepository = friendsListRepository;
+	}
 	
 	public boolean Create(FriendslistDTO dto) {
 		ModelMapper mapper = new ModelMapper();

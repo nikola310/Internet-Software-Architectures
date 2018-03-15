@@ -23,8 +23,12 @@ import com.management.interfaces.PropsManagerInterface;
 @RequestMapping(value = "/props")
 public class PropsController {
 	
-	@Autowired
 	private PropsManagerInterface manager;
+
+	@Autowired
+	public PropsController(PropsManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PropsDTO>> getProps() {

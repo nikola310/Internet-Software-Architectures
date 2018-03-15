@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.ActorPerformancesDTO;
 import com.management.entities.Actorperformances;
@@ -16,10 +17,15 @@ import com.management.repositories.ActorPerformancesRepository;
  *
  */
 @Service
+@Transactional
 public class ActorPerformancesManager implements ActorPerformancesManagerInterface{
 	
-	@Autowired
 	private ActorPerformancesRepository actorPerformancesRepository;
+
+	@Autowired
+	public ActorPerformancesManager(ActorPerformancesRepository actorPerformancesRepository) {
+		this.actorPerformancesRepository = actorPerformancesRepository;
+	}
 
 	public boolean Create(ActorPerformancesDTO dto) {
 		ModelMapper mapper = new ModelMapper();

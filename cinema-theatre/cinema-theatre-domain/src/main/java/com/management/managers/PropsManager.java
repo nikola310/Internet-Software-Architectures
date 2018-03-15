@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.PropsDTO;
 import com.management.entities.Props;
@@ -12,10 +13,15 @@ import com.management.interfaces.PropsManagerInterface;
 import com.management.repositories.PropsRepository;
 
 @Service
+@Transactional
 public class PropsManager implements PropsManagerInterface {
 
-	@Autowired
 	private PropsRepository propsRepository;
+
+	@Autowired
+	public PropsManager(PropsRepository propsRepository) {
+		this.propsRepository = propsRepository;
+	}
 	
 	public boolean Create(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();

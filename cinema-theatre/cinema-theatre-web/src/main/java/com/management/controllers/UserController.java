@@ -22,8 +22,12 @@ import com.management.interfaces.UserManagerInterface;
 @RequestMapping(value = "/user")
 public class UserController {
 	
-	@Autowired
 	private UserManagerInterface manager;
+	
+	@Autowired
+	public UserController(UserManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsers() {

@@ -22,8 +22,12 @@ import com.management.interfaces.EventManagerInterface;
 @RequestMapping(value = "/event")
 public class EventController {
 	
-	@Autowired
 	private EventManagerInterface manager;
+
+	@Autowired
+	public EventController(EventManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<EventDTO>> getEvents() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.EventDTO;
 import com.management.entities.Event;
@@ -16,10 +17,15 @@ import com.management.repositories.EventRepository;
  *
  */
 @Service
+@Transactional
 public class EventManager implements EventManagerInterface{
 	
-	@Autowired
 	private EventRepository eventRepository;
+
+	@Autowired
+	public EventManager(EventRepository eventRepository) {
+		this.eventRepository = eventRepository;
+	}
 
 	public boolean Create(EventDTO dto) {
 		ModelMapper mapper = new ModelMapper();

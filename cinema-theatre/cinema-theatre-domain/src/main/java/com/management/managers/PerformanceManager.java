@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.PerformanceDTO;
 import com.management.entities.Performance;
@@ -16,10 +17,15 @@ import com.management.repositories.PerformanceRepository;
  *
  */
 @Service
-public class PerformanceManager implements PerformanceManagerInterface{
-	
-	@Autowired
+@Transactional
+public class PerformanceManager implements PerformanceManagerInterface {
+
 	private PerformanceRepository performanceRepository;
+
+	@Autowired
+	public PerformanceManager(PerformanceRepository performanceRepository) {
+		this.performanceRepository = performanceRepository;
+	}
 
 	public boolean Create(PerformanceDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -50,7 +56,7 @@ public class PerformanceManager implements PerformanceManagerInterface{
 
 		return dto;
 	}
-	
+
 	public ArrayList<PerformanceDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<Performance> listEntities = (ArrayList<Performance>) performanceRepository.findAll();
@@ -80,7 +86,7 @@ public class PerformanceManager implements PerformanceManagerInterface{
 			return false;
 		}
 		performanceRepository.save(tmp);
-		
+
 		return true;
 	}
 
@@ -91,7 +97,7 @@ public class PerformanceManager implements PerformanceManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 }

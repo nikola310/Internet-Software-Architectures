@@ -23,8 +23,12 @@ import com.management.interfaces.FanZoneManagerInterface;
 @RequestMapping(value = "/fan-zone")
 public class FanZoneController {
 
-	@Autowired
 	private FanZoneManagerInterface manager;
+
+	@Autowired
+	public FanZoneController(FanZoneManagerInterface manager) {
+		this.manager = manager;
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<FanZoneDTO>> getFanZone() {
