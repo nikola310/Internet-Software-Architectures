@@ -3,6 +3,7 @@ package com.management.managers;
 import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
@@ -37,9 +38,8 @@ public class PropsManagerTests {
 		dto.setPropsName("Spoderman props");
 		dto.setPropsPrice(300);
 		dto.setPropsUsed(true);
-		String filePath = "C:\\Users\\Nikola\\Desktop\\test.png";
-		byte[] byteArray;
-		byteArray = ((DataBufferByte) ImageIO.read(new File(filePath))
+		byte[] byteArray = ((DataBufferByte) ImageIO
+				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
 				.getData().getDataBuffer()).getData();
 		dto.setPropsImage(byteArray);
 		PropsManager manager = new PropsManager(propsRepository);
@@ -51,6 +51,12 @@ public class PropsManagerTests {
 		Props props = propsRepository.findOne(0);
 
 		Assert.assertEquals(dto.getPropsId(), props.getPropsId());
+		Assert.assertEquals(dto.getPropsName(), props.getPropsName());
+		Assert.assertEquals(dto.getPropsPrice(), props.getPropsPrice(), 0.1);
+		Assert.assertEquals(dto.getPropsDeadline(), props.getPropsDeadline());
+		Assert.assertEquals(dto.getPropsDesc(), props.getPropsDesc());
+		Assert.assertArrayEquals(dto.getPropsImage(), props.getPropsImage());
+		Assert.assertEquals(dto.isPropsUsed(), props.isPropsUsed());
 	}
 
 	@Test
@@ -108,6 +114,93 @@ public class PropsManagerTests {
 		Assert.assertNotNull(dto);
 
 		Assert.assertEquals(dto.getPropsId(), props.getPropsId());
+		Assert.assertEquals(dto.getPropsName(), props.getPropsName());
+		Assert.assertEquals(dto.getPropsPrice(), props.getPropsPrice(), 0.1);
+		Assert.assertEquals(dto.getPropsDeadline(), props.getPropsDeadline());
+		Assert.assertEquals(dto.getPropsDesc(), props.getPropsDesc());
+		Assert.assertArrayEquals(dto.getPropsImage(), props.getPropsImage());
+		Assert.assertEquals(dto.isPropsUsed(), props.isPropsUsed());
+
+		mock.assertIsSatisfied();
+	}
+
+	@Test
+	public void ReadAllProps_ReturnsAllProps() throws IOException {
+		// Arrange
+		Mockery mock = new Mockery();
+		propsRepository = mock.mock(PropsRepository.class);
+
+		final ArrayList<Props> list = new ArrayList<Props>();
+
+		Props p1 = new Props();
+		p1.setPropsDeadline(new Date());
+		p1.setPropsDesc("Spoderman props");
+		p1.setPropsName("Spoderman suit");
+		p1.setPropsPrice(300);
+		p1.setPropsUsed(true);
+		byte[] propsImage = ((DataBufferByte) ImageIO
+				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
+				.getData().getDataBuffer()).getData();
+		p1.setPropsImage(propsImage);
+
+		Props p2 = new Props();
+		p2.setPropsDeadline(new Date());
+		p2.setPropsDesc("Captain Murica props");
+		p2.setPropsName("Captain Murica suit");
+		p2.setPropsPrice(500);
+		p2.setPropsUsed(false);
+		byte[] propsImage2 = ((DataBufferByte) ImageIO
+				.read(new File("C:\\Users\\Nikola\\Desktop\\9cd.jpg"))
+				.getData().getDataBuffer()).getData();
+		p2.setPropsImage(propsImage2);
+
+		list.add(p1);
+		list.add(p2);
+
+		mock.checking(new Expectations() {
+			{
+				oneOf(propsRepository).findAll();
+				will(returnValue(list));
+			}
+		});
+
+		PropsManager manager = new PropsManager(propsRepository);
+
+		// Act
+		ArrayList<PropsDTO> dtoList = manager.ReadAll();
+
+		// Assert
+		Assert.assertNotNull(dtoList);
+
+		Assert.assertEquals(dtoList.get(0).getPropsId(), list.get(0)
+				.getPropsId());
+		Assert.assertEquals(dtoList.get(0).getPropsDesc(), list.get(0)
+				.getPropsDesc());
+		Assert.assertEquals(dtoList.get(0).getPropsName(), list.get(0)
+				.getPropsName());
+		Assert.assertEquals(dtoList.get(0).getPropsPrice(), list.get(0)
+				.getPropsPrice(), 0.1);
+		Assert.assertEquals(dtoList.get(0).getPropsDeadline(), list.get(0)
+				.getPropsDeadline());
+		Assert.assertArrayEquals(dtoList.get(0).getPropsImage(), list.get(0)
+				.getPropsImage());
+		Assert.assertEquals(dtoList.get(0).isPropsUsed(), list.get(0)
+				.isPropsUsed());
+
+		Assert.assertEquals(dtoList.get(1).getPropsId(), list.get(1)
+				.getPropsId());
+		Assert.assertEquals(dtoList.get(1).getPropsDesc(), list.get(1)
+				.getPropsDesc());
+		Assert.assertEquals(dtoList.get(1).getPropsName(), list.get(1)
+				.getPropsName());
+		Assert.assertEquals(dtoList.get(1).getPropsPrice(), list.get(1)
+				.getPropsPrice(), 0.1);
+		Assert.assertEquals(dtoList.get(1).getPropsDeadline(), list.get(1)
+				.getPropsDeadline());
+		Assert.assertArrayEquals(dtoList.get(1).getPropsImage(), list.get(1)
+				.getPropsImage());
+		Assert.assertEquals(dtoList.get(1).isPropsUsed(), list.get(1)
+				.isPropsUsed());
 
 		mock.assertIsSatisfied();
 	}

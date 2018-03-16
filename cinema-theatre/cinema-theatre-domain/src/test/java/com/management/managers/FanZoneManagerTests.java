@@ -1,5 +1,7 @@
 package com.management.managers;
 
+import java.util.ArrayList;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -61,7 +63,7 @@ public class FanZoneManagerTests {
 	}
 
 	@Test
-	public void ReadEvent_ReturnsEvent() {
+	public void ReadFanZone_ReturnsFanZone() {
 		// Arrange
 		Mockery mock = new Mockery();
 		fanZoneRepository = mock.mock(FanZoneRepository.class);
@@ -85,5 +87,48 @@ public class FanZoneManagerTests {
 		Assert.assertNotNull(dto);
 
 		Assert.assertEquals(dto.getFanZoneName(), fz.getFanZoneName());
+	}
+
+	@Test
+	public void ReadAllFanZones_ReturnsAllFanZones() {
+		// Arrange
+		Mockery mock = new Mockery();
+		fanZoneRepository = mock.mock(FanZoneRepository.class);
+
+		final ArrayList<FanZone> list = new ArrayList<FanZone>();
+		FanZone fz1 = new FanZone();
+		fz1.setFanZoneName("Spoderman fan zone");
+
+		FanZone fz2 = new FanZone();
+		fz2.setFanZoneName("Captain Amurica fan zone");
+
+		list.add(fz1);
+		list.add(fz2);
+
+		mock.checking(new Expectations() {
+			{
+				oneOf(fanZoneRepository).findAll();
+				will(returnValue(list));
+			}
+		});
+
+		FanZoneManager manager = new FanZoneManager(fanZoneRepository);
+
+		// Act
+		ArrayList<FanZoneDTO> dtoList = manager.ReadAll();
+
+		// Assert
+		Assert.assertNotNull(dtoList);
+
+		Assert.assertEquals(dtoList.get(0).getFanZoneId(), list.get(0)
+				.getFanZoneId());
+		Assert.assertEquals(dtoList.get(0).getFanZoneName(), list.get(0)
+				.getFanZoneName());
+		Assert.assertEquals(dtoList.get(1).getFanZoneId(), list.get(1)
+				.getFanZoneId());
+		Assert.assertEquals(dtoList.get(1).getFanZoneName(), list.get(1)
+				.getFanZoneName());
+
+		mock.assertIsSatisfied();
 	}
 }
