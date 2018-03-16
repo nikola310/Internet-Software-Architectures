@@ -68,4 +68,13 @@ public class ActorController {
 		
 		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);	
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ActorDTO> deleteActor(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<ActorDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ActorDTO>(HttpStatus.OK);
+	}
 }
