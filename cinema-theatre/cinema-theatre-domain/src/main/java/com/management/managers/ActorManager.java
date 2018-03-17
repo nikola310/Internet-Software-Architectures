@@ -18,14 +18,10 @@ import com.management.repositories.ActorRepository;
  */
 @Service
 @Transactional
-public class ActorManager implements ActorManagerInterface{
-	
-	
+public class ActorManager implements ActorManagerInterface {
+
 	private ActorRepository actorRepository;
-	
-	/**
-	 * 
-	 */
+
 	@Autowired
 	public ActorManager(ActorRepository actorRepository) {
 		this.actorRepository = actorRepository;
@@ -60,7 +56,7 @@ public class ActorManager implements ActorManagerInterface{
 
 		return dto;
 	}
-	
+
 	public ArrayList<ActorDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<Actor> listEntities = (ArrayList<Actor>) actorRepository.findAll();
@@ -90,7 +86,7 @@ public class ActorManager implements ActorManagerInterface{
 			return false;
 		}
 		actorRepository.save(tmp);
-		
+
 		return true;
 	}
 
@@ -101,7 +97,7 @@ public class ActorManager implements ActorManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 }
