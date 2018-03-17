@@ -21,9 +21,9 @@ import com.management.interfaces.FriendsListManagerInterface;
 @RestController
 @RequestMapping(value = "/friends-list")
 public class FriendsListController {
-	
+
 	private FriendsListManagerInterface manager;
-	
+
 	@Autowired
 	public FriendsListController(FriendsListManagerInterface manager) {
 		this.manager = manager;
@@ -46,26 +46,35 @@ public class FriendsListController {
 
 		return new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<FriendslistDTO> addFriendslist(@RequestBody FriendslistDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<FriendslistDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<FriendslistDTO> updateFriendslist(@RequestBody FriendslistDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<FriendslistDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<FriendslistDTO> deleteFriendsList(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<FriendslistDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<FriendslistDTO>(HttpStatus.OK);
 	}
 }

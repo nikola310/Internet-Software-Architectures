@@ -21,7 +21,7 @@ import com.management.interfaces.HistoryManagerInterface;
 @RestController
 @RequestMapping(value = "/history")
 public class HistoryController {
-	
+
 	private HistoryManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class HistoryController {
 
 		return new ResponseEntity<HistoryDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<HistoryDTO> addHistory(@RequestBody HistoryDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HistoryDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<HistoryDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<HistoryDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<HistoryDTO> updateHistory(@RequestBody HistoryDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HistoryDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<HistoryDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<HistoryDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<HistoryDTO> deleteHistory(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<HistoryDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<HistoryDTO>(HttpStatus.OK);
 	}
 }

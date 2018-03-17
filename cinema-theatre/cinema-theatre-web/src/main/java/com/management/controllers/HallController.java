@@ -21,7 +21,7 @@ import com.management.interfaces.HallManagerInterface;
 @RestController
 @RequestMapping(value = "/hall")
 public class HallController {
-	
+
 	private HallManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class HallController {
 
 		return new ResponseEntity<HallDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<HallDTO> addHall(@RequestBody HallDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HallDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<HallDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<HallDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<HallDTO> updateHall(@RequestBody HallDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HallDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<HallDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<HallDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<HallDTO> deleteHall(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<HallDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<HallDTO>(HttpStatus.OK);
 	}
 }

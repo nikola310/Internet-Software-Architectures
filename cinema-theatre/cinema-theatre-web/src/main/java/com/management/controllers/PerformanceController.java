@@ -21,7 +21,7 @@ import com.management.interfaces.PerformanceManagerInterface;
 @RestController
 @RequestMapping(value = "/performance")
 public class PerformanceController {
-	
+
 	private PerformanceManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class PerformanceController {
 
 		return new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<PerformanceDTO> addPerformance(@RequestBody PerformanceDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<PerformanceDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<PerformanceDTO> updatePerformance(@RequestBody PerformanceDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<PerformanceDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<PerformanceDTO> deletePerformance(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<PerformanceDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<PerformanceDTO>(HttpStatus.OK);
 	}
 }

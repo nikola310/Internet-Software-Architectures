@@ -21,9 +21,9 @@ import com.management.interfaces.UserManagerInterface;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-	
+
 	private UserManagerInterface manager;
-	
+
 	@Autowired
 	public UserController(UserManagerInterface manager) {
 		this.manager = manager;
@@ -46,26 +46,35 @@ public class UserController {
 
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<UserDTO>(HttpStatus.OK);
 	}
 }

@@ -46,26 +46,35 @@ public class SeatController {
 
 		return new ResponseEntity<SeatDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<SeatDTO> addSeat(@RequestBody SeatDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<SeatDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<SeatDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<SeatDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<SeatDTO> updateSeat(@RequestBody SeatDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<SeatDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<SeatDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<SeatDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<SeatDTO> deleteSeat(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<SeatDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<SeatDTO>(HttpStatus.OK);
 	}
 }

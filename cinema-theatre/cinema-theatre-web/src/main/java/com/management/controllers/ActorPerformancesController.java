@@ -21,7 +21,7 @@ import com.management.interfaces.ActorPerformancesManagerInterface;
 @RestController
 @RequestMapping(value = "/actor-performances")
 public class ActorPerformancesController {
-	
+
 	private ActorPerformancesManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class ActorPerformancesController {
 
 		return new ResponseEntity<ActorPerformancesDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<ActorPerformancesDTO> addActorPerformances(@RequestBody ActorPerformancesDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<ActorPerformancesDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<ActorPerformancesDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<ActorPerformancesDTO> updateActorPerformances(@RequestBody ActorPerformancesDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<ActorPerformancesDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<ActorPerformancesDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ActorPerformancesDTO> deleteActorPerformances(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.OK);
 	}
 }

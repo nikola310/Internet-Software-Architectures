@@ -21,7 +21,7 @@ import com.management.interfaces.EventManagerInterface;
 @RestController
 @RequestMapping(value = "/event")
 public class EventController {
-	
+
 	private EventManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class EventController {
 
 		return new ResponseEntity<EventDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<EventDTO> addEvent(@RequestBody EventDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<EventDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<EventDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<EventDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<EventDTO> updateEvent(@RequestBody EventDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<EventDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<EventDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<EventDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<EventDTO> deleteEvent(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<EventDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<EventDTO>(HttpStatus.OK);
 	}
 }

@@ -21,10 +21,10 @@ import com.management.interfaces.ActorManagerInterface;
 @RestController
 @RequestMapping(value = "/actor")
 public class ActorController {
-	
+
 	private ActorManagerInterface manager;
 
-	@Autowired	
+	@Autowired
 	public ActorController(ActorManagerInterface manager) {
 		this.manager = manager;
 	}
@@ -46,29 +46,29 @@ public class ActorController {
 
 		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<ActorDTO> addActor(@RequestBody ActorDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<ActorDTO> updateActor(@RequestBody ActorDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<ActorDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ActorDTO> deleteActor(@PathVariable("id") int id) {
 		if (!manager.Delete(id)) {

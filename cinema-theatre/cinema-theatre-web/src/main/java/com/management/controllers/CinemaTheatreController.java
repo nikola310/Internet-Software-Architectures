@@ -21,7 +21,7 @@ import com.management.interfaces.CinemaTheatreManagerInterface;
 @RestController
 @RequestMapping(value = "/cinema-theatre")
 public class CinemaTheatreController {
-	
+
 	private CinemaTheatreManagerInterface manager;
 
 	@Autowired
@@ -46,26 +46,35 @@ public class CinemaTheatreController {
 
 		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(@RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Create(dto);
-		
-		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<CinemaTheatreDTO> updateCinemaTheatre(@RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		manager.Update(dto);
-		
-		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);	
+
+		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<CinemaTheatreDTO> deleteCinemaTheatre(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.OK);
 	}
 }
