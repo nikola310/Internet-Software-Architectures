@@ -86,12 +86,12 @@ public class ActorControllerTests {
 		ActorController controller = new ActorController(manager);
 
 		// Act
-		ResponseEntity<ActorDTO> responce = controller.getActor(1);
-		ActorDTO dto = responce.getBody();
+		ResponseEntity<ActorDTO> response = controller.getActor(1);
+		ActorDTO dto = response.getBody();
 
 		// Assert
 		Assert.assertNotNull(controller);
-		Assert.assertEquals(responce, new ResponseEntity<ActorDTO>(dto, HttpStatus.OK));
+		Assert.assertEquals(response, new ResponseEntity<ActorDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
@@ -126,12 +126,12 @@ public class ActorControllerTests {
 		ActorController controller = new ActorController(manager);
 
 		// Act
-		ResponseEntity<List<ActorDTO>> responce = controller.getActors();
-		ArrayList<ActorDTO> listDTO = (ArrayList<ActorDTO>) responce.getBody();
+		ResponseEntity<List<ActorDTO>> response = controller.getActors();
+		ArrayList<ActorDTO> listDTO = (ArrayList<ActorDTO>) response.getBody();
 
 		// Assert
 		Assert.assertNotNull(controller);
-		Assert.assertEquals(responce, new ResponseEntity<List<ActorDTO>>(listDTO, HttpStatus.OK));
+		Assert.assertEquals(response, new ResponseEntity<List<ActorDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
