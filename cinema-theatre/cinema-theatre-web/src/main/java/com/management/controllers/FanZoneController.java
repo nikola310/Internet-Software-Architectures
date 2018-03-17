@@ -31,7 +31,7 @@ public class FanZoneController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<FanZoneDTO>> getFanZone() {
+	public ResponseEntity<List<FanZoneDTO>> getFanZones() {
 		List<FanZoneDTO> list = manager.ReadAll();
 
 		return new ResponseEntity<List<FanZoneDTO>>(list, HttpStatus.OK);
@@ -64,6 +64,15 @@ public class FanZoneController {
 		} else {
 			manager.Update(dto);
 			return new ResponseEntity<FanZoneDTO>(dto, HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<FanZoneDTO> deleteFanZone(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<FanZoneDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<FanZoneDTO>(HttpStatus.OK);
 		}
 	}
 }

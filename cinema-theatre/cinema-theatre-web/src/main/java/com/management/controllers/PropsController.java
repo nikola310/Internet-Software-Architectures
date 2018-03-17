@@ -22,7 +22,7 @@ import com.management.interfaces.PropsManagerInterface;
 @RestController
 @RequestMapping(value = "/props")
 public class PropsController {
-	
+
 	private PropsManagerInterface manager;
 
 	@Autowired
@@ -64,6 +64,15 @@ public class PropsController {
 		} else {
 			manager.Update(dto);
 			return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<PropsDTO> deleteProps(@PathVariable("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<PropsDTO>(HttpStatus.OK);
 		}
 	}
 }
