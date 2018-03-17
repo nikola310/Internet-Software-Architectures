@@ -1,28 +1,32 @@
-package com.management.managers;
+package com.management.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.management.dto.PerformanceDTO;
 import com.management.entities.Performance;
 import com.management.fake.PerformanceRepositoryFake;
+import com.management.managers.PerformanceManager;
 import com.management.repositories.PerformanceRepository;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class PerformanceManagerTests {
+public class PerformanceControllerTests {
 
 	private PerformanceRepository performanceRepository;
 
 	@Test
-	public void AddingNewPerformance_ReturnsBoolean() {
+	public void AddingNewPerformance_ReturnsOK() {
 		// Arrange
 		performanceRepository = new PerformanceRepositoryFake();
 
@@ -37,14 +41,15 @@ public class PerformanceManagerTests {
 		dto.setPerRank(0);
 		dto.setPerType('M');
 		PerformanceManager manager = new PerformanceManager(performanceRepository);
+		PerformanceController controller = new PerformanceController(manager);
 
 		// Act and assert
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.addPerformance(dto), new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK));
 	}
 
 	@Test
-	public void DeletingPerformance_ReturnsBoolean() {
+	public void DeletingPerformance_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		performanceRepository = mock.mock(PerformanceRepository.class);
@@ -58,14 +63,16 @@ public class PerformanceManagerTests {
 
 		// Act and assert
 		PerformanceManager manager = new PerformanceManager(performanceRepository);
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Delete(1));
+		PerformanceController controller = new PerformanceController(manager);
+
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.deletePerformance(1), new ResponseEntity<PerformanceDTO>(HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadPerformance_ReturnsPerformance() {
+	public void ReadPerformance_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		performanceRepository = mock.mock(PerformanceRepository.class);
@@ -89,27 +96,21 @@ public class PerformanceManagerTests {
 		});
 
 		PerformanceManager manager = new PerformanceManager(performanceRepository);
+		PerformanceController controller = new PerformanceController(manager);
 
 		// Act
-		PerformanceDTO dto = manager.Read(1);
+		ResponseEntity<PerformanceDTO> response = controller.getPerformance(1);
+		PerformanceDTO dto = response.getBody();
 
 		// Assert
-		Assert.assertNotNull(dto);
-
-		Assert.assertEquals(dto.getPerId(), per.getPerId());
-		Assert.assertEquals(per.getPerDescription(), dto.getPerDescription());
-		Assert.assertEquals(per.getPerDirector(), dto.getPerDirector());
-		Assert.assertEquals(per.getPerDuration(), dto.getPerDuration());
-		Assert.assertEquals(per.getPerGenre(), dto.getPerGenre());
-		Assert.assertEquals((int) per.getPerPrice(), (int) dto.getPerPrice());
-		Assert.assertEquals(per.getPerRank(), dto.getPerRank());
-		Assert.assertEquals(per.getPerType(), dto.getPerType());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<PerformanceDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadAllPerformances_ReturnsAllPerformances() {
+	public void ReadAllPerformances_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		performanceRepository = mock.mock(PerformanceRepository.class);
@@ -149,30 +150,15 @@ public class PerformanceManagerTests {
 		});
 
 		PerformanceManager manager = new PerformanceManager(performanceRepository);
+		PerformanceController controller = new PerformanceController(manager);
 
 		// Act
-		ArrayList<PerformanceDTO> listDTO = manager.ReadAll();
+		ResponseEntity<List<PerformanceDTO>> response = controller.getPerformances();
+		ArrayList<PerformanceDTO> listDTO = (ArrayList<PerformanceDTO>) response.getBody();
 
 		// Assert
-		Assert.assertNotNull(listDTO);
-
-		Assert.assertEquals(listDTO.get(0).getPerId(), list.get(0).getPerId());
-		Assert.assertEquals(listDTO.get(0).getPerDescription(), list.get(0).getPerDescription());
-		Assert.assertEquals(listDTO.get(0).getPerDirector(), list.get(0).getPerDirector());
-		Assert.assertEquals(listDTO.get(0).getPerDuration(), list.get(0).getPerDuration());
-		Assert.assertEquals(listDTO.get(0).getPerGenre(), list.get(0).getPerGenre());
-		Assert.assertEquals((int) listDTO.get(0).getPerPrice(), (int) list.get(0).getPerPrice());
-		Assert.assertEquals(listDTO.get(0).getPerRank(), list.get(0).getPerRank());
-		Assert.assertEquals(listDTO.get(0).getPerType(), list.get(0).getPerType());
-
-		Assert.assertEquals(listDTO.get(1).getPerId(), list.get(1).getPerId());
-		Assert.assertEquals(listDTO.get(1).getPerDescription(), list.get(1).getPerDescription());
-		Assert.assertEquals(listDTO.get(1).getPerDirector(), list.get(1).getPerDirector());
-		Assert.assertEquals(listDTO.get(1).getPerDuration(), list.get(1).getPerDuration());
-		Assert.assertEquals(listDTO.get(1).getPerGenre(), list.get(1).getPerGenre());
-		Assert.assertEquals((int) listDTO.get(1).getPerPrice(), (int) list.get(1).getPerPrice());
-		Assert.assertEquals(listDTO.get(1).getPerRank(), list.get(1).getPerRank());
-		Assert.assertEquals(listDTO.get(1).getPerType(), list.get(1).getPerType());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<List<PerformanceDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}

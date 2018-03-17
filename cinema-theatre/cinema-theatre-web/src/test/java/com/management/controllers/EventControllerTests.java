@@ -1,46 +1,47 @@
-package com.management.managers;
+package com.management.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.management.dto.EventDTO;
 import com.management.entities.Event;
 import com.management.fake.EventRepositoryFake;
+import com.management.managers.EventManager;
 import com.management.repositories.EventRepository;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class EvenetManagerTests {
+public class EventControllerTests {
 
 	private EventRepository eventRepository;
 
 	@Test
-	public void AddingNewEvent_ReturnsBoolean() {
+	public void AddingNewEvent_ReturnsOK() {
 		// Arrange
 		eventRepository = new EventRepositoryFake();
 
 		EventDTO dto = new EventDTO();
 		dto.setEventDate(new Date());
 		EventManager manager = new EventManager(eventRepository);
+		EventController controller = new EventController(manager);
 
 		// Act and assert
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
-
-		Event event = eventRepository.findOne(0);
-
-		Assert.assertEquals(dto.getEventId(), event.getEventId());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.addEvent(dto), new ResponseEntity<EventDTO>(dto, HttpStatus.OK));
 	}
 
 	@Test
-	public void DeletingEvent_ReturnsBoolean() {
+	public void DeletingEvent_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		eventRepository = mock.mock(EventRepository.class);
@@ -54,14 +55,16 @@ public class EvenetManagerTests {
 
 		// Act and assert
 		EventManager manager = new EventManager(eventRepository);
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Delete(1));
+		EventController controller = new EventController(manager);
+
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.deleteEvent(1), new ResponseEntity<EventDTO>(HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadEvent_ReturnsEvent() {
+	public void ReadEvent_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		eventRepository = mock.mock(EventRepository.class);
@@ -77,20 +80,21 @@ public class EvenetManagerTests {
 		});
 
 		EventManager manager = new EventManager(eventRepository);
+		EventController controller = new EventController(manager);
 
 		// Act
-		EventDTO dto = manager.Read(1);
+		ResponseEntity<EventDTO> response = controller.getEvent(1);
+		EventDTO dto = response.getBody();
 
 		// Assert
-		Assert.assertNotNull(dto);
-
-		Assert.assertEquals(dto.getEventId(), event.getEventId());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<EventDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadAllEvents_ReturnsAllEvents() {
+	public void ReadAllEvents_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		eventRepository = mock.mock(EventRepository.class);
@@ -114,15 +118,15 @@ public class EvenetManagerTests {
 		});
 
 		EventManager manager = new EventManager(eventRepository);
+		EventController controller = new EventController(manager);
 
 		// Act
-		ArrayList<EventDTO> listDTO = manager.ReadAll();
+		ResponseEntity<List<EventDTO>> response = controller.getEvents();
+		ArrayList<EventDTO> listDTO = (ArrayList<EventDTO>) response.getBody();
 
 		// Assert
-		Assert.assertNotNull(listDTO);
-
-		Assert.assertEquals(listDTO.get(0).getEventId(), list.get(0).getEventId());
-		Assert.assertEquals(listDTO.get(1).getEventId(), list.get(1).getEventId());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<List<EventDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}

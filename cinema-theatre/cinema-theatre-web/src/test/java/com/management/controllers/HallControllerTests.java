@@ -1,46 +1,46 @@
-package com.management.managers;
+package com.management.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
 import com.management.fake.HallRepositoryFake;
+import com.management.managers.HallManager;
 import com.management.repositories.HallRepository;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class HallManagerTests {
+public class HallControllerTests {
 
 	private HallRepository hallRepository;
 
 	@Test
-	public void AddingNewHall_ReturnsBoolean() {
+	public void AddingNewHall_ReturnsOK() {
 		// Arrange
 		hallRepository = new HallRepositoryFake();
 
 		HallDTO dto = new HallDTO();
 		dto.setHallName("A1");
 		HallManager manager = new HallManager(hallRepository);
+		HallController controller = new HallController(manager);
 
 		// Act and assert
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
-
-		Hall hall = hallRepository.findOne(0);
-
-		Assert.assertEquals(dto.getHallId(), hall.getHallId());
-		Assert.assertEquals(dto.getHallName(), hall.getHallName());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.addHall(dto), new ResponseEntity<HallDTO>(dto, HttpStatus.OK));
 	}
 
 	@Test
-	public void DeletingHall_ReturnsBoolean() {
+	public void DeletingHall_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		hallRepository = mock.mock(HallRepository.class);
@@ -54,14 +54,16 @@ public class HallManagerTests {
 
 		// Act and assert
 		HallManager manager = new HallManager(hallRepository);
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Delete(1));
+		HallController controller = new HallController(manager);
+
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.deleteHall(1), new ResponseEntity<HallDTO>(HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadHall_ReturnsHall() {
+	public void ReadHall_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		hallRepository = mock.mock(HallRepository.class);
@@ -77,21 +79,21 @@ public class HallManagerTests {
 		});
 
 		HallManager manager = new HallManager(hallRepository);
+		HallController controller = new HallController(manager);
 
 		// Act
-		HallDTO dto = manager.Read(1);
+		ResponseEntity<HallDTO> response = controller.getHall(1);
+		HallDTO dto = response.getBody();
 
 		// Assert
-		Assert.assertNotNull(dto);
-
-		Assert.assertEquals(dto.getHallId(), hall.getHallId());
-		Assert.assertEquals(dto.getHallName(), hall.getHallName());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<HallDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadAllHalls_ReturnsAllHalls() {
+	public void ReadAllHalls_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		hallRepository = mock.mock(HallRepository.class);
@@ -115,15 +117,15 @@ public class HallManagerTests {
 		});
 
 		HallManager manager = new HallManager(hallRepository);
+		HallController controller = new HallController(manager);
 
 		// Act
-		ArrayList<HallDTO> listDTO = manager.ReadAll();
+		ResponseEntity<List<HallDTO>> response = controller.getHalls();
+		ArrayList<HallDTO> listDTO = (ArrayList<HallDTO>) response.getBody();
 
 		// Assert
-		Assert.assertNotNull(listDTO);
-
-		Assert.assertEquals(listDTO.get(0).getHallId(), list.get(0).getHallId());
-		Assert.assertEquals(listDTO.get(1).getHallName(), list.get(1).getHallName());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<List<HallDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}

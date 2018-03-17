@@ -1,27 +1,31 @@
-package com.management.managers;
+package com.management.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
 import com.management.fake.FriendsListRepositoryFake;
+import com.management.managers.FriendsListManager;
 import com.management.repositories.FriendsListRepository;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class FriendsListManagerTest {
+public class FriendsListControllerTests {
 
 	private FriendsListRepository friendsListRepository;
 
 	@Test
-	public void AddingNewFriendsList_ReturnsBoolean() {
+	public void AddingNewFriendsList_ReturnsOK() {
 		// Arrange
 		friendsListRepository = new FriendsListRepositoryFake();
 
@@ -29,19 +33,16 @@ public class FriendsListManagerTest {
 		dto.setFriendsStatus('P');
 
 		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListController controller = new FriendsListController(manager);
 
 		// Act and assert
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
-
-		Friendslist list = friendsListRepository.findOne(0);
-
-		Assert.assertEquals(dto.getFriendsStatus(), list.getFriendsStatus());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.addFriendslist(dto), new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK));
 
 	}
 
 	@Test
-	public void DeletingFriendsList_ReturnsBoolean() {
+	public void DeletingFriendsList_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		friendsListRepository = mock.mock(FriendsListRepository.class);
@@ -55,14 +56,16 @@ public class FriendsListManagerTest {
 
 		// Act and assert
 		FriendsListManager manager = new FriendsListManager(friendsListRepository);
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Delete(1));
+		FriendsListController controller = new FriendsListController(manager);
+
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.deleteFriendsList(1), new ResponseEntity<FriendslistDTO>(HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadFriendsList_ReturnsUser() {
+	public void ReadFriendsList_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		friendsListRepository = mock.mock(FriendsListRepository.class);
@@ -78,20 +81,21 @@ public class FriendsListManagerTest {
 		});
 
 		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListController controller = new FriendsListController(manager);
 
 		// Act
-		FriendslistDTO dto = manager.Read(1);
+		ResponseEntity<FriendslistDTO> response = controller.getFriendslist(1);
+		FriendslistDTO dto = response.getBody();
 
 		// Assert
-		Assert.assertNotNull(dto);
-
-		Assert.assertEquals(dto.getFriendsStatus(), list.getFriendsStatus());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadAllFriendsLists_ReturnsAllFriendsLists() {
+	public void ReadAllFriendsLists_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		friendsListRepository = mock.mock(FriendsListRepository.class);
@@ -115,15 +119,15 @@ public class FriendsListManagerTest {
 		});
 
 		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListController controller = new FriendsListController(manager);
 
 		// Act
-		ArrayList<FriendslistDTO> listDTO = manager.ReadAll();
+		ResponseEntity<List<FriendslistDTO>> response = controller.getFriendslists();
+		ArrayList<FriendslistDTO> listDTO = (ArrayList<FriendslistDTO>) response.getBody();
 
 		// Assert
-		Assert.assertNotNull(listDTO);
-
-		Assert.assertEquals(listDTO.get(0).getFriendsStatus(), list.get(0).getFriendsStatus());
-		Assert.assertEquals(listDTO.get(1).getFriendsStatus(), list.get(1).getFriendsStatus());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<List<FriendslistDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}

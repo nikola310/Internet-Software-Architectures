@@ -16,14 +16,10 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.management.dto.FanZoneDTO;
 import com.management.dto.PropsDTO;
-import com.management.entities.FanZone;
 import com.management.entities.Props;
 import com.management.fake.PropsRepositoryFake;
-import com.management.managers.FanZoneManager;
 import com.management.managers.PropsManager;
-import com.management.repositories.FanZoneRepository;
 import com.management.repositories.PropsRepository;
 
 /**

@@ -1,27 +1,31 @@
-package com.management.managers;
+package com.management.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
 import com.management.fake.CinemaTheatreRepositoryFake;
+import com.management.managers.CinemaTheatreManager;
 import com.management.repositories.CinemaTheatreRepository;
 
 /**
  * @author Zivko Stanisic
  *
  */
-public class CinemaTheatreManagerTests {
+public class CinemaTheatreControllerTests {
 
 	private CinemaTheatreRepository cinemaTheatreRepository;
 
 	@Test
-	public void AddingNewCinemaTheatre_ReturnsBoolean() {
+	public void AddingNewCinemaTheatre_ReturnsOK() {
 		// Arrange
 		cinemaTheatreRepository = new CinemaTheatreRepositoryFake();
 
@@ -32,22 +36,16 @@ public class CinemaTheatreManagerTests {
 		dto.setCtPhone(1234567890);
 
 		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController(manager);
 
 		// Act and assert
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
-
-		CinemaTheatre cinemaTheatre = cinemaTheatreRepository.findOne(0);
-
-		Assert.assertEquals(dto.getCtAdress(), cinemaTheatre.getCtAdress());
-		Assert.assertEquals(dto.getCtDescription(), cinemaTheatre.getCtDescription());
-		Assert.assertEquals(dto.getCtName(), cinemaTheatre.getCtName());
-		Assert.assertEquals(dto.getCtPhone(), cinemaTheatre.getCtPhone());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.addCinemaTheatre(dto), new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK));
 
 	}
 
 	@Test
-	public void DeletingCinemaTheatre_ReturnsBoolean() {
+	public void DeletingCinemaTheatre_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		cinemaTheatreRepository = mock.mock(CinemaTheatreRepository.class);
@@ -61,14 +59,16 @@ public class CinemaTheatreManagerTests {
 
 		// Act and assert
 		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
-		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Delete(1));
+		CinemaTheatreController controller = new CinemaTheatreController(manager);
+
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(controller.deleteCinemaTheatre(1), new ResponseEntity<CinemaTheatreDTO>(HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadCinemaTheatre_ReturnsUser() {
+	public void ReadCinemaTheatre_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		cinemaTheatreRepository = mock.mock(CinemaTheatreRepository.class);
@@ -88,23 +88,21 @@ public class CinemaTheatreManagerTests {
 		});
 
 		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController(manager);
 
 		// Act
-		CinemaTheatreDTO dto = manager.Read(1);
+		ResponseEntity<CinemaTheatreDTO> response = controller.getCinemaTheatre(1);
+		CinemaTheatreDTO dto = response.getBody();
 
 		// Assert
-		Assert.assertNotNull(dto);
-
-		Assert.assertEquals(dto.getCtAdress(), cinemaTheatre.getCtAdress());
-		Assert.assertEquals(dto.getCtDescription(), cinemaTheatre.getCtDescription());
-		Assert.assertEquals(dto.getCtName(), cinemaTheatre.getCtName());
-		Assert.assertEquals(dto.getCtPhone(), cinemaTheatre.getCtPhone());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
 
 	@Test
-	public void ReadAllCinemaTheatres_ReturnsAllCinemaTheatres() {
+	public void ReadAllCinemaTheatres_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		cinemaTheatreRepository = mock.mock(CinemaTheatreRepository.class);
@@ -136,22 +134,15 @@ public class CinemaTheatreManagerTests {
 		});
 
 		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController(manager);
 
 		// Act
-		ArrayList<CinemaTheatreDTO> listDTO = manager.ReadAll();
+		ResponseEntity<List<CinemaTheatreDTO>> response = controller.getCinemaTheatres();
+		ArrayList<CinemaTheatreDTO> listDTO = (ArrayList<CinemaTheatreDTO>) response.getBody();
 
 		// Assert
-		Assert.assertNotNull(listDTO);
-
-		Assert.assertEquals(list.get(0).getCtAdress(), listDTO.get(0).getCtAdress());
-		Assert.assertEquals(list.get(0).getCtDescription(), listDTO.get(0).getCtDescription());
-		Assert.assertEquals(list.get(0).getCtName(), listDTO.get(0).getCtName());
-		Assert.assertEquals(list.get(0).getCtPhone(), listDTO.get(0).getCtPhone());
-
-		Assert.assertEquals(list.get(1).getCtAdress(), listDTO.get(1).getCtAdress());
-		Assert.assertEquals(list.get(1).getCtDescription(), listDTO.get(1).getCtDescription());
-		Assert.assertEquals(list.get(1).getCtName(), listDTO.get(1).getCtName());
-		Assert.assertEquals(list.get(1).getCtPhone(), listDTO.get(1).getCtPhone());
+		Assert.assertNotNull(controller);
+		Assert.assertEquals(response, new ResponseEntity<List<CinemaTheatreDTO>>(listDTO, HttpStatus.OK));
 
 		mock.assertIsSatisfied();
 	}
