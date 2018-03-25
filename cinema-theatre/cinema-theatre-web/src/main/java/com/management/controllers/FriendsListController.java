@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class FriendsListController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<FriendslistDTO> addFriendslist(@RequestBody FriendslistDTO dto) {
+	public ResponseEntity<FriendslistDTO> addFriendslist(@Validated @RequestBody FriendslistDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<FriendslistDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -59,7 +60,7 @@ public class FriendsListController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<FriendslistDTO> updateFriendslist(@RequestBody FriendslistDTO dto) {
+	public ResponseEntity<FriendslistDTO> updateFriendslist(@Validated @RequestBody FriendslistDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<FriendslistDTO>(HttpStatus.NOT_FOUND);
 		}

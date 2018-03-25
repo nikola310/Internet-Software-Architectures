@@ -7,11 +7,14 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author Zivko Stanisic
@@ -68,7 +71,8 @@ public class Performance implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GenericGenerator(name="generator" , strategy="increment")
+	@GeneratedValue(generator="generator")
 	@Column(name = "PER_ID", unique = true, nullable = false)
 	public int getPerId() {
 		return this.perId;

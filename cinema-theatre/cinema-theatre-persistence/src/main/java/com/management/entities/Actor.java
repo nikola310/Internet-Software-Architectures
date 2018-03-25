@@ -3,12 +3,16 @@ package com.management.entities;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author Zivko Stanisic
@@ -41,7 +45,8 @@ public class Actor implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GenericGenerator(name="generator" , strategy="increment")
+	@GeneratedValue(generator="generator")
 	@Column(name = "AC_ID", unique = true, nullable = false)
 	public int getAcId() {
 		return this.acId;

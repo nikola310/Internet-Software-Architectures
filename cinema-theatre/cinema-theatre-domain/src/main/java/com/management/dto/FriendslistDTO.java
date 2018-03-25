@@ -1,5 +1,7 @@
 package com.management.dto;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Zivko Stanisic
  *
@@ -7,6 +9,7 @@ package com.management.dto;
 public class FriendslistDTO {
 	
 	private int friendsId;
+	@NotNull
 	private char friendsStatus;
 	
 	public int getFriendsId() {

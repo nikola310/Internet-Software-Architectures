@@ -1,5 +1,8 @@
 package com.management.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author Zivko Stanisic
  *
@@ -7,7 +10,9 @@ package com.management.dto;
 public class ActorDTO {
 
 	private int acId;
+	@Size(min = 1, max = 50) @NotNull
 	private String acName;
+	@Size(min = 1, max = 50) @NotNull
 	private String acSurname;
 	
 	public int getAcId() {

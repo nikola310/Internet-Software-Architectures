@@ -2,6 +2,8 @@ package com.management.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Zivko Stanisic
  *
@@ -9,6 +11,7 @@ import java.util.Date;
 public class EventDTO {
 
 	private int eventId;
+	@NotNull
 	private Date eventDate;
 
 	public int getEventId() {

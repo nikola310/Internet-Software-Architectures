@@ -2,6 +2,8 @@ package com.management.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Zivko Stanisic
  *
@@ -9,7 +11,9 @@ import java.util.Date;
 public class SeatDTO {
 	
 	private int seatId;
+	@NotNull
 	private boolean seatTaken;
+	@NotNull
 	private Date seatModified;
 	
 	public int getSeatId() {

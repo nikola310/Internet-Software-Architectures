@@ -1,5 +1,9 @@
 package com.management.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author Zivko Stanisic
  *
@@ -7,10 +11,15 @@ package com.management.dto;
 public class CinemaTheatreDTO {
 	
 	private int ctId;
+	@Size(min = 1, max = 50) @NotNull
 	private String ctName;
+	@Size(min = 3, max = 3) @NotNull
 	private String ctStateid;
+	@Min(0) @NotNull
 	private Integer ctPhone;
+	@Size(min = 1, max = 50) @NotNull
 	private String ctAdress;
+	@Size(min = 1, max = 200)
 	private String ctDescription;
 	
 	public String getCtStateid() {

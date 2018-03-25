@@ -2,6 +2,12 @@ package com.management.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 /**
  * @author Zivko Stanisic
  *
@@ -9,16 +15,26 @@ import java.util.Date;
 public class UserDTO {
 	
 	private int userId;
+	@Email @NotNull
 	private String userEmail;
+	@Size(min = 1, max = 50) @NotNull
 	private String userName;
+	@Size(min = 1, max = 50) @NotNull
 	private String userSurname;
+	@Size(min = 1, max = 50) @NotNull
 	private String userPassword;
+	@Size(min = 1, max = 50) @NotNull
 	private String userCity;
+	@NotNull
 	private boolean userActive;
+	@NotNull
 	private Date userCreationDate;
 	private char userAdmin;
+	@Size(min = 3, max = 3)
 	private String userStateid;
+	@Min(0)
 	private Integer userPhone;
+	@Min(0)
 	private Integer userRank;
 	
 	public int getUserId() {

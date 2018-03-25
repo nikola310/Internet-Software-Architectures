@@ -2,6 +2,10 @@ package com.management.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author Zivko Stanisic
  *
@@ -11,13 +15,20 @@ public class PerformanceDTO {
 
 	private int perId;
 	private char perType;
+	@Size(min = 1, max = 30) @NotNull
 	private String perGenre;
+	@Size(min = 1, max = 50) @NotNull
 	private String perDirector;
+	@Min(1) @NotNull
 	private int perDuration;
+	@NotNull
 	private Date perCreationDate;
+	@Min(0) @NotNull
 	private float perPrice;
+	@Min(0) @NotNull
 	private int perRank;
 	private byte[] perPoster;
+	@Size(min = 0, max = 200)
 	private String perDescription;
 	
 	public int getPerId() {

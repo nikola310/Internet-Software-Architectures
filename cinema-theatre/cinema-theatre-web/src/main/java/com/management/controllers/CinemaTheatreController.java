@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(@RequestBody CinemaTheatreDTO dto) {
+	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -59,7 +60,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<CinemaTheatreDTO> updateCinemaTheatre(@RequestBody CinemaTheatreDTO dto) {
+	public ResponseEntity<CinemaTheatreDTO> updateCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}

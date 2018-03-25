@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class ActorPerformancesController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<ActorPerformancesDTO> addActorPerformances(@RequestBody ActorPerformancesDTO dto) {
+	public ResponseEntity<ActorPerformancesDTO> addActorPerformances(@Validated @RequestBody ActorPerformancesDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -59,7 +60,7 @@ public class ActorPerformancesController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<ActorPerformancesDTO> updateActorPerformances(@RequestBody ActorPerformancesDTO dto) {
+	public ResponseEntity<ActorPerformancesDTO> updateActorPerformances(@Validated @RequestBody ActorPerformancesDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ActorPerformancesDTO>(HttpStatus.NOT_FOUND);
 		}

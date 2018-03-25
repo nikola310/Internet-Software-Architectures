@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class HallController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<HallDTO> addHall(@RequestBody HallDTO dto) {
+	public ResponseEntity<HallDTO> addHall(@Validated @RequestBody HallDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HallDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -59,7 +60,7 @@ public class HallController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<HallDTO> updateHall(@RequestBody HallDTO dto) {
+	public ResponseEntity<HallDTO> updateHall(@Validated @RequestBody HallDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<HallDTO>(HttpStatus.NOT_FOUND);
 		}

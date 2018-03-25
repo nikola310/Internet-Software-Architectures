@@ -1,5 +1,8 @@
 package com.management.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Zivko Stanisic
  *
@@ -7,6 +10,7 @@ package com.management.dto;
 public class HistoryDTO {
 	
 	private int historyId;
+	@Min(0) @NotNull
 	private int historyPrice;
 	
 	public int getHistoryId() {

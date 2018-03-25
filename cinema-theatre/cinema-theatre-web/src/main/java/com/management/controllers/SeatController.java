@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class SeatController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<SeatDTO> addSeat(@RequestBody SeatDTO dto) {
+	public ResponseEntity<SeatDTO> addSeat(@Validated @RequestBody SeatDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<SeatDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -59,7 +60,7 @@ public class SeatController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<SeatDTO> updateSeat(@RequestBody SeatDTO dto) {
+	public ResponseEntity<SeatDTO> updateSeat(@Validated @RequestBody SeatDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<SeatDTO>(HttpStatus.NOT_FOUND);
 		}
