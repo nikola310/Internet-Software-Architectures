@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class PropsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<PropsDTO> addProps(@RequestBody PropsDTO dto) {
+	public ResponseEntity<PropsDTO> addProps(@Validated @RequestBody PropsDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
 		} else {
