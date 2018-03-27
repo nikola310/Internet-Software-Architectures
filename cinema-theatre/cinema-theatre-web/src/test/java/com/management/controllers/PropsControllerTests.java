@@ -42,6 +42,7 @@ public class PropsControllerTests {
 		dto.setPropsDesc("Spoderman hat");
 		dto.setPropsName("Spoderman");
 		dto.setPropsPrice(300);
+		dto.setPropsModified(new Date());
 		dto.setPropsUsed(true);
 		byte[] byteArray = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
@@ -91,6 +92,7 @@ public class PropsControllerTests {
 		props.setPropsDesc("Spoderman hat");
 		props.setPropsName("Spoderman");
 		props.setPropsPrice(300);
+		props.setPropsModified(new Date());
 		props.setPropsUsed(true);
 		byte[] byteArray = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
@@ -132,6 +134,7 @@ public class PropsControllerTests {
 		props1.setPropsDesc("Spoderman hat");
 		props1.setPropsName("Spoderman");
 		props1.setPropsPrice(300);
+		props1.setPropsModified(new Date());
 		props1.setPropsUsed(true);
 		byte[] byteArray = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
@@ -143,6 +146,7 @@ public class PropsControllerTests {
 		props2.setPropsDesc("Captain Murica shield");
 		props2.setPropsName("Captain Murica");
 		props2.setPropsPrice(500);
+		props2.setPropsModified(new Date());
 		props2.setPropsUsed(false);
 		byteArray = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\9cd.jpg"))

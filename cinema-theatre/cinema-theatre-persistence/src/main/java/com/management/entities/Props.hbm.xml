@@ -27,6 +27,9 @@
         <property generated="never" lazy="false" name="propsPrice" optimistic-lock="true" type="float" unique="false">
             <column name="PROPS_PRICE" not-null="true" precision="8"/>
         </property>
+        <property generated="never" lazy="false" name="propsModified" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="PROPS_MODIFIED" not-null="true"/>
+        </property>
         <property generated="never" lazy="false" name="propsImage" optimistic-lock="true" type="binary" unique="false">
             <column name="PROPS_IMAGE"/>
         </property>
