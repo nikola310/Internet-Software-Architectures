@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -43,6 +44,8 @@ public class User implements java.io.Serializable {
 	private Set<Seat> seats = new HashSet<Seat>(0);
 	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(0);
 	private Set<Friendslist> friendslistsForUserId = new HashSet<Friendslist>(0);
+	
+	private String token;
 
 	public User() {
 	}
@@ -248,6 +251,15 @@ public class User implements java.io.Serializable {
 
 	public void setFriendslistsForUserId(Set<Friendslist> friendslistsForUserId) {
 		this.friendslistsForUserId = friendslistsForUserId;
+	}
+	
+	@Transient
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
