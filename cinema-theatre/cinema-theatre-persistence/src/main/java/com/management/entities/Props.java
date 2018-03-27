@@ -154,7 +154,7 @@ public class Props implements java.io.Serializable {
 	}
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "PROPS_DEADLINE", nullable = false, length = 19)
+	@Column(name = "PROPS_MODIFIED", nullable = false, length = 19)
 	public Date getPropsModified() {
 		return propsModified;
 	}
