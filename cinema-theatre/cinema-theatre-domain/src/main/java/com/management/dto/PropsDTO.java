@@ -22,7 +22,8 @@ public class PropsDTO {
 	private Date propsDeadline;
 	@NotNull
 	private float propsPrice;
-	
+	@NotNull
+	private Date propsModified;
 	private byte[] propsImage;
 	private String propsDesc;
 
@@ -72,6 +73,14 @@ public class PropsDTO {
 
 	public void setPropsPrice(float propsPrice) {
 		this.propsPrice = propsPrice;
+	}
+
+	public Date getPropsModified() {
+		return propsModified;
+	}
+
+	public void setPropsModified(Date propsModified) {
+		this.propsModified = propsModified;
 	}
 
 	public byte[] getPropsImage() {

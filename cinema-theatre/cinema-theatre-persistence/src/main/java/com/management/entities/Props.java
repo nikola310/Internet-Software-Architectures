@@ -2,6 +2,7 @@ package com.management.entities;
 // Generated Mar 14, 2018 9:09:33 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,6 +33,7 @@ public class Props implements java.io.Serializable {
 	private char propsType;
 	private Date propsDeadline;
 	private float propsPrice;
+	private Date propsModified;
 	private byte[] propsImage;
 	private String propsDesc;
 
@@ -60,6 +62,24 @@ public class Props implements java.io.Serializable {
 		this.propsType = propsType;
 		this.propsDeadline = propsDeadline;
 		this.propsPrice = propsPrice;
+		this.propsImage = propsImage;
+		this.propsDesc = propsDesc;
+	}
+	
+	public Props(int propsId, FanZone fanZone, User user, String propsName,
+			boolean propsUsed, char propsType, Date propsDeadline,
+			float propsPrice, Date propsModified, byte[] propsImage,
+			String propsDesc) {
+		super();
+		this.propsId = propsId;
+		this.fanZone = fanZone;
+		this.user = user;
+		this.propsName = propsName;
+		this.propsUsed = propsUsed;
+		this.propsType = propsType;
+		this.propsDeadline = propsDeadline;
+		this.propsPrice = propsPrice;
+		this.propsModified = propsModified;
 		this.propsImage = propsImage;
 		this.propsDesc = propsDesc;
 	}
@@ -131,6 +151,16 @@ public class Props implements java.io.Serializable {
 
 	public void setPropsDeadline(Date propsDeadline) {
 		this.propsDeadline = propsDeadline;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "PROPS_DEADLINE", nullable = false, length = 19)
+	public Date getPropsModified() {
+		return propsModified;
+	}
+
+	public void setPropsModified(Date propsModified) {
+		this.propsModified = propsModified;
 	}
 
 	@Column(name = "PROPS_PRICE", nullable = false, precision = 8)
