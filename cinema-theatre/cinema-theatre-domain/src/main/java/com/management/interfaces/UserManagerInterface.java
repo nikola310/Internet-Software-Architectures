@@ -11,4 +11,5 @@ import com.management.dto.UserDTO;
  */
 public interface UserManagerInterface extends ManagerInterface<UserDTO>{
 
+	public void addRegistrationToken(String token);
 }

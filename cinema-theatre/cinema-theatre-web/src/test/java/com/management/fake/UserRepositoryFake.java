@@ -115,4 +115,12 @@ public class UserRepositoryFake implements UserRepository{
 	public <S extends User> S findOne(Example<S> arg0) {
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.management.repositories.UserRepository#findByToken(java.lang.String)
+	 */
+	public User findByToken(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

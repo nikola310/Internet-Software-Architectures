@@ -46,6 +46,7 @@ public class User implements java.io.Serializable {
 	private Set<Friendslist> friendslistsForUserId = new HashSet<Friendslist>(0);
 	
 	private String token;
+	private Date expiration;
 
 	public User() {
 	}
@@ -260,6 +261,15 @@ public class User implements java.io.Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+	
+	@Transient
+	public Date getExpiration() {
+		return expiration;
+	}
+
+	public void setExpiration(Date expiration) {
+		this.expiration = expiration;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.management.repositories.UserRepository;
 public class UserManager implements UserManagerInterface {
 
 	private UserRepository userRepository;
+	private String token;
 
 	@Autowired
 	public UserManager(UserRepository userRepository) {
@@ -37,6 +39,16 @@ public class UserManager implements UserManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
+		
+		if (token == null) {
+			return false;
+		}
+		
+		Date expiration = new Date();
+		expiration.setTime(expiration.getTime() + (24*60*60*1000));
+		
+		user.setToken(token);
+		user.setExpiration(expiration);
 		userRepository.save(user);
 
 		return true;
@@ -99,5 +111,9 @@ public class UserManager implements UserManagerInterface {
 		}
 		
 		return true;
+	}
+
+	public void addRegistrationToken(String token) {
+		this.token = token;
 	}
 }
