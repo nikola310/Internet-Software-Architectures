@@ -49,7 +49,8 @@ public class FanZoneController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<FanZoneDTO> addFanZone(@Validated @RequestBody FanZoneDTO dto) {
+	public ResponseEntity<FanZoneDTO> addFanZone(
+			@Validated @RequestBody FanZoneDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<FanZoneDTO>(HttpStatus.NOT_FOUND);
 		} else {
