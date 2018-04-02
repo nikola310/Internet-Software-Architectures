@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.History" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="history">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.History" table="history" catalog="isa" optimistic-lock="version">
         <id name="historyId" type="int">
-            <column name="HISTORY_ID"/>
-            <generator class="increment"/>
+            <column name="HISTORY_ID" />
+            <generator class="assigned" />
         </id>
-        <many-to-one class="com.management.entities.Event" embed-xml="true" fetch="select" insert="true" name="event" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="EVENT_ID" not-null="true"/>
+        <many-to-one name="event" class="com.management.entities.Event" fetch="select">
+            <column name="EVENT_ID" not-null="true" />
         </many-to-one>
-        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="user" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="USER_ID" not-null="true"/>
+        <many-to-one name="user" class="com.management.entities.User" fetch="select">
+            <column name="USER_ID" not-null="true" />
         </many-to-one>
-        <property generated="never" lazy="false" name="historyPrice" optimistic-lock="true" type="int" unique="false">
-            <column name="HISTORY_PRICE" not-null="true"/>
+        <property name="historyPrice" type="int">
+            <column name="HISTORY_PRICE" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

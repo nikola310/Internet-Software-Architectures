@@ -55,7 +55,6 @@ public class PropsManagerTests {
 		Assert.assertEquals(dto.getPropsName(), props.getPropsName());
 		Assert.assertEquals(dto.getPropsPrice(), props.getPropsPrice(), 0.1);
 		Assert.assertEquals(dto.getPropsDeadline(), props.getPropsDeadline());
-		Assert.assertEquals(dto.getPropsModified(), props.getPropsModified());
 		Assert.assertEquals(dto.getPropsDesc(), props.getPropsDesc());
 		Assert.assertArrayEquals(dto.getPropsImage(), props.getPropsImage());
 		Assert.assertEquals(dto.isPropsUsed(), props.isPropsUsed());
@@ -93,7 +92,6 @@ public class PropsManagerTests {
 		props.setPropsDesc("Spoderman props description");
 		props.setPropsName("Spoderman props");
 		props.setPropsPrice(300);
-		props.setPropsModified(new Date());
 		props.setPropsUsed(true);
 		String filePath = "C:\\Users\\Nikola\\Desktop\\test.png";
 		byte[] byteArray;
@@ -120,7 +118,6 @@ public class PropsManagerTests {
 		Assert.assertEquals(dto.getPropsName(), props.getPropsName());
 		Assert.assertEquals(dto.getPropsPrice(), props.getPropsPrice(), 0.1);
 		Assert.assertEquals(dto.getPropsDeadline(), props.getPropsDeadline());
-		Assert.assertEquals(dto.getPropsModified(), props.getPropsModified());
 		Assert.assertEquals(dto.getPropsDesc(), props.getPropsDesc());
 		Assert.assertArrayEquals(dto.getPropsImage(), props.getPropsImage());
 		Assert.assertEquals(dto.isPropsUsed(), props.isPropsUsed());
@@ -141,7 +138,6 @@ public class PropsManagerTests {
 		p1.setPropsDesc("Spoderman props");
 		p1.setPropsName("Spoderman suit");
 		p1.setPropsPrice(300);
-		p1.setPropsModified(new Date());
 		p1.setPropsUsed(true);
 		byte[] propsImage = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
@@ -153,7 +149,6 @@ public class PropsManagerTests {
 		p2.setPropsDesc("Captain Murica props");
 		p2.setPropsName("Captain Murica suit");
 		p2.setPropsPrice(500);
-		p2.setPropsModified(new Date());
 		p2.setPropsUsed(false);
 		byte[] propsImage2 = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\9cd.jpg"))
@@ -188,8 +183,6 @@ public class PropsManagerTests {
 				.getPropsPrice(), 0.1);
 		Assert.assertEquals(dtoList.get(0).getPropsDeadline(), list.get(0)
 				.getPropsDeadline());
-		Assert.assertEquals(dtoList.get(0).getPropsModified(), list.get(0)
-				.getPropsModified());
 		Assert.assertArrayEquals(dtoList.get(0).getPropsImage(), list.get(0)
 				.getPropsImage());
 		Assert.assertEquals(dtoList.get(0).isPropsUsed(), list.get(0)
@@ -205,8 +198,6 @@ public class PropsManagerTests {
 				.getPropsPrice(), 0.1);
 		Assert.assertEquals(dtoList.get(1).getPropsDeadline(), list.get(1)
 				.getPropsDeadline());
-		Assert.assertEquals(dtoList.get(1).getPropsModified(), list.get(1)
-				.getPropsModified());
 		Assert.assertArrayEquals(dtoList.get(1).getPropsImage(), list.get(1)
 				.getPropsImage());
 		Assert.assertEquals(dtoList.get(1).isPropsUsed(), list.get(1)

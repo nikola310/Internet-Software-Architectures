@@ -1,49 +1,51 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Performance" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="performance">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Performance" table="performance" catalog="isa" optimistic-lock="version">
         <id name="perId" type="int">
-            <column name="PER_ID"/>
-            <generator class="increment"/>
+            <column name="PER_ID" />
+            <generator class="assigned" />
         </id>
-        <property generated="never" lazy="false" name="perType" optimistic-lock="true" type="char" unique="false">
-            <column length="1" name="PER_TYPE" not-null="true"/>
+        <property name="perType" type="char">
+            <column name="PER_TYPE" length="1" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perGenre" optimistic-lock="true" type="string" unique="false">
-            <column length="30" name="PER_GENRE" not-null="true"/>
+        <property name="perGenre" type="string">
+            <column name="PER_GENRE" length="30" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perDirector" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="PER_DIRECTOR" not-null="true"/>
+        <property name="perDirector" type="string">
+            <column name="PER_DIRECTOR" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perDuration" optimistic-lock="true" type="int" unique="false">
-            <column name="PER_DURATION" not-null="true"/>
+        <property name="perDuration" type="int">
+            <column name="PER_DURATION" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perCreationDate" optimistic-lock="true" type="timestamp" unique="false">
-            <column length="19" name="PER_CREATION_DATE" not-null="true"/>
+        <property name="perCreationDate" type="timestamp">
+            <column name="PER_CREATION_DATE" length="19" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perPrice" optimistic-lock="true" type="float" unique="false">
-            <column name="PER_PRICE" not-null="true" precision="8"/>
+        <property name="perPrice" type="float">
+            <column name="PER_PRICE" precision="8" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perRank" optimistic-lock="true" type="int" unique="false">
-            <column name="PER_RANK" not-null="true"/>
+        <property name="perRank" type="int">
+            <column name="PER_RANK" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="perPoster" optimistic-lock="true" type="binary" unique="false">
-            <column name="PER_POSTER"/>
+        <property name="perPoster" type="binary">
+            <column name="PER_POSTER" />
         </property>
-        <property generated="never" lazy="false" name="perDescription" optimistic-lock="true" type="string" unique="false">
-            <column length="200" name="PER_DESCRIPTION"/>
+        <property name="perDescription" type="string">
+            <column name="PER_DESCRIPTION" length="200" />
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="actorperformanceses" optimistic-lock="true" sort="unsorted" table="actorperformances">
-            <key on-delete="noaction">
-                <column name="PER_ID" not-null="true"/>
+        <set name="actorperformanceses" table="actorperformances" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Actorperformances" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Actorperformances" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="events" optimistic-lock="true" sort="unsorted" table="event">
-            <key on-delete="noaction">
-                <column name="PER_ID" not-null="true"/>
+        <set name="events" table="event" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Event" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Event" />
         </set>
     </class>
 </hibernate-mapping>

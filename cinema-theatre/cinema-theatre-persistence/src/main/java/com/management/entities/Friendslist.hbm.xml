@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Friendslist" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="friendslist">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Friendslist" table="friendslist" catalog="isa" optimistic-lock="version">
         <id name="friendsId" type="int">
-            <column name="FRIENDS_ID"/>
-            <generator class="increment"/>
+            <column name="FRIENDS_ID" />
+            <generator class="assigned" />
         </id>
-        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="userByUseUserId2" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="USE_USER_ID2" not-null="true"/>
+        <many-to-one name="userByUseUserId2" class="com.management.entities.User" fetch="select">
+            <column name="USE_USER_ID2" not-null="true" />
         </many-to-one>
-        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="userByUseUserId" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="USE_USER_ID" not-null="true"/>
+        <many-to-one name="userByUseUserId" class="com.management.entities.User" fetch="select">
+            <column name="USE_USER_ID" not-null="true" />
         </many-to-one>
-        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="userByUserId" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="USER_ID" not-null="true"/>
+        <many-to-one name="userByUserId" class="com.management.entities.User" fetch="select">
+            <column name="USER_ID" not-null="true" />
         </many-to-one>
-        <property generated="never" lazy="false" name="friendsStatus" optimistic-lock="true" type="char" unique="false">
-            <column length="1" name="FRIENDS_STATUS" not-null="true"/>
+        <property name="friendsStatus" type="char">
+            <column name="FRIENDS_STATUS" length="1" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

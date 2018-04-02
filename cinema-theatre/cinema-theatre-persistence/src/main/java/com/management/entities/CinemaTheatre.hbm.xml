@@ -1,31 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.CinemaTheatre" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cinema_theatre">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.CinemaTheatre" table="cinema_theatre" catalog="isa" optimistic-lock="version">
         <id name="ctId" type="int">
-            <column name="CT_ID"/>
-            <generator class="increment"/>
+            <column name="CT_ID" />
+            <generator class="assigned" />
         </id>
-        <property generated="never" lazy="false" name="ctName" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="CT_NAME"/>
+        <property name="ctName" type="string">
+            <column name="CT_NAME" length="50" />
         </property>
-        <property generated="never" lazy="false" name="ctStateid" optimistic-lock="true" type="string" unique="false">
-            <column length="3" name="CT_STATEID"/>
+        <property name="ctStateid" type="string">
+            <column name="CT_STATEID" length="3" />
         </property>
-        <property generated="never" lazy="false" name="ctPhone" optimistic-lock="true" type="java.lang.Integer" unique="false">
-            <column name="CT_PHONE"/>
+        <property name="ctPhone" type="java.lang.Integer">
+            <column name="CT_PHONE" />
         </property>
-        <property generated="never" lazy="false" name="ctAdress" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="CT_ADRESS"/>
+        <property name="ctAdress" type="string">
+            <column name="CT_ADRESS" length="50" />
         </property>
-        <property generated="never" lazy="false" name="ctDescription" optimistic-lock="true" type="string" unique="false">
-            <column length="200" name="CT_DESCRIPTION"/>
+        <property name="ctDescription" type="string">
+            <column name="CT_DESCRIPTION" length="200" />
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="halls" optimistic-lock="true" sort="unsorted" table="hall">
-            <key on-delete="noaction">
-                <column name="CT_ID" not-null="true"/>
+        <set name="halls" table="hall" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CT_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Hall" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Hall" />
         </set>
     </class>
 </hibernate-mapping>
