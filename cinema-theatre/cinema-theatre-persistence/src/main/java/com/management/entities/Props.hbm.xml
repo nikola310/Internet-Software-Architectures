@@ -29,7 +29,7 @@
         <property name="propsDesc" type="string">
             <column name="PROPS_DESC" length="120" />
         </property>
-        <property name="propsApproved" type="java.lang.Boolean">
+        <property name="propsApproved" type="boolean">
             <column name="PROPS_APPROVED" />
         </property>
         <set name="bids" table="bid" inverse="true" lazy="true" fetch="select">

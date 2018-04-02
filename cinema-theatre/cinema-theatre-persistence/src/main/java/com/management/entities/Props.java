@@ -33,7 +33,7 @@ public class Props implements java.io.Serializable {
 	private float propsPrice;
 	private byte[] propsImage;
 	private String propsDesc;
-	private Boolean propsApproved;
+	private boolean propsApproved;
 	private Set<Bid> bids = new HashSet<Bid>(0);
 
 	public Props() {
@@ -51,7 +51,7 @@ public class Props implements java.io.Serializable {
 
 	public Props(int propsId, User user, String propsName, boolean propsUsed,
 			Date propsDeadline, float propsPrice, byte[] propsImage,
-			String propsDesc, Boolean propsApproved, Set<Bid> bids) {
+			String propsDesc, boolean propsApproved, Set<Bid> bids) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -140,11 +140,11 @@ public class Props implements java.io.Serializable {
 	}
 
 	@Column(name = "PROPS_APPROVED")
-	public Boolean getPropsApproved() {
+	public boolean getPropsApproved() {
 		return this.propsApproved;
 	}
 
-	public void setPropsApproved(Boolean propsApproved) {
+	public void setPropsApproved(boolean propsApproved) {
 		this.propsApproved = propsApproved;
 	}
 

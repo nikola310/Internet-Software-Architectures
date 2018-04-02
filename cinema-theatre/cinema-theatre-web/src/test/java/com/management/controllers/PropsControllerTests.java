@@ -42,7 +42,6 @@ public class PropsControllerTests {
 		dto.setPropsDesc("Spoderman hat");
 		dto.setPropsName("Spoderman");
 		dto.setPropsPrice(300);
-		dto.setPropsModified(new Date());
 		dto.setPropsUsed(true);
 		byte[] byteArray = ((DataBufferByte) ImageIO
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
