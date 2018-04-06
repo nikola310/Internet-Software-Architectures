@@ -120,7 +120,7 @@ public class PropsControllerTests {
 	}
 
 	@Test
-	public void ReadAllFanZones_ReturnsOK() throws IOException {
+	public void ReadAllPropses_ReturnsOK() throws IOException {
 		// Arrange
 		Mockery mock = new Mockery();
 		propsRepository = mock.mock(PropsRepository.class);
