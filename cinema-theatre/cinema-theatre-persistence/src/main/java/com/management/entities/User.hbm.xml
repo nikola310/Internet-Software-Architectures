@@ -1,79 +1,87 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.User" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="user">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.User" table="user" catalog="isa" optimistic-lock="version">
         <id name="userId" type="int">
-            <column name="USER_ID"/>
-            <generator class="increment"/>
+            <column name="USER_ID" />
+            <generator class="assigned" />
         </id>
-        <property generated="never" lazy="false" name="userEmail" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="USER_EMAIL" not-null="true"/>
+        <property name="userEmail" type="string">
+            <column name="USER_EMAIL" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userName" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="USER_NAME" not-null="true"/>
+        <property name="userName" type="string">
+            <column name="USER_NAME" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userSurname" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="USER_SURNAME" not-null="true"/>
+        <property name="userSurname" type="string">
+            <column name="USER_SURNAME" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userPassword" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="USER_PASSWORD" not-null="true"/>
+        <property name="userPassword" type="string">
+            <column name="USER_PASSWORD" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userCity" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="USER_CITY" not-null="true"/>
+        <property name="userCity" type="string">
+            <column name="USER_CITY" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userActive" optimistic-lock="true" type="boolean" unique="false">
-            <column name="USER_ACTIVE" not-null="true"/>
+        <property name="userActive" type="boolean">
+            <column name="USER_ACTIVE" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userCreationDate" optimistic-lock="true" type="timestamp" unique="false">
-            <column length="19" name="USER_CREATION_DATE" not-null="true"/>
+        <property name="userCreationDate" type="timestamp">
+            <column name="USER_CREATION_DATE" length="19" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userAdmin" optimistic-lock="true" type="char" unique="false">
-            <column length="1" name="USER_ADMIN" not-null="true"/>
+        <property name="userAdmin" type="char">
+            <column name="USER_ADMIN" length="1" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="userStateid" optimistic-lock="true" type="string" unique="false">
-            <column length="3" name="USER_STATEID"/>
+        <property name="userStateid" type="string">
+            <column name="USER_STATEID" length="3" />
         </property>
-        <property generated="never" lazy="false" name="userPhone" optimistic-lock="true" type="java.lang.Integer" unique="false">
-            <column name="USER_PHONE"/>
+        <property name="userPhone" type="java.lang.Integer">
+            <column name="USER_PHONE" />
         </property>
-        <property generated="never" lazy="false" name="userRank" optimistic-lock="true" type="java.lang.Integer" unique="false">
-            <column name="USER_RANK"/>
+        <property name="userRank" type="java.lang.Integer">
+            <column name="USER_RANK" />
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="histories" optimistic-lock="true" sort="unsorted" table="history">
-            <key on-delete="noaction">
-                <column name="USER_ID" not-null="true"/>
+        <set name="histories" table="history" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.History" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.History" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="friendslistsForUseUserId2" optimistic-lock="true" sort="unsorted" table="friendslist">
-            <key on-delete="noaction">
-                <column name="USE_USER_ID2" not-null="true"/>
+        <set name="friendslistsForUseUserId2" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USE_USER_ID2" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Friendslist" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Friendslist" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="propses" optimistic-lock="true" sort="unsorted" table="props">
-            <key on-delete="noaction">
-                <column name="USER_ID" not-null="true"/>
+        <set name="propses" table="props" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Props" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Props" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="seats" optimistic-lock="true" sort="unsorted" table="seat">
-            <key on-delete="noaction">
-                <column name="USER_ID"/>
+        <set name="seats" table="seat" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" />
             </key>
-            <one-to-many class="com.management.entities.Seat" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Seat" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="friendslistsForUseUserId" optimistic-lock="true" sort="unsorted" table="friendslist">
-            <key on-delete="noaction">
-                <column name="USE_USER_ID" not-null="true"/>
+        <set name="bids" table="bid" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Friendslist" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Bid" />
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="friendslistsForUserId" optimistic-lock="true" sort="unsorted" table="friendslist">
-            <key on-delete="noaction">
-                <column name="USER_ID" not-null="true"/>
+        <set name="friendslistsForUseUserId" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USE_USER_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Friendslist" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Friendslist" />
+        </set>
+        <set name="friendslistsForUserId" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Friendslist" />
         </set>
     </class>
 </hibernate-mapping>

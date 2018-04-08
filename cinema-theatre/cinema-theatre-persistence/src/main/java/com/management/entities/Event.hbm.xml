@@ -1,25 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Event" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="event">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Event" table="event" catalog="isa" optimistic-lock="version">
         <id name="eventId" type="int">
-            <column name="EVENT_ID"/>
-            <generator class="increment"/>
+            <column name="EVENT_ID" />
+            <generator class="assigned" />
         </id>
-        <many-to-one class="com.management.entities.Hall" embed-xml="true" fetch="select" insert="true" name="hall" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="HALL_ID" not-null="true"/>
+        <many-to-one name="hall" class="com.management.entities.Hall" fetch="select">
+            <column name="HALL_ID" not-null="true" />
         </many-to-one>
-        <many-to-one class="com.management.entities.Performance" embed-xml="true" fetch="select" insert="true" name="performance" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="PER_ID" not-null="true"/>
+        <many-to-one name="performance" class="com.management.entities.Performance" fetch="select">
+            <column name="PER_ID" not-null="true" />
         </many-to-one>
-        <property generated="never" lazy="false" name="eventDate" optimistic-lock="true" type="timestamp" unique="false">
-            <column length="19" name="EVENT_DATE" not-null="true"/>
+        <property name="eventDate" type="timestamp">
+            <column name="EVENT_DATE" length="19" not-null="true" />
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="histories" optimistic-lock="true" sort="unsorted" table="history">
-            <key on-delete="noaction">
-                <column name="EVENT_ID" not-null="true"/>
+        <set name="histories" table="history" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="EVENT_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.History" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.History" />
         </set>
     </class>
 </hibernate-mapping>

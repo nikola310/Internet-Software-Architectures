@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.management.managers;
 
 import java.util.ArrayList;
@@ -7,49 +10,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.management.dto.PropsDTO;
-import com.management.entities.Props;
-import com.management.interfaces.PropsManagerInterface;
-import com.management.repositories.PropsRepository;
+import com.management.dto.BidDTO;
+import com.management.entities.Bid;
+import com.management.interfaces.BidManagerInterface;
+import com.management.repositories.BidRepository;
 
 /**
- * 
  * @author Nikola Stojanovic
  *
  */
 @Service
 @Transactional
-public class PropsManager implements PropsManagerInterface {
+public class BidManager implements BidManagerInterface {
 
-	private PropsRepository propsRepository;
+	private BidRepository bidRepository;
 
 	@Autowired
-	public PropsManager(PropsRepository propsRepository) {
-		this.propsRepository = propsRepository;
+	public BidManager(BidRepository bidRepository) {
+		this.bidRepository = bidRepository;
 	}
-	
-	public boolean Create(PropsDTO dto) {
+
+	public boolean Create(BidDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Props props;
+		Bid bid;
 
 		try {
-			props = mapper.map(dto, Props.class);
+			bid = mapper.map(dto, Bid.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		propsRepository.save(props);
+		bidRepository.save(bid);
 
 		return true;
 	}
 
-	public PropsDTO Read(int id) {
+	public BidDTO Read(int id) {
 		ModelMapper mapper = new ModelMapper();
-		PropsDTO dto;
+		BidDTO dto;
 
 		try {
-			Props props = propsRepository.findOne(id);
-			dto = mapper.map(props, PropsDTO.class);
+			Bid bid = bidRepository.findOne(id);
+			dto = mapper.map(bid, BidDTO.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return null;
@@ -58,14 +60,14 @@ public class PropsManager implements PropsManagerInterface {
 		return dto;
 	}
 
-	public ArrayList<PropsDTO> ReadAll() {
+	public ArrayList<BidDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository.findAll();
-		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
+		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository.findAll();
+		ArrayList<BidDTO> listDTO = new ArrayList<BidDTO>();
 
-		for (Props tmp : listEntities) {
+		for (Bid tmp : listEntities) {
 			try {
-				PropsDTO dto = mapper.map(tmp, PropsDTO.class);
+				BidDTO dto = mapper.map(tmp, BidDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -76,24 +78,24 @@ public class PropsManager implements PropsManagerInterface {
 		return listDTO;
 	}
 
-	public boolean Update(PropsDTO dto) {
+	public boolean Update(BidDTO dto) {
 		ModelMapper mapper = new ModelMapper();
-		Props tmp;
+		Bid tmp;
 
 		try {
-			tmp = mapper.map(dto, Props.class);
+			tmp = mapper.map(dto, Bid.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		propsRepository.save(tmp);
+		bidRepository.save(tmp);
 
 		return true;
 	}
 
 	public boolean Delete(int id) {
 		try {
-			propsRepository.delete(id);
+			bidRepository.delete(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

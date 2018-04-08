@@ -32,21 +32,19 @@ public class UserManager implements UserManagerInterface {
 	public boolean Create(UserDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		User user;
-
 		try {
 			user = mapper.map(dto, User.class);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		if (token == null) {
 			return false;
 		}
-		
 		Date expiration = new Date();
-		expiration.setTime(expiration.getTime() + (24*60*60*1000));
-		
+		expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
+
 		user.setToken(token);
 		user.setExpiration(expiration);
 		userRepository.save(user);
@@ -68,10 +66,11 @@ public class UserManager implements UserManagerInterface {
 
 		return dto;
 	}
-	
+
 	public ArrayList<UserDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) userRepository.findAll();
+		ArrayList<User> listEntities = (ArrayList<User>) userRepository
+				.findAll();
 		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
 		for (User tmp : listEntities) {
@@ -98,7 +97,7 @@ public class UserManager implements UserManagerInterface {
 			return false;
 		}
 		userRepository.save(tmp);
-		
+
 		return true;
 	}
 
@@ -109,7 +108,7 @@ public class UserManager implements UserManagerInterface {
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 

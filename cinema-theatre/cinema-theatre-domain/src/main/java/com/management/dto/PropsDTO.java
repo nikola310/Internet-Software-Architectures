@@ -2,6 +2,7 @@ package com.management.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,15 +18,14 @@ public class PropsDTO {
 	private String propsName;
 	@NotNull
 	private boolean propsUsed;
-	private char propsType;
 	@NotNull
 	private Date propsDeadline;
+	@Min(0)
 	@NotNull
 	private float propsPrice;
-	@NotNull
-	private Date propsModified;
 	private byte[] propsImage;
 	private String propsDesc;
+	private boolean propsApproved;
 
 	public int getPropsId() {
 		return propsId;
@@ -51,14 +51,6 @@ public class PropsDTO {
 		this.propsUsed = propsUsed;
 	}
 
-	public char getPropsType() {
-		return propsType;
-	}
-
-	public void setPropsType(char propsType) {
-		this.propsType = propsType;
-	}
-
 	public Date getPropsDeadline() {
 		return propsDeadline;
 	}
@@ -75,14 +67,6 @@ public class PropsDTO {
 		this.propsPrice = propsPrice;
 	}
 
-	public Date getPropsModified() {
-		return propsModified;
-	}
-
-	public void setPropsModified(Date propsModified) {
-		this.propsModified = propsModified;
-	}
-
 	public byte[] getPropsImage() {
 		return propsImage;
 	}
@@ -97,5 +81,13 @@ public class PropsDTO {
 
 	public void setPropsDesc(String propsDesc) {
 		this.propsDesc = propsDesc;
+	}
+
+	public boolean isPropsApproved() {
+		return propsApproved;
+	}
+
+	public void setPropsApproved(boolean propsApproved) {
+		this.propsApproved = propsApproved;
 	}
 }

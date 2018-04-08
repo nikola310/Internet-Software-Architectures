@@ -25,7 +25,7 @@ public class UserManagerTest {
 	public void AddingNewUser_ReturnsBoolean() {
 		// Arrange
 		userRepository = new UserRepositoryFake();
-
+		
 		UserDTO dto = new UserDTO();
 		dto.setUserActive(true);
 		dto.setUserName("Pero");
@@ -40,7 +40,8 @@ public class UserManagerTest {
 		dto.setUserStateid("381");
 
 		UserManager manager = new UserManager(userRepository);
-
+		manager.addRegistrationToken("nekiToken");
+		
 		// Act and assert
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Create(dto));

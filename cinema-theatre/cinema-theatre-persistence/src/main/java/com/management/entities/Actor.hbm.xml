@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Actor" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="actor">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Actor" table="actor" catalog="isa" optimistic-lock="version">
         <id name="acId" type="int">
-            <column name="AC_ID"/>
-            <generator class="increment"/>
+            <column name="AC_ID" />
+            <generator class="assigned" />
         </id>
-        <property generated="never" lazy="false" name="acName" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="AC_NAME" not-null="true"/>
+        <property name="acName" type="string">
+            <column name="AC_NAME" length="50" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="acSurname" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="AC_SURNAME" not-null="true"/>
+        <property name="acSurname" type="string">
+            <column name="AC_SURNAME" length="50" not-null="true" />
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="actorperformanceses" optimistic-lock="true" sort="unsorted" table="actorperformances">
-            <key on-delete="noaction">
-                <column name="AC_ID" not-null="true"/>
+        <set name="actorperformanceses" table="actorperformances" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="AC_ID" not-null="true" />
             </key>
-            <one-to-many class="com.management.entities.Actorperformances" embed-xml="true" not-found="exception"/>
+            <one-to-many class="com.management.entities.Actorperformances" />
         </set>
     </class>
 </hibernate-mapping>

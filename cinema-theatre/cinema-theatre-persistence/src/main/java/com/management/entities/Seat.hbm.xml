@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Mar 14, 2018 9:09:34 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="isa" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.management.entities.Seat" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="seat">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Seat" table="seat" catalog="isa" optimistic-lock="version">
         <id name="seatId" type="int">
-            <column name="SEAT_ID"/>
-            <generator class="increment"/>
+            <column name="SEAT_ID" />
+            <generator class="assigned" />
         </id>
-        <many-to-one class="com.management.entities.Hall" embed-xml="true" fetch="select" insert="true" name="hall" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="HALL_ID" not-null="true"/>
+        <many-to-one name="hall" class="com.management.entities.Hall" fetch="select">
+            <column name="HALL_ID" not-null="true" />
         </many-to-one>
-        <many-to-one class="com.management.entities.User" embed-xml="true" fetch="select" insert="true" name="user" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="USER_ID"/>
+        <many-to-one name="user" class="com.management.entities.User" fetch="select">
+            <column name="USER_ID" />
         </many-to-one>
-        <property generated="never" lazy="false" name="seatTaken" optimistic-lock="true" type="boolean" unique="false">
-            <column name="SEAT_TAKEN" not-null="true"/>
+        <property name="seatTaken" type="boolean">
+            <column name="SEAT_TAKEN" not-null="true" />
         </property>
-        <property generated="never" lazy="false" name="seatModified" optimistic-lock="true" type="timestamp" unique="false">
-            <column length="19" name="SEAT_MODIFIED" not-null="true"/>
+        <property name="seatModified" type="timestamp">
+            <column name="SEAT_MODIFIED" length="19" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
