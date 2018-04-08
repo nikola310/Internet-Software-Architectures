@@ -6,7 +6,7 @@
     <class name="com.management.entities.Actor" table="actor" catalog="isa" optimistic-lock="version">
         <id name="acId" type="int">
             <column name="AC_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="acName" type="string">
             <column name="AC_NAME" length="50" not-null="true" />

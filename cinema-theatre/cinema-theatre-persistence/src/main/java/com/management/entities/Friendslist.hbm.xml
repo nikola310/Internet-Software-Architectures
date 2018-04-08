@@ -6,7 +6,7 @@
     <class name="com.management.entities.Friendslist" table="friendslist" catalog="isa" optimistic-lock="version">
         <id name="friendsId" type="int">
             <column name="FRIENDS_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="userByUseUserId2" class="com.management.entities.User" fetch="select">
             <column name="USE_USER_ID2" not-null="true" />

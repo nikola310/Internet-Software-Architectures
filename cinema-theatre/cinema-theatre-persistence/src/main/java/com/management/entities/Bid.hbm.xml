@@ -6,7 +6,7 @@
     <class name="com.management.entities.Bid" table="bid" catalog="isa" optimistic-lock="version">
         <id name="bidId" type="int">
             <column name="BID_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="props" class="com.management.entities.Props" fetch="select">
             <column name="PROPS_ID" not-null="true" />

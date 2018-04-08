@@ -6,7 +6,7 @@
     <class name="com.management.entities.User" table="user" catalog="isa" optimistic-lock="version">
         <id name="userId" type="int">
             <column name="USER_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="userEmail" type="string">
             <column name="USER_EMAIL" length="50" not-null="true" />

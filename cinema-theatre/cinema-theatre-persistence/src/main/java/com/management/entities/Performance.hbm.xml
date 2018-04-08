@@ -6,7 +6,7 @@
     <class name="com.management.entities.Performance" table="performance" catalog="isa" optimistic-lock="version">
         <id name="perId" type="int">
             <column name="PER_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="perType" type="char">
             <column name="PER_TYPE" length="1" not-null="true" />

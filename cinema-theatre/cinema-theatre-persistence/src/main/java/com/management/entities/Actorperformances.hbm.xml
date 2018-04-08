@@ -6,7 +6,7 @@
     <class name="com.management.entities.Actorperformances" table="actorperformances" catalog="isa" optimistic-lock="version">
         <id name="apId" type="int">
             <column name="AP_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="actor" class="com.management.entities.Actor" fetch="select">
             <column name="AC_ID" not-null="true" />

@@ -6,7 +6,7 @@
     <class name="com.management.entities.CinemaTheatre" table="cinema_theatre" catalog="isa" optimistic-lock="version">
         <id name="ctId" type="int">
             <column name="CT_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="ctName" type="string">
             <column name="CT_NAME" length="50" />

@@ -6,7 +6,7 @@
     <class name="com.management.entities.Hall" table="hall" catalog="isa" optimistic-lock="version">
         <id name="hallId" type="int">
             <column name="HALL_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="cinemaTheatre" class="com.management.entities.CinemaTheatre" fetch="select">
             <column name="CT_ID" not-null="true" />

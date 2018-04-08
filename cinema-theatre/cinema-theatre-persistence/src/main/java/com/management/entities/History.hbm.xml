@@ -6,7 +6,7 @@
     <class name="com.management.entities.History" table="history" catalog="isa" optimistic-lock="version">
         <id name="historyId" type="int">
             <column name="HISTORY_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="event" class="com.management.entities.Event" fetch="select">
             <column name="EVENT_ID" not-null="true" />

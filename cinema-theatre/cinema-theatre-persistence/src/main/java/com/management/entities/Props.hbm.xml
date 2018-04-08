@@ -6,7 +6,7 @@
     <class name="com.management.entities.Props" table="props" catalog="isa" optimistic-lock="version">
         <id name="propsId" type="int">
             <column name="PROPS_ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="user" class="com.management.entities.User" fetch="select">
             <column name="USER_ID" not-null="true" />
