@@ -1,11 +1,9 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,8 +42,7 @@ public class Event implements java.io.Serializable {
 		this.eventDate = eventDate;
 	}
 
-	public Event(int eventId, Hall hall, Performance performance,
-			Date eventDate, Set<History> histories) {
+	public Event(int eventId, Hall hall, Performance performance, Date eventDate, Set<History> histories) {
 		this.eventId = eventId;
 		this.hall = hall;
 		this.performance = performance;

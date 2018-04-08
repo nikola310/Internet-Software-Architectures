@@ -42,7 +42,7 @@ public class CinemaTheatreManagerTests {
 		Assert.assertEquals(dto.getCtAdress(), cinemaTheatre.getCtAdress());
 		Assert.assertEquals(dto.getCtDescription(), cinemaTheatre.getCtDescription());
 		Assert.assertEquals(dto.getCtName(), cinemaTheatre.getCtName());
-		Assert.assertEquals(dto.getCtPhone(), cinemaTheatre.getCtPhone());
+		Assert.assertEquals((int)dto.getCtPhone(), cinemaTheatre.getCtPhone());
 
 	}
 
@@ -98,7 +98,7 @@ public class CinemaTheatreManagerTests {
 		Assert.assertEquals(dto.getCtAdress(), cinemaTheatre.getCtAdress());
 		Assert.assertEquals(dto.getCtDescription(), cinemaTheatre.getCtDescription());
 		Assert.assertEquals(dto.getCtName(), cinemaTheatre.getCtName());
-		Assert.assertEquals(dto.getCtPhone(), cinemaTheatre.getCtPhone());
+		Assert.assertEquals((int)dto.getCtPhone(), cinemaTheatre.getCtPhone());
 
 		mock.assertIsSatisfied();
 	}
@@ -146,12 +146,12 @@ public class CinemaTheatreManagerTests {
 		Assert.assertEquals(list.get(0).getCtAdress(), listDTO.get(0).getCtAdress());
 		Assert.assertEquals(list.get(0).getCtDescription(), listDTO.get(0).getCtDescription());
 		Assert.assertEquals(list.get(0).getCtName(), listDTO.get(0).getCtName());
-		Assert.assertEquals(list.get(0).getCtPhone(), listDTO.get(0).getCtPhone());
+		Assert.assertEquals(list.get(0).getCtPhone(), (int)listDTO.get(0).getCtPhone());
 
 		Assert.assertEquals(list.get(1).getCtAdress(), listDTO.get(1).getCtAdress());
 		Assert.assertEquals(list.get(1).getCtDescription(), listDTO.get(1).getCtDescription());
 		Assert.assertEquals(list.get(1).getCtName(), listDTO.get(1).getCtName());
-		Assert.assertEquals(list.get(1).getCtPhone(), listDTO.get(1).getCtPhone());
+		Assert.assertEquals(list.get(1).getCtPhone(), (int)listDTO.get(1).getCtPhone());
 
 		mock.assertIsSatisfied();
 	}

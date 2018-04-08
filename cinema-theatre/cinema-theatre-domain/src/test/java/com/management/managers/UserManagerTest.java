@@ -27,12 +27,10 @@ public class UserManagerTest {
 		userRepository = new UserRepositoryFake();
 		
 		UserDTO dto = new UserDTO();
-		dto.setUserActive(true);
 		dto.setUserName("Pero");
 		dto.setUserSurname("Peric");
 		dto.setUserAdmin('O');
 		dto.setUserCity("Novi Sad");
-		dto.setUserCreationDate(new Date());
 		dto.setUserEmail("pero@gmail.com");
 		dto.setUserPassword("123");
 		dto.setUserRank(0);
@@ -57,7 +55,6 @@ public class UserManagerTest {
 		Assert.assertEquals(dto.getUserPassword(), user.getUserPassword());
 		Assert.assertEquals(dto.getUserSurname(), user.getUserSurname());
 		Assert.assertEquals(dto.getUserAdmin(), user.getUserAdmin());
-		Assert.assertEquals(dto.getUserCreationDate(), user.getUserCreationDate());
 		Assert.assertEquals(dto.getUserPhone(), user.getUserPhone());
 		Assert.assertEquals(dto.getUserStateid(), user.getUserStateid());
 	}
@@ -127,7 +124,6 @@ public class UserManagerTest {
 		Assert.assertEquals(dto.getUserPassword(), user.getUserPassword());
 		Assert.assertEquals(dto.getUserSurname(), user.getUserSurname());
 		Assert.assertEquals(dto.getUserAdmin(), user.getUserAdmin());
-		Assert.assertEquals(dto.getUserCreationDate(), user.getUserCreationDate());
 		Assert.assertEquals(dto.getUserPhone(), user.getUserPhone());
 		Assert.assertEquals(dto.getUserStateid(), user.getUserStateid());
 
@@ -197,7 +193,6 @@ public class UserManagerTest {
 		Assert.assertEquals(listDTO.get(0).getUserPassword(), list.get(0).getUserPassword());
 		Assert.assertEquals(listDTO.get(0).getUserSurname(), list.get(0).getUserSurname());
 		Assert.assertEquals(listDTO.get(0).getUserAdmin(), list.get(0).getUserAdmin());
-		Assert.assertEquals(listDTO.get(0).getUserCreationDate(), list.get(0).getUserCreationDate());
 		Assert.assertEquals(listDTO.get(0).getUserPhone(), list.get(0).getUserPhone());
 		Assert.assertEquals(listDTO.get(0).getUserStateid(), list.get(0).getUserStateid());
 
@@ -210,7 +205,6 @@ public class UserManagerTest {
 		Assert.assertEquals(listDTO.get(1).getUserPassword(), list.get(1).getUserPassword());
 		Assert.assertEquals(listDTO.get(1).getUserSurname(), list.get(1).getUserSurname());
 		Assert.assertEquals(listDTO.get(1).getUserAdmin(), list.get(1).getUserAdmin());
-		Assert.assertEquals(listDTO.get(1).getUserCreationDate(), list.get(1).getUserCreationDate());
 		Assert.assertEquals(listDTO.get(1).getUserPhone(), list.get(1).getUserPhone());
 		Assert.assertEquals(listDTO.get(1).getUserStateid(), list.get(1).getUserStateid());
 

@@ -30,26 +30,30 @@ public class UserManager implements UserManagerInterface {
 	}
 
 	public boolean Create(UserDTO dto) {
+		System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 		ModelMapper mapper = new ModelMapper();
 		User user;
 		try {
 			user = mapper.map(dto, User.class);
+			token = dto.getToken();
+			if (token == null) {
+				return false;
+			}
+			Date expiration = new Date();
+			expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
+
+			user.setUserToken(token);
+			user.setUserExpiration(expiration);
+			user.setUserCreationDate(new Date());
+
+			userRepository.save(user);
+
+			return true;
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
-			return false;
 		}
-
-		if (token == null) {
 			return false;
-		}
-		Date expiration = new Date();
-		expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
-
-		user.setToken(token);
-		user.setExpiration(expiration);
-		userRepository.save(user);
-
-		return true;
 	}
 
 	public UserDTO Read(int id) {

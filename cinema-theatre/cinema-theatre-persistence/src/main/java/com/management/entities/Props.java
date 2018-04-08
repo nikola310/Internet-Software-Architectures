@@ -1,11 +1,9 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,14 +34,13 @@ public class Props implements java.io.Serializable {
 	private float propsPrice;
 	private byte[] propsImage;
 	private String propsDesc;
-	private boolean propsApproved;
+	private Boolean propsApproved;
 	private Set<Bid> bids = new HashSet<Bid>(0);
 
 	public Props() {
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed,
-			Date propsDeadline, float propsPrice) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -52,9 +49,8 @@ public class Props implements java.io.Serializable {
 		this.propsPrice = propsPrice;
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed,
-			Date propsDeadline, float propsPrice, byte[] propsImage,
-			String propsDesc, boolean propsApproved, Set<Bid> bids) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice,
+			byte[] propsImage, String propsDesc, Boolean propsApproved, Set<Bid> bids) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -145,11 +141,11 @@ public class Props implements java.io.Serializable {
 	}
 
 	@Column(name = "PROPS_APPROVED")
-	public boolean getPropsApproved() {
+	public Boolean getPropsApproved() {
 		return this.propsApproved;
 	}
 
-	public void setPropsApproved(boolean propsApproved) {
+	public void setPropsApproved(Boolean propsApproved) {
 		this.propsApproved = propsApproved;
 	}
 

@@ -1,10 +1,8 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,8 +35,7 @@ public class Actor implements java.io.Serializable {
 		this.acSurname = acSurname;
 	}
 
-	public Actor(int acId, String acName, String acSurname,
-			Set<Actorperformances> actorperformanceses) {
+	public Actor(int acId, String acName, String acSurname, Set<Actorperformances> actorperformanceses) {
 		this.acId = acId;
 		this.acName = acName;
 		this.acSurname = acSurname;
@@ -80,8 +77,7 @@ public class Actor implements java.io.Serializable {
 		return this.actorperformanceses;
 	}
 
-	public void setActorperformanceses(
-			Set<Actorperformances> actorperformanceses) {
+	public void setActorperformanceses(Set<Actorperformances> actorperformanceses) {
 		this.actorperformanceses = actorperformanceses;
 	}
 

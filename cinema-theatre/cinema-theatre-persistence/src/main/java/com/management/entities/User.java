@@ -1,6 +1,5 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,28 +34,24 @@ public class User implements java.io.Serializable {
 	private boolean userActive;
 	private Date userCreationDate;
 	private char userAdmin;
+	private String userToken;
+	private Date userExpiration;
 	private String userStateid;
 	private Integer userPhone;
 	private Integer userRank;
 	private Set<History> histories = new HashSet<History>(0);
-	private Set<Friendslist> friendslistsForUseUserId2 = new HashSet<Friendslist>(
-			0);
+	private Set<Friendslist> friendslistsForUseUserId2 = new HashSet<Friendslist>(0);
 	private Set<Props> propses = new HashSet<Props>(0);
 	private Set<Seat> seats = new HashSet<Seat>(0);
 	private Set<Bid> bids = new HashSet<Bid>(0);
-	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(
-			0);
+	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(0);
 	private Set<Friendslist> friendslistsForUserId = new HashSet<Friendslist>(0);
-
-	private String token;
-	private Date expiration;
 
 	public User() {
 	}
 
-	public User(int userId, String userEmail, String userName,
-			String userSurname, String userPassword, String userCity,
-			boolean userActive, Date userCreationDate, char userAdmin) {
+	public User(int userId, String userEmail, String userName, String userSurname, String userPassword, String userCity,
+			boolean userActive, Date userCreationDate, char userAdmin, String userToken, Date userExpiration) {
 		this.userId = userId;
 		this.userEmail = userEmail;
 		this.userName = userName;
@@ -67,16 +61,15 @@ public class User implements java.io.Serializable {
 		this.userActive = userActive;
 		this.userCreationDate = userCreationDate;
 		this.userAdmin = userAdmin;
+		this.userToken = userToken;
+		this.userExpiration = userExpiration;
 	}
 
-	public User(int userId, String userEmail, String userName,
-			String userSurname, String userPassword, String userCity,
-			boolean userActive, Date userCreationDate, char userAdmin,
-			String userStateid, Integer userPhone, Integer userRank,
-			Set<History> histories, Set<Friendslist> friendslistsForUseUserId2,
-			Set<Props> propses, Set<Seat> seats, Set<Bid> bids,
-			Set<Friendslist> friendslistsForUseUserId,
-			Set<Friendslist> friendslistsForUserId) {
+	public User(int userId, String userEmail, String userName, String userSurname, String userPassword, String userCity,
+			boolean userActive, Date userCreationDate, char userAdmin, String userToken, Date userExpiration,
+			String userStateid, Integer userPhone, Integer userRank, Set<History> histories,
+			Set<Friendslist> friendslistsForUseUserId2, Set<Props> propses, Set<Seat> seats, Set<Bid> bids,
+			Set<Friendslist> friendslistsForUseUserId, Set<Friendslist> friendslistsForUserId) {
 		this.userId = userId;
 		this.userEmail = userEmail;
 		this.userName = userName;
@@ -86,6 +79,8 @@ public class User implements java.io.Serializable {
 		this.userActive = userActive;
 		this.userCreationDate = userCreationDate;
 		this.userAdmin = userAdmin;
+		this.userToken = userToken;
+		this.userExpiration = userExpiration;
 		this.userStateid = userStateid;
 		this.userPhone = userPhone;
 		this.userRank = userRank;
@@ -183,6 +178,25 @@ public class User implements java.io.Serializable {
 		this.userAdmin = userAdmin;
 	}
 
+	@Column(name = "USER_TOKEN", nullable = false, length = 100)
+	public String getUserToken() {
+		return this.userToken;
+	}
+
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "USER_EXPIRATION", nullable = false, length = 19)
+	public Date getUserExpiration() {
+		return this.userExpiration;
+	}
+
+	public void setUserExpiration(Date userExpiration) {
+		this.userExpiration = userExpiration;
+	}
+
 	@Column(name = "USER_STATEID", length = 3)
 	public String getUserStateid() {
 		return this.userStateid;
@@ -224,8 +238,7 @@ public class User implements java.io.Serializable {
 		return this.friendslistsForUseUserId2;
 	}
 
-	public void setFriendslistsForUseUserId2(
-			Set<Friendslist> friendslistsForUseUserId2) {
+	public void setFriendslistsForUseUserId2(Set<Friendslist> friendslistsForUseUserId2) {
 		this.friendslistsForUseUserId2 = friendslistsForUseUserId2;
 	}
 
@@ -261,8 +274,7 @@ public class User implements java.io.Serializable {
 		return this.friendslistsForUseUserId;
 	}
 
-	public void setFriendslistsForUseUserId(
-			Set<Friendslist> friendslistsForUseUserId) {
+	public void setFriendslistsForUseUserId(Set<Friendslist> friendslistsForUseUserId) {
 		this.friendslistsForUseUserId = friendslistsForUseUserId;
 	}
 
@@ -273,24 +285,6 @@ public class User implements java.io.Serializable {
 
 	public void setFriendslistsForUserId(Set<Friendslist> friendslistsForUserId) {
 		this.friendslistsForUserId = friendslistsForUserId;
-	}
-
-	@Transient
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	@Transient
-	public Date getExpiration() {
-		return expiration;
-	}
-
-	public void setExpiration(Date expiration) {
-		this.expiration = expiration;
 	}
 
 }
