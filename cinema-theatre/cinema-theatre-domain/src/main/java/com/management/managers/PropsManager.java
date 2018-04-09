@@ -34,6 +34,7 @@ public class PropsManager implements PropsManagerInterface {
 
 		try {
 			props = mapper.map(dto, Props.class);
+			System.out.println(props.getUser().getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

@@ -23,6 +23,8 @@ public class PropsDTO {
 	@Min(0)
 	@NotNull
 	private float propsPrice;
+	@NotNull
+	private int userId;
 	private byte[] propsImage;
 	private String propsDesc;
 	private boolean propsApproved;
@@ -89,5 +91,13 @@ public class PropsDTO {
 
 	public void setPropsApproved(boolean propsApproved) {
 		this.propsApproved = propsApproved;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

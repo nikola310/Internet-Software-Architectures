@@ -25,13 +25,13 @@ function addNewProps() {
 	}else if($("input[name=usedGroup]:checked").val() == "FALSE"){
 		used = false;
 	}
-	var user = {"user":1};
+	//var user = {"userId":1};
 	var dt = JSON.stringify({
 		"propsName" : $("#props-name").val(),
 		"propsDesc" : $("#props-desc").val(),
 		"propsDeadline" : $("#props-date").val(),
 		"propsImage" : proba,
-		"user" : user,
+		"userId" : 1,
 		"propsUsed" : used,
 		"propsPrice" : parseFloat($("#props-price").val()),
 		"propsApproved" : null
@@ -39,7 +39,7 @@ function addNewProps() {
 	console.log(dt);
 	$.ajax({
 		type : "POST",
-		url : "props/real",
+		url : "props",
 		data : dt,
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
