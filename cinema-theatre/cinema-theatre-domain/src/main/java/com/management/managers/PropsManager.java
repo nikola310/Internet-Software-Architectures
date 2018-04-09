@@ -27,7 +27,7 @@ public class PropsManager implements PropsManagerInterface {
 	public PropsManager(PropsRepository propsRepository) {
 		this.propsRepository = propsRepository;
 	}
-	
+
 	public boolean Create(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Props props;
@@ -60,7 +60,8 @@ public class PropsManager implements PropsManagerInterface {
 
 	public ArrayList<PropsDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository.findAll();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.findAll();
 		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
 
 		for (Props tmp : listEntities) {

@@ -111,4 +111,9 @@ public class BidRepositoryFake implements BidRepository {
 		return null;
 	}
 
+	public List<Bid> findBidByUserId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -485,3 +485,21 @@ input.text {
 	word-wrap: break-word;
 	padding: 5px;
 }
+
+/* Okvir oko ponude */
+.bid-div {
+	font-family: Tahoma, Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 13px;
+	background-color: #fafafa;
+	border: 1px solid #d32c2c;
+	border-radius: 7px;
+	color: #222222;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	padding: 5px;
+}
+
+/* Tabela koja sadrzi formu za rekvizite */
+.props_table{
+	font-size: 13px;
+}

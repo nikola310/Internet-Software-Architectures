@@ -1,6 +1,7 @@
 package com.management.interfaces;
 
 import com.management.dto.PropsDTO;
+import com.management.entities.Props;
 
 /**
  * 

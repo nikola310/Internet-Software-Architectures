@@ -51,6 +51,7 @@ public class BidController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<BidDTO> addBid(@Validated @RequestBody BidDTO dto) {
+		
 		if (dto == null) {
 			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -79,4 +80,5 @@ public class BidController {
 
 		return new ResponseEntity<BidDTO>(HttpStatus.OK);
 	}
+
 }

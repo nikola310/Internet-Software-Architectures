@@ -49,7 +49,8 @@ public class PropsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<PropsDTO> addProps(@Validated @RequestBody PropsDTO dto) {
+	public ResponseEntity<PropsDTO> addProps(
+			@Validated @RequestBody PropsDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -76,4 +77,5 @@ public class PropsController {
 			return new ResponseEntity<PropsDTO>(HttpStatus.OK);
 		}
 	}
+
 }

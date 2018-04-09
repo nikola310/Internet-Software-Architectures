@@ -8,6 +8,8 @@
 <script
 	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="icon" href="images/icon.ico" type="image/x-icon" />
+<!-- link rel="shortcut icon" href="images/icon.ico" type="image/x-icon" /-->
 <script type="text/javascript" src="scripts/data-include.js"></script>
 <script type="text/javascript" src="scripts/props.js"></script>
 <meta charset="UTF-8">
@@ -20,33 +22,49 @@
 	<div data-role="collapsible-set" id="collapsible-set-1">
 		<div data-role="collapsible">
 			<h4>Add props</h4>
-			<form action="addNewProps()">
-				<table>
+			<form onsubmit="return addNewProps();">
+				<table class="props_table">
 					<tr>
 						<td>Name</td>
-						<td><input type="text"></td>
+						<td><input type="text" id="props-name"></td>
 					</tr>
 					<tr>
 						<td>Description</td>
-						<td><input type="text" style="width: 60px; height: 25px"
-							maxlength="200"></td>
+						<td><input type="text" maxlength="200" id="props-desc"></td>
 					</tr>
 					<tr>
 						<td>Deadline</td>
-						<td><input type="datetime"></td>
+						<td><input type="datetime" id="props-date"></td>
 					</tr>
 					<tr>
 						<td>Image</td>
-						<td><input type="file" accept="image/*"></td>
+						<td><input id="inputImage" type="file"
+							onchange="loadImage();" /></td>
+					</tr>
+					<tr>
+						<td>Price</td>
+						<td><input type="number" id="props-price"></td>
+					</tr>
+					<tr>
+						<td>Used</td>
+						<td>
+							<fieldset>
+								<input type="radio" name="usedGroup" value="TRUE" checked>Yes
+								<input type="radio" name="usedGroup" value="FALSE">No
+							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><button type="reset">Cancel</button> <input type="submit"
+							value="Send"></td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		<div data-role="collapsible">
 			<h4>Manage offers</h4>
-			<div id="offers-container">
-				
-			</div>
+			<div id="offers-container"></div>
 		</div>
 	</div>
 	<br />
