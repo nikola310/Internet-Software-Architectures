@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import com.management.dto.UserDTO;
 import com.management.entities.User;
 import com.management.fake.UserRepositoryFake;
+import com.management.mail.Mailing;
 import com.management.managers.UserManager;
 import com.management.repositories.UserRepository;
 
@@ -31,12 +32,10 @@ public class UserControllerTests {
 		userRepository = new UserRepositoryFake();
 
 		UserDTO dto = new UserDTO();
-		dto.setUserActive(true);
 		dto.setUserName("Pero");
 		dto.setUserSurname("Peric");
 		dto.setUserAdmin('O');
 		dto.setUserCity("Novi Sad");
-		dto.setUserCreationDate(new Date());
 		dto.setUserEmail("pero@gmail.com");
 		dto.setUserPassword("123");
 		dto.setUserRank(0);
@@ -44,7 +43,11 @@ public class UserControllerTests {
 		dto.setUserStateid("381");
 
 		UserManager manager = new UserManager(userRepository);
-		UserController controller = new UserController(manager);
+		Mailing mailing = new Mailing();
+
+		UserController controller = new UserController();
+		controller.setMailingManager(mailing);
+		controller.setManager(manager);
 
 		// Act and assert
 		Assert.assertNotNull(controller);
@@ -66,7 +69,11 @@ public class UserControllerTests {
 
 		// Act and assert
 		UserManager manager = new UserManager(userRepository);
-		UserController controller = new UserController(manager);
+		Mailing mailing = new Mailing();
+
+		UserController controller = new UserController();
+		controller.setMailingManager(mailing);
+		controller.setManager(manager);
 
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.deleteUser(1), new ResponseEntity<UserDTO>(HttpStatus.OK));
@@ -102,7 +109,11 @@ public class UserControllerTests {
 		});
 
 		UserManager manager = new UserManager(userRepository);
-		UserController controller = new UserController(manager);
+		Mailing mailing = new Mailing();
+
+		UserController controller = new UserController();
+		controller.setMailingManager(mailing);
+		controller.setManager(manager);
 
 		// Act
 		ResponseEntity<UserDTO> response = controller.getUser(1);
@@ -162,7 +173,11 @@ public class UserControllerTests {
 		});
 
 		UserManager manager = new UserManager(userRepository);
-		UserController controller = new UserController(manager);
+		Mailing mailing = new Mailing();
+
+		UserController controller = new UserController();
+		controller.setMailingManager(mailing);
+		controller.setManager(manager);
 
 		// Act
 		ResponseEntity<List<UserDTO>> response = controller.getUsers();

@@ -1,10 +1,8 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +24,7 @@ public class CinemaTheatre implements java.io.Serializable {
 	private int ctId;
 	private String ctName;
 	private String ctStateid;
-	private Integer ctPhone;
+	private int ctPhone;
 	private String ctAdress;
 	private String ctDescription;
 	private Set<Hall> halls = new HashSet<Hall>(0);
@@ -34,12 +32,15 @@ public class CinemaTheatre implements java.io.Serializable {
 	public CinemaTheatre() {
 	}
 
-	public CinemaTheatre(int ctId) {
+	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress) {
 		this.ctId = ctId;
+		this.ctName = ctName;
+		this.ctStateid = ctStateid;
+		this.ctPhone = ctPhone;
+		this.ctAdress = ctAdress;
 	}
 
-	public CinemaTheatre(int ctId, String ctName, String ctStateid,
-			Integer ctPhone, String ctAdress, String ctDescription,
+	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress, String ctDescription,
 			Set<Hall> halls) {
 		this.ctId = ctId;
 		this.ctName = ctName;
@@ -62,7 +63,7 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctId = ctId;
 	}
 
-	@Column(name = "CT_NAME", length = 50)
+	@Column(name = "CT_NAME", nullable = false, length = 50)
 	public String getCtName() {
 		return this.ctName;
 	}
@@ -71,7 +72,7 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctName = ctName;
 	}
 
-	@Column(name = "CT_STATEID", length = 3)
+	@Column(name = "CT_STATEID", nullable = false, length = 3)
 	public String getCtStateid() {
 		return this.ctStateid;
 	}
@@ -80,16 +81,16 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctStateid = ctStateid;
 	}
 
-	@Column(name = "CT_PHONE")
-	public Integer getCtPhone() {
+	@Column(name = "CT_PHONE", nullable = false)
+	public int getCtPhone() {
 		return this.ctPhone;
 	}
 
-	public void setCtPhone(Integer ctPhone) {
+	public void setCtPhone(int ctPhone) {
 		this.ctPhone = ctPhone;
 	}
 
-	@Column(name = "CT_ADRESS", length = 50)
+	@Column(name = "CT_ADRESS", nullable = false, length = 50)
 	public String getCtAdress() {
 		return this.ctAdress;
 	}

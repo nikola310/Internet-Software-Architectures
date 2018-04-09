@@ -1,9 +1,7 @@
 package com.management.entities;
-
-// Generated Apr 2, 2018 4:06:14 PM by Hibernate Tools 4.3.1
+// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,8 +39,7 @@ public class Seat implements java.io.Serializable {
 		this.seatModified = seatModified;
 	}
 
-	public Seat(int seatId, Hall hall, User user, boolean seatTaken,
-			Date seatModified) {
+	public Seat(int seatId, Hall hall, User user, boolean seatTaken, Date seatModified) {
 		this.seatId = seatId;
 		this.hall = hall;
 		this.user = user;

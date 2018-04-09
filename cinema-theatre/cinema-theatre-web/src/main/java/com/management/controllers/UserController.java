@@ -1,6 +1,7 @@
 package com.management.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.UserDTO;
 import com.management.interfaces.UserManagerInterface;
+import com.management.mail.MailingInterface;
 
 /**
  * @author Zivko Stanisic
@@ -23,12 +25,11 @@ import com.management.interfaces.UserManagerInterface;
 @RequestMapping(value = "/user")
 public class UserController {
 
+	@Autowired
 	private UserManagerInterface manager;
 
 	@Autowired
-	public UserController(UserManagerInterface manager) {
-		this.manager = manager;
-	}
+	private MailingInterface mailingManager;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsers() {
@@ -53,7 +54,10 @@ public class UserController {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
+		String token = UUID.randomUUID().toString();
 
+		dto.setToken(token);
+		mailingManager.sendRegistration(dto.getUserEmail(), token);
 		manager.Create(dto);
 
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
@@ -65,9 +69,12 @@ public class UserController {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
 
-		manager.Update(dto);
+		if (manager.Update(dto)) {
 
-		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+			return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -77,5 +84,21 @@ public class UserController {
 		}
 
 		return new ResponseEntity<UserDTO>(HttpStatus.OK);
+	}
+
+	public UserManagerInterface getManager() {
+		return manager;
+	}
+
+	public void setManager(UserManagerInterface manager) {
+		this.manager = manager;
+	}
+
+	public MailingInterface getMailingManager() {
+		return mailingManager;
+	}
+
+	public void setMailingManager(MailingInterface mailingManager) {
+		this.mailingManager = mailingManager;
 	}
 }
