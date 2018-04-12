@@ -85,7 +85,51 @@ public class UserController {
 
 		return new ResponseEntity<UserDTO>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/normal/{ID}", method = RequestMethod.PUT)
+	public ResponseEntity<UserDTO> setUserAsNormal(@PathVariable("ID") int ID){
+		UserDTO dto = manager.Read(ID);
+		if(dto.equals(null))
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		
+		dto.setUserAdmin('N');
+		manager.Update(dto);
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+	}
 
+	@RequestMapping(value = "/fanzone/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<UserDTO> setFZAdmin(@PathVariable("id") int id){
+		UserDTO dto = manager.Read(id);
+		if(dto.equals(null))
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		
+		dto.setUserAdmin('F');
+		manager.Update(dto);
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/ct/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<UserDTO> setCTAdmin(@PathVariable("id") int id){
+		UserDTO dto = manager.Read(id);
+		if(dto.equals(null))
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		
+		dto.setUserAdmin('C');
+		manager.Update(dto);
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/system/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<UserDTO> setSysAdmin(@PathVariable("id") int id){
+		UserDTO dto = manager.Read(id);
+		if(dto.equals(null))
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		
+		dto.setUserAdmin('S');
+		manager.Update(dto);
+		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+	}
+	
 	public UserManagerInterface getManager() {
 		return manager;
 	}

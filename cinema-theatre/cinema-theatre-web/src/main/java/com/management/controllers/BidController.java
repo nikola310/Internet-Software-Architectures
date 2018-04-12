@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.BidDTO;
+import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
 
 /**
@@ -79,6 +80,19 @@ public class BidController {
 		}
 
 		return new ResponseEntity<BidDTO>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getBidByName(@PathVariable("id") int id){
+		User user = new User();
+		user.setUserId(id);
+		try{
+			List<BidDTO> list = manager.getBids(user);
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
 }

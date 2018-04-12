@@ -1,5 +1,7 @@
 package com.management.dto;
 
+import java.util.Date;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,6 +39,8 @@ public class UserDTO {
 	@Min(0)
 	private Integer userRank;
 
+	private Date userCreationDate;
+	private Date userExpiration;
 	private String token;
 
 	public String getToken() {
@@ -125,5 +129,21 @@ public class UserDTO {
 
 	public void setUserRank(Integer userRank) {
 		this.userRank = userRank;
+	}
+
+	public Date getUserCreationDate() {
+		return userCreationDate;
+	}
+
+	public void setUserCreationDate(Date userCreationDate) {
+		this.userCreationDate = userCreationDate;
+	}
+
+	public Date getUserExpiration() {
+		return userExpiration;
+	}
+
+	public void setUserExpiration(Date userExpiration) {
+		this.userExpiration = userExpiration;
 	}
 }

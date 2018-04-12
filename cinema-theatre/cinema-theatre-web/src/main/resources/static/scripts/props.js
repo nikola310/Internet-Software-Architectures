@@ -6,6 +6,7 @@
 // Za ucitavanje slike
 var glob;
 
+// Pretvara sliku u base64
 function loadImage() {
 	var FR = new FileReader();
 	FR.addEventListener("load", function(e) {
@@ -16,27 +17,27 @@ function loadImage() {
 
 function addNewProps() {
 
-	if(glob != "")
+	if(glob != null)
 		glob = glob.split(/,(.+)/)[1];
-	var proba = window.btoa(glob);
+	
 	var used;
 	if($("input[name=usedGroup]:checked").val() == "TRUE"){
 		used = true;
 	}else if($("input[name=usedGroup]:checked").val() == "FALSE"){
 		used = false;
 	}
-	//var user = {"userId":1};
+	
 	var dt = JSON.stringify({
 		"propsName" : $("#props-name").val(),
 		"propsDesc" : $("#props-desc").val(),
-		"propsDeadline" : $("#props-date").val(),
-		"propsImage" : proba,
+		"propsDeadline" : new Date($("#props-date").val()).getTime(),
+		"propsImage" : glob,
 		"userId" : 1,
 		"propsUsed" : used,
 		"propsPrice" : parseFloat($("#props-price").val()),
 		"propsApproved" : null
 	});
-	console.log(dt);
+	
 	$.ajax({
 		type : "POST",
 		url : "props",
@@ -44,7 +45,8 @@ function addNewProps() {
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
 		success : function(data) {
-			console.log(data);
+			alert("Prop succesfully registered");
+			window.location = "fanzone.html";
 		},
 		fail : function(data) {
 			console.log(data);
@@ -65,7 +67,7 @@ function loadBids() {
 
 			for (i = 0; i < data.length; i++) {
 
-				var btn = "";
+				/*var btn = "";
 				if (!data[i].bidAccepted)
 					btn = '<br/><input type="button" value="Accept">'
 
@@ -80,7 +82,19 @@ function loadBids() {
 				});
 				div.attr("class", "bid-div");
 
-				offers.append(div[0].outerHTML);
+				offers.append(div[0].outerHTML);*/
+				
+				if(data[i].bidAccepted == null){
+				
+				var forma = $("<form/>", {
+					
+				});
+				
+					var btn = $("<input/>", {
+						type: "submit",
+						value: "Accept"
+					})
+				}
 			}
 
 		}
@@ -89,25 +103,4 @@ function loadBids() {
 			offers[0].innerHTML = "<p>There are no bids yet.</p>";
 
 	});
-}
-
-// Pretvara sliku u base64
-function encodeImageFileAsURL() {
-
-	var filesSelected = document.getElementById("inputImageToLoad").files;
-	if (filesSelected.length > 0) {
-		var fileToLoad = filesSelected[0];
-
-		var fileReader = new FileReader();
-
-		fileReader.onload = function(fileLoadedEvent) {
-			var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-			var newImage = document.createElement('img');
-			newImage.src = srcData;
-
-			document.getElementById("imgPreview").innerHTML = newImage.outerHTML;
-		}
-		fileReader.readAsDataURL(fileToLoad);
-	}
 }

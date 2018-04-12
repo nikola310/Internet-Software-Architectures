@@ -104,4 +104,22 @@ public class PropsManager implements PropsManagerInterface {
 		return true;
 	}
 
+	public ArrayList<PropsDTO> getNullAllowedProps() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.getPropsByPropsApprovedIsNull();
+		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
+
+		for (Props tmp : listEntities) {
+			try {
+				PropsDTO dto = mapper.map(tmp, PropsDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 }

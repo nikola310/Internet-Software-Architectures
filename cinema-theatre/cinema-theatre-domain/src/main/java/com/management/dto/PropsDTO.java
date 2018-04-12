@@ -27,7 +27,7 @@ public class PropsDTO {
 	private int userId;
 	private byte[] propsImage;
 	private String propsDesc;
-	private boolean propsApproved;
+	private Boolean propsApproved;
 
 	public int getPropsId() {
 		return propsId;
@@ -85,11 +85,11 @@ public class PropsDTO {
 		this.propsDesc = propsDesc;
 	}
 
-	public boolean isPropsApproved() {
+	public Boolean isPropsApproved() {
 		return propsApproved;
 	}
 
-	public void setPropsApproved(boolean propsApproved) {
+	public void setPropsApproved(Boolean propsApproved) {
 		this.propsApproved = propsApproved;
 	}
 

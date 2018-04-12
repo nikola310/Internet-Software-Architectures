@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.management.entities.Bid;
+import com.management.entities.User;
 
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 
-//	public List<Bid> findBidByUserId(int id);
+	List<Bid> findByUser(User u);
 }

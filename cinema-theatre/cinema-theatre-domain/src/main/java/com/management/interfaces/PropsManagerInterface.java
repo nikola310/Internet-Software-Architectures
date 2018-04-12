@@ -1,7 +1,8 @@
 package com.management.interfaces;
 
+import java.util.List;
+
 import com.management.dto.PropsDTO;
-import com.management.entities.Props;
 
 /**
  * 
@@ -10,4 +11,5 @@ import com.management.entities.Props;
  */
 public interface PropsManagerInterface extends ManagerInterface<PropsDTO> {
 
+	public List<PropsDTO> getNullAllowedProps();
 }
