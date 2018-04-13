@@ -16,7 +16,7 @@ public class Mailing implements MailingInterface {
 	private JavaMailSender mailSender;
 
 	public void sendRegistration(String mail, String token) {
-		String link = "localhost:8080/cinema-theatre/confirmatin.html?token=";
+		String link = "localhost:8080/cinema-theatre/confirmation.html?token=";
 		String subject = "Registration Confirmation";
 		String confirmationUrl = link + token;
 		String message = "Confirm your registration on this link: ";

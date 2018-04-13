@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.interfaces.UserManagerInterface;
 import com.management.mail.MailingInterface;
@@ -49,18 +50,26 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/confirmation/{token}", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> getConfirmation(@PathVariable String token) {
+		if (manager.Confirmation(token)) {
+			return new ResponseEntity<UserDTO>(HttpStatus.OK);
+		}
+
+		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<UserDTO> addUser(@Validated @RequestBody UserDTO dto) {
+	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
 		if (dto == null) {
-			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<RegistrationDTO>(HttpStatus.NOT_FOUND);
 		}
 		String token = UUID.randomUUID().toString();
-
-		dto.setToken(token);
+		
 		mailingManager.sendRegistration(dto.getUserEmail(), token);
-		manager.Create(dto);
+		manager.Create(dto, token);
 
-		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
+		return new ResponseEntity<RegistrationDTO>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
@@ -73,7 +82,7 @@ public class UserController {
 
 			return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 		}
-		
+
 		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
 

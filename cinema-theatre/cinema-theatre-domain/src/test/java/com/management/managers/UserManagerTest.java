@@ -8,6 +8,7 @@ import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.entities.User;
 import com.management.fake.UserRepositoryFake;
@@ -25,36 +26,29 @@ public class UserManagerTest {
 	public void AddingNewUser_ReturnsBoolean() {
 		// Arrange
 		userRepository = new UserRepositoryFake();
-		
-		UserDTO dto = new UserDTO();
+
+		RegistrationDTO dto = new RegistrationDTO();
 		dto.setUserName("Pero");
 		dto.setUserSurname("Peric");
-		dto.setUserAdmin('O');
 		dto.setUserCity("Novi Sad");
 		dto.setUserEmail("pero@gmail.com");
 		dto.setUserPassword("123");
-		dto.setUserRank(0);
 		dto.setUserPhone(123456);
 		dto.setUserStateid("381");
 
 		UserManager manager = new UserManager(userRepository);
-		manager.addRegistrationToken("nekiToken");
-		
 		// Act and assert
 		Assert.assertNotNull(manager);
-		Assert.assertTrue(manager.Create(dto));
+		Assert.assertTrue(manager.Create(dto, "something"));
 
 		User user = userRepository.findOne(0);
 
 		Assert.assertEquals(dto.getUserCity(), user.getUserCity());
-		Assert.assertEquals(dto.getUserAdmin(), user.getUserAdmin());
-		Assert.assertEquals(dto.getUserRank(), user.getUserRank());
 		Assert.assertEquals(dto.getUserCity(), user.getUserCity());
 		Assert.assertEquals(dto.getUserEmail(), user.getUserEmail());
 		Assert.assertEquals(dto.getUserName(), user.getUserName());
 		Assert.assertEquals(dto.getUserPassword(), user.getUserPassword());
 		Assert.assertEquals(dto.getUserSurname(), user.getUserSurname());
-		Assert.assertEquals(dto.getUserAdmin(), user.getUserAdmin());
 		Assert.assertEquals(dto.getUserPhone(), user.getUserPhone());
 		Assert.assertEquals(dto.getUserStateid(), user.getUserStateid());
 	}

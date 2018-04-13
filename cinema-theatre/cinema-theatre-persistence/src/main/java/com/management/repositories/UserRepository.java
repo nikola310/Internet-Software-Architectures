@@ -8,7 +8,7 @@ import com.management.entities.User;
  * @author Zivko Stanisic
  *
  */
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-//	public User findByToken(String token);
+	public User findUserByUserToken(String token);
 }

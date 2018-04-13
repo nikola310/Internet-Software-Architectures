@@ -1,3 +1,6 @@
+/**
+ * @author Zivko Stanisic
+ */
 $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){

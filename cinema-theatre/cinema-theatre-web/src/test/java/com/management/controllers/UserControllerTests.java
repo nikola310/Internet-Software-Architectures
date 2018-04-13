@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.entities.User;
 import com.management.fake.UserRepositoryFake;
@@ -31,14 +32,12 @@ public class UserControllerTests {
 		// Arrange
 		userRepository = new UserRepositoryFake();
 
-		UserDTO dto = new UserDTO();
+		RegistrationDTO dto = new RegistrationDTO();
 		dto.setUserName("Pero");
 		dto.setUserSurname("Peric");
-		dto.setUserAdmin('O');
 		dto.setUserCity("Novi Sad");
 		dto.setUserEmail("pero@gmail.com");
 		dto.setUserPassword("123");
-		dto.setUserRank(0);
 		dto.setUserPhone(123456);
 		dto.setUserStateid("381");
 
@@ -51,7 +50,7 @@ public class UserControllerTests {
 
 		// Act and assert
 		Assert.assertNotNull(controller);
-		Assert.assertEquals(controller.addUser(dto), new ResponseEntity<UserDTO>(dto, HttpStatus.OK));
+		Assert.assertEquals(controller.addUser(dto), new ResponseEntity<UserDTO>(HttpStatus.OK));
 	}
 
 	@Test

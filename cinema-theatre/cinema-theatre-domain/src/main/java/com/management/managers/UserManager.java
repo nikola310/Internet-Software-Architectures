@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.entities.User;
 import com.management.interfaces.UserManagerInterface;
@@ -22,20 +23,17 @@ import com.management.repositories.UserRepository;
 public class UserManager implements UserManagerInterface {
 
 	private UserRepository userRepository;
-	private String token;
 
 	@Autowired
 	public UserManager(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
-	public boolean Create(UserDTO dto) {
-		System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+	public boolean Create(RegistrationDTO dto, String token) {
 		ModelMapper mapper = new ModelMapper();
 		User user;
 		try {
 			user = mapper.map(dto, User.class);
-			token = dto.getToken();
 			if (token == null) {
 				return false;
 			}
@@ -45,6 +43,8 @@ public class UserManager implements UserManagerInterface {
 			user.setUserToken(token);
 			user.setUserExpiration(expiration);
 			user.setUserCreationDate(new Date());
+			user.setUserRank(0);
+			user.setUserAdmin('N');
 
 			userRepository.save(user);
 
@@ -53,7 +53,7 @@ public class UserManager implements UserManagerInterface {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-			return false;
+		return false;
 	}
 
 	public UserDTO Read(int id) {
@@ -73,8 +73,7 @@ public class UserManager implements UserManagerInterface {
 
 	public ArrayList<UserDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) userRepository
-				.findAll();
+		ArrayList<User> listEntities = (ArrayList<User>) userRepository.findAll();
 		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
 		for (User tmp : listEntities) {
@@ -116,7 +115,33 @@ public class UserManager implements UserManagerInterface {
 		return true;
 	}
 
-	public void addRegistrationToken(String token) {
-		this.token = token;
+	public boolean Confirmation(String token) {
+		if (token == null) {
+			return false;
+		}
+
+		try {
+			User user = userRepository.findUserByUserToken(token);
+			String userToken = user.getUserToken();
+
+			if (token.equals(userToken)) {
+				Date today = new Date();
+
+				if (today.after(user.getUserExpiration())) {
+					userRepository.delete(user);
+					return false;
+				}
+
+				user.setUserActive(true);
+				userRepository.save(user);
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
+
 }
