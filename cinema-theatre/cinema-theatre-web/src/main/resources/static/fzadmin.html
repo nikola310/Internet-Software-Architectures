@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="scripts/data-include.js"></script>
+<script type="text/javascript" src="scripts/fzadmin.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="icon" href="images/icon.ico" type="image/x-icon" />
+<meta charset="UTF-8">
+<title>Fanzone management</title>
+</head>
+<body onload="loadNotCheckedOffers()">
+	<div data-include="header"></div>
+	<table data-role="table" id="table-check" class="ui-body-a ui-responsive table-stripe">
+		<thead>
+			<tr class="ui-bar-a">
+				<th>Name</th>
+				<th data-priority="1">Description</th>
+				<th data-priority="2">Image</th>
+				<th data-priority="3">Deadline</th>
+				<th data-priority="4">Official</th>
+				<th data-priority="5">Feedback</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div data-include="footer"></div>
+
+</body>
+</html>

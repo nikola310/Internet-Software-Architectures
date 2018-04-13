@@ -49,7 +49,8 @@ public class PropsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<PropsDTO> addProps(@Validated @RequestBody PropsDTO dto) {
+	public ResponseEntity<PropsDTO> addProps(
+			@Validated @RequestBody PropsDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -75,5 +76,28 @@ public class PropsController {
 		} else {
 			return new ResponseEntity<PropsDTO>(HttpStatus.OK);
 		}
+	}
+
+	@RequestMapping(value = "/not-checked", method = RequestMethod.GET)
+	public ResponseEntity<List<PropsDTO>> getNotChecked() {
+		List<PropsDTO> list = manager.getNullAllowedProps();
+
+		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/approve/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<PropsDTO> approveProps(@PathVariable int id) {
+		PropsDTO dto = manager.Read(id);
+		dto.setPropsApproved(true);
+		manager.Update(dto);
+		return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/reject/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<PropsDTO> rejectProps(@PathVariable int id) {
+		PropsDTO dto = manager.Read(id);
+		dto.setPropsApproved(false);
+		manager.Update(dto);
+		return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
 	}
 }

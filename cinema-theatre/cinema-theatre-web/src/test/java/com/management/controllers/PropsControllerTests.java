@@ -47,6 +47,7 @@ public class PropsControllerTests {
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
 				.getData().getDataBuffer()).getData();
 		dto.setPropsImage(byteArray);
+		dto.setUserId(1);
 		PropsManager manager = new PropsManager(propsRepository);
 		PropsController controller = new PropsController(manager);
 

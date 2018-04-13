@@ -13,7 +13,7 @@ function loadPropses() {
 			for(i = 0; i < data.length; i++){
 				
 				var div = $("<div/>", {
-					id: "props-" + i,
+					id: "props-" + data[i].propsId,
 				});
 				div.attr("class", "props-div");
 				
@@ -22,7 +22,7 @@ function loadPropses() {
 				});
 				
 				var naslov = $("<h2/>", {
-					html: data[0].propsName
+					html: data[i].propsName
 				});
 				
 				var img = $("<img/>", {
@@ -31,7 +31,7 @@ function loadPropses() {
 				});
 				
 				if(data[i].propsImage != null){
-					img.attr("src", "data:application/unknown;base64, " + data.content);
+					img.attr("src", "data:application/unknown;base64, " + window.atob(data[i].propsImage));
 				}else{
 					img.attr("src", "");
 				}
@@ -39,15 +39,18 @@ function loadPropses() {
 				if(data[i].propsUsed){
 					
 					var txt = $("<input/>", {
+						id: "bid-value-" + data[0].propsId,
 						type: "text"
 					});
 					
 					var btn = $("<input/>", {
-						type: "button",
+						type: "submit",
 						value: "Send bid"
 					});
 					
 					var forma = $("<form/>", {
+						id: "bid-" + data[i].propsId,
+						onsubmit: "return createBid(this)",
 						html: txt[0].outerHTML + btn[0].outerHTML
 					});
 					
@@ -56,7 +59,7 @@ function loadPropses() {
 					ads.append(div[0].outerHTML);
 				}else{
 					var buyBtn = $("<input/>", {
-						type: "button",
+						type: "submit",
 						value: "Book it"
 					});
 					
@@ -75,5 +78,35 @@ function loadPropses() {
 			official[0].innerHTML = "<p>There are no official ads right now.</p>";
 		if(ads[0].innerHTML == "")
 			ads[0].innerHTML = "<p>There are no ads right now.</p>";
+	});
+}
+
+function createBid(e){
+	console.log(e);
+	var propsID =  e.id.split(/-(.+)/)[1];
+	
+	dt = JSON.stringify({
+		"bidPrice" : parseFloat($("#bid-value-" + propsID).val()),
+		"userId" : 1,
+		"propsId" : parseInt(propsID),
+		"propsAccepted" : null
+	});
+	
+	$.ajax({
+		type : "POST",
+		url : "bid",
+		data : dt,
+		contentType : "application/json; charset=utf-8",
+		dataType : "json",
+		success : function(data) {
+			alert("Bid succesfully created");
+			//window.location = "fanzone.html";
+		},
+		fail : function(data) {
+			console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
 	});
 }

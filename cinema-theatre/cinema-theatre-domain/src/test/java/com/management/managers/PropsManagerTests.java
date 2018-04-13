@@ -43,6 +43,7 @@ public class PropsManagerTests {
 				.read(new File("C:\\Users\\Nikola\\Desktop\\test.png"))
 				.getData().getDataBuffer()).getData();
 		dto.setPropsImage(byteArray);
+		dto.setUserId(1);
 		PropsManager manager = new PropsManager(propsRepository);
 
 		// Act and assert
@@ -59,6 +60,7 @@ public class PropsManagerTests {
 		Assert.assertArrayEquals(dto.getPropsImage(), props.getPropsImage());
 		Assert.assertEquals(dto.isPropsUsed(), props.isPropsUsed());
 		Assert.assertEquals(dto.isPropsApproved(), props.getPropsApproved());
+		Assert.assertEquals(dto.getUserId(), props.getUser().getUserId());
 	}
 
 	@Test
@@ -100,7 +102,7 @@ public class PropsManagerTests {
 		byteArray = ((DataBufferByte) ImageIO.read(new File(filePath))
 				.getData().getDataBuffer()).getData();
 		props.setPropsImage(byteArray);
-
+		
 		mock.checking(new Expectations() {
 			{
 				oneOf(propsRepository).findOne(1);

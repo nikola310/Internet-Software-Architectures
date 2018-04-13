@@ -7,52 +7,43 @@
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <script
 	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="icon" href="images/icon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="images/icon.ico" type="image/x-icon" />
 <script type="text/javascript" src="scripts/data-include.js"></script>
-<script type="text/javascript" src="scripts/props.js"></script>
-<meta charset="UTF-8">
-<title>Props</title>
+<script type="text/javascript" src="scripts/sysadmin.js"></script>
+<title>System administration</title>
 </head>
-<body onload="loadBids()">
+<body onload="read_users()">
 	<div data-include="header"></div>
 	<br />
 	<br />
-	<div data-role="collapsible-set" id="collapsible-set-1">
+	<div data-role="collapsible-set" id="collapsible-set-1"
+		data-content-theme="d">
 		<div data-role="collapsible">
-			<h4>Add props</h4>
-			<form onsubmit="return addNewProps();">
-				<table class="props_table">
+			<h4>Register new cinema/theatre</h4>
+			<form id="form_new" onsubmit="return addNewCT();">
+				<table>
 					<tr>
 						<td>Name</td>
-						<td><input type="text" id="props-name"></td>
+						<td><input type="text" id="ct_name" maxlength="50"></td>
+					</tr>
+					<tr>
+						<td>State</td>
+						<td><input type="text" maxlength="3" id="ct_state"></td>
+					</tr>
+					<tr>
+						<td>Phone</td>
+						<td><input type="number" id="ct_phone"></td>
+					</tr>
+					<tr>
+						<td>Adress</td>
+						<td><input type="text" id="ct_adress" maxlength="50"></td>
 					</tr>
 					<tr>
 						<td>Description</td>
-						<td><input type="text" maxlength="200" id="props-desc"></td>
-					</tr>
-					<tr>
-						<td>Deadline</td>
-						<td><input type="datetime-local" id="props-date"></td>
-					</tr>
-					<tr>
-						<td>Image</td>
-						<td><input id="inputImage" type="file"
-							onchange="loadImage();" /></td>
-					</tr>
-					<tr>
-						<td>Price</td>
-						<td><input type="number" id="props-price"></td>
-					</tr>
-					<tr>
-						<td>Used</td>
-						<td>
-							<fieldset>
-								<input type="radio" name="usedGroup" value="TRUE" checked>Yes
-								<input type="radio" name="usedGroup" value="FALSE">No
-							</fieldset>
-						</td>
+						<td><input type="text" id="ct_desc" maxlength="200"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -63,8 +54,20 @@
 			</form>
 		</div>
 		<div data-role="collapsible">
-			<h4>Manage offers</h4>
-			<div id="offers-container"></div>
+			<h4>Manage users</h4>
+			<div>
+				<table data-role="table" id="user-table" class="ui-body-a ui-responsive table-stripe">
+					<thead>
+						<tr class="ui-bar-a">
+							<th>User</th>
+							<th data-priority="1">Type</th>
+							<th data-priority="2">Change to</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<br />

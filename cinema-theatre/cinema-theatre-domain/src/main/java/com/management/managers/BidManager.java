@@ -4,6 +4,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.BidDTO;
 import com.management.entities.Bid;
+import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
 import com.management.repositories.BidRepository;
 
@@ -102,6 +104,24 @@ public class BidManager implements BidManagerInterface {
 		}
 
 		return true;
+	}
+
+	public List<BidDTO> getBids(User user) {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository.findByUser(user);
+		ArrayList<BidDTO> listDTO = new ArrayList<BidDTO>();
+
+		for (Bid tmp : listEntities) {
+			try {
+				BidDTO dto = mapper.map(tmp, BidDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
 	}
 
 }

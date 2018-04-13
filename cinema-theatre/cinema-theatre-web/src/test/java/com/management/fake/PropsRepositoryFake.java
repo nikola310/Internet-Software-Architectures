@@ -116,4 +116,8 @@ public class PropsRepositoryFake implements PropsRepository {
 		return null;
 	}
 
+	public List<Props> getPropsByPropsApprovedIsNull() {
+		return null;
+	}
+
 }

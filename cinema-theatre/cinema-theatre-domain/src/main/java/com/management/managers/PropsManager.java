@@ -27,13 +27,14 @@ public class PropsManager implements PropsManagerInterface {
 	public PropsManager(PropsRepository propsRepository) {
 		this.propsRepository = propsRepository;
 	}
-	
+
 	public boolean Create(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Props props;
 
 		try {
 			props = mapper.map(dto, Props.class);
+			System.out.println(props.getUser().getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -60,7 +61,8 @@ public class PropsManager implements PropsManagerInterface {
 
 	public ArrayList<PropsDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository.findAll();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.findAll();
 		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
 
 		for (Props tmp : listEntities) {
@@ -102,4 +104,22 @@ public class PropsManager implements PropsManagerInterface {
 		return true;
 	}
 
+	public ArrayList<PropsDTO> getNullAllowedProps() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.getPropsByPropsApprovedIsNull();
+		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
+
+		for (Props tmp : listEntities) {
+			try {
+				PropsDTO dto = mapper.map(tmp, PropsDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 }

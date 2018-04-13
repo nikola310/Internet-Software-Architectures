@@ -24,12 +24,12 @@ public class Bid implements java.io.Serializable {
 	private Props props;
 	private User user;
 	private float bidPrice;
-	private boolean bidAccepted;
+	private Boolean bidAccepted;
 
 	public Bid() {
 	}
 
-	public Bid(int bidId, Props props, User user, float bidPrice, boolean bidAccepted) {
+	public Bid(int bidId, Props props, User user, float bidPrice, Boolean bidAccepted) {
 		this.bidId = bidId;
 		this.props = props;
 		this.user = user;
@@ -78,12 +78,12 @@ public class Bid implements java.io.Serializable {
 		this.bidPrice = bidPrice;
 	}
 
-	@Column(name = "BID_ACCEPTED", nullable = false)
-	public boolean isBidAccepted() {
+	@Column(name = "BID_ACCEPTED", nullable = true)
+	public Boolean isBidAccepted() {
 		return this.bidAccepted;
 	}
 
-	public void setBidAccepted(boolean bidAccepted) {
+	public void setBidAccepted(Boolean bidAccepted) {
 		this.bidAccepted = bidAccepted;
 	}
 

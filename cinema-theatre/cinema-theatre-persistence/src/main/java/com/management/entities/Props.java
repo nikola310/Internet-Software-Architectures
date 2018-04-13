@@ -140,7 +140,7 @@ public class Props implements java.io.Serializable {
 		this.propsDesc = propsDesc;
 	}
 
-	@Column(name = "PROPS_APPROVED")
+	@Column(name = "PROPS_APPROVED", nullable = true)
 	public Boolean getPropsApproved() {
 		return this.propsApproved;
 	}
