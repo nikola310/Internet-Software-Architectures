@@ -14,21 +14,78 @@
 <meta charset="UTF-8">
 <title>Fanzone management</title>
 </head>
-<body onload="loadNotCheckedOffers()">
+<body onload="loadNotCheckedOffers(); official_props();">
 	<div data-include="header"></div>
-	<table data-role="table" id="table-check" class="ui-body-a ui-responsive table-stripe">
-		<thead>
-			<tr class="ui-bar-a">
-				<th>Name</th>
-				<th data-priority="1">Description</th>
-				<th data-priority="2">Image</th>
-				<th data-priority="3">Deadline</th>
-				<th data-priority="4">Official</th>
-				<th data-priority="5">Feedback</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+	<br />
+	<div data-role="collapsible-set" id="fz-admin-container" data-theme="a"
+		data-content-theme="d">
+		<div data-role="collapsible">
+			<h4>Add new official props</h4>
+			<form onsubmit="return add_official();">
+				<table class="props_table">
+					<tr>
+						<td>Name</td>
+						<td><input type="text" id="props-name"></td>
+					</tr>
+					<tr>
+						<td>Description</td>
+						<td><input type="text" maxlength="200" id="props-desc"></td>
+					</tr>
+					<tr>
+						<td>Deadline</td>
+						<td><input type="datetime-local" id="props-date"></td>
+					</tr>
+					<tr>
+						<td>Image</td>
+						<td><input id="inputImage" type="file"
+							onchange="loadImage();" /></td>
+					</tr>
+					<tr>
+						<td>Price</td>
+						<td><input type="number" id="props-price"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><button type="reset">Cancel</button> <input type="submit"
+							value="Send"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div data-role="collapsible">
+			<h4>Manage offers</h4>
+			<table data-role="table" id="table-check"
+				class="ui-body-a ui-responsive table-stripe">
+				<thead>
+					<tr class="ui-bar-a">
+						<th>Name</th>
+						<th data-priority="1">Description</th>
+						<th data-priority="2">Image</th>
+						<th data-priority="3">Deadline</th>
+						<th data-priority="5">Feedback</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div data-role="collapsible">
+			<h4>Manage official props</h4>
+			<table data-role="table" id="check-official"
+				class="ui-body-a ui-responsive table-stripe">
+				<thead>
+					<tr class="ui-bar-a">
+						<th>Name</th>
+						<th data-priority="1">Description</th>
+						<th data-priority="2">Image</th>
+						<th data-priority="3">Deadline</th>
+						<th data-priority="5">Edit</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+
 	<div data-include="footer"></div>
 
 </body>

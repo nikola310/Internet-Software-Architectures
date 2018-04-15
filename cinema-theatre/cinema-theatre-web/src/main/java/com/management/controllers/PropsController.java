@@ -86,18 +86,32 @@ public class PropsController {
 	}
 
 	@RequestMapping(value = "/approve/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<PropsDTO> approveProps(@PathVariable int id) {
+	public ResponseEntity<PropsDTO> approveProps(@PathVariable("id") int id) {
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(true);
 		manager.Update(dto);
 		return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/reject/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<PropsDTO> rejectProps(@PathVariable int id) {
+	public ResponseEntity<PropsDTO> rejectProps(@PathVariable("id") int id) {
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(false);
 		manager.Update(dto);
 		return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/official", method = RequestMethod.GET)
+	public ResponseEntity<List<PropsDTO>> getOfficial() {
+		List<PropsDTO> list = manager.getOfficialProps();
+
+		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/byuser/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<PropsDTO>> propsByUser(@PathVariable("id") int id){
+		List<PropsDTO> list = manager.getPropsByUser(id);
+		
+		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
 	}
 }

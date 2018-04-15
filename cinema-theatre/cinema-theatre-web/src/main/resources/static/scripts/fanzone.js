@@ -25,13 +25,15 @@ function loadPropses() {
 					html: data[i].propsName
 				});
 				
-				var img = $("<img/>", {
+				/*var img = $("<img/>", {
 					width: 80,
 					height: 80
-				});
+				});*/
+				
+				var img = $("<img/>");
 				
 				if(data[i].propsImage != null){
-					img.attr("src", "data:application/unknown;base64, " + window.atob(data[i].propsImage));
+					img.attr("src", "data:application/unknown;base64, " + data[i].propsImage);
 				}else{
 					img.attr("src", "");
 				}
@@ -39,7 +41,7 @@ function loadPropses() {
 				if(data[i].propsUsed){
 					
 					var txt = $("<input/>", {
-						id: "bid-value-" + data[0].propsId,
+						id: "bid-value-" + data[i].propsId,
 						type: "text"
 					});
 					
@@ -58,16 +60,12 @@ function loadPropses() {
 					
 					ads.append(div[0].outerHTML);
 				}else{
-					var buyBtn = $("<input/>", {
-						type: "submit",
-						value: "Book it"
+					var buyBtn = $("<button/>", {
+						value: "Make a reservation",
+						id: "reservation-" + data[i].propsId
 					});
 					
-					var buyForma = $("<form/>", {
-						html: buyBtn[0].outerHTML
-					});
-					
-					div[0].innerHTML = naslov[0].outerHTML + img[0].outerHTML + desc[0].outerHTML + buyForma[0].outerHTML;
+					div[0].innerHTML = naslov[0].outerHTML + img[0].outerHTML + desc[0].outerHTML + buyBtn[0].outerHTML;
 					
 					official.append(div[0].outerHTML);
 				}
@@ -109,4 +107,6 @@ function createBid(e){
 			console.log(data);
 		}
 	});
+	
+	return false;
 }

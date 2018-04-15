@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.management.entities.Props;
+import com.management.entities.User;
 
 /**
  * @author Nikola Stojanovic
@@ -13,4 +14,8 @@ import com.management.entities.Props;
 public interface PropsRepository extends JpaRepository<Props, Integer>{
 
 	List<Props> getPropsByPropsApprovedIsNull();
+	
+	List<Props> getPropsByPropsUsedIsFalse();
+	
+	List<Props> getPropsByUserAndPropsApprovedIsTrue(User user);
 }

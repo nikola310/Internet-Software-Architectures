@@ -1,6 +1,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.PropsDTO;
 import com.management.entities.Props;
+import com.management.entities.User;
 import com.management.interfaces.PropsManagerInterface;
 import com.management.repositories.PropsRepository;
 
@@ -108,6 +110,46 @@ public class PropsManager implements PropsManagerInterface {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
 				.getPropsByPropsApprovedIsNull();
+		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
+
+		for (Props tmp : listEntities) {
+			try {
+				PropsDTO dto = mapper.map(tmp, PropsDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+
+	public ArrayList<PropsDTO> getOfficialProps() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.getPropsByPropsUsedIsFalse();
+		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
+
+		for (Props tmp : listEntities) {
+			try {
+				PropsDTO dto = mapper.map(tmp, PropsDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+
+	public List<PropsDTO> getPropsByUser(int id) {
+		User u = new User();
+		u.setUserId(id);
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Props> listEntities = (ArrayList<Props>) propsRepository
+				.getPropsByUserAndPropsApprovedIsTrue(u);
 		ArrayList<PropsDTO> listDTO = new ArrayList<PropsDTO>();
 
 		for (Props tmp : listEntities) {

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.BidDTO;
 import com.management.entities.Bid;
+import com.management.entities.Props;
 import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
 import com.management.repositories.BidRepository;
@@ -108,7 +109,8 @@ public class BidManager implements BidManagerInterface {
 
 	public List<BidDTO> getBids(User user) {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository.findByUser(user);
+		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository
+				.findByUser(user);
 		ArrayList<BidDTO> listDTO = new ArrayList<BidDTO>();
 
 		for (Bid tmp : listEntities) {
@@ -124,4 +126,43 @@ public class BidManager implements BidManagerInterface {
 		return listDTO;
 	}
 
+	public List<BidDTO> getNotAccepted(User user) {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository
+				.findByUserAndBidAcceptedIsNull(user);
+		ArrayList<BidDTO> listDTO = new ArrayList<BidDTO>();
+
+		for (Bid tmp : listEntities) {
+			try {
+				BidDTO dto = mapper.map(tmp, BidDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+
+	public List<BidDTO> readBidsByProps(int id) {
+		Props p = new Props();
+		p.setPropsId(id);
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Bid> listEntities = (ArrayList<Bid>) bidRepository
+				.findByPropsAndBidAcceptedIsNull(p);
+		ArrayList<BidDTO> listDTO = new ArrayList<BidDTO>();
+
+		for (Bid tmp : listEntities) {
+			try {
+				BidDTO dto = mapper.map(tmp, BidDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 }

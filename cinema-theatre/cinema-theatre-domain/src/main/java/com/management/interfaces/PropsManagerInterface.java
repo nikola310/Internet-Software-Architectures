@@ -12,4 +12,8 @@ import com.management.dto.PropsDTO;
 public interface PropsManagerInterface extends ManagerInterface<PropsDTO> {
 
 	public List<PropsDTO> getNullAllowedProps();
+	
+	public List<PropsDTO> getOfficialProps();
+	
+	public List<PropsDTO> getPropsByUser(int id);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.management.entities.Props;
+import com.management.entities.User;
 import com.management.repositories.PropsRepository;
 
 /**
@@ -117,6 +118,14 @@ public class PropsRepositoryFake implements PropsRepository {
 	}
 
 	public List<Props> getPropsByPropsApprovedIsNull() {
+		return null;
+	}
+
+	public List<Props> getPropsByPropsUsedIsFalse() {
+		return null;
+	}
+
+	public List<Props> getPropsByUserAndPropsApprovedIsTrue(User user) {
 		return null;
 	}
 

@@ -52,7 +52,7 @@ public class BidController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<BidDTO> addBid(@Validated @RequestBody BidDTO dto) {
-		
+
 		if (dto == null) {
 			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -81,18 +81,42 @@ public class BidController {
 
 		return new ResponseEntity<BidDTO>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<BidDTO>> getBidByName(@PathVariable("id") int id){
+	public ResponseEntity<List<BidDTO>> getBidByName(@PathVariable("id") int id) {
 		User user = new User();
 		user.setUserId(id);
-		try{
+		try {
 			List<BidDTO> list = manager.getBids(user);
 			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
+	@RequestMapping(value = "/byuser/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getForUser(@PathVariable("id") int id) {
+		User user = new User();
+		user.setUserId(id);
+		try {
+			List<BidDTO> list = manager.getNotAccepted(user);
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/not-accepted/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getNotAcceptedByProps(
+			@PathVariable("id") int id) {
+		try {
+			List<BidDTO> list = manager.readBidsByProps(id);
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+	}
 }

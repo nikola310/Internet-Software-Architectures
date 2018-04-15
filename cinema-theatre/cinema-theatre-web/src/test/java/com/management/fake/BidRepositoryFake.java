@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.management.entities.Bid;
+import com.management.entities.Props;
 import com.management.entities.User;
 import com.management.repositories.BidRepository;
 
@@ -123,7 +124,14 @@ public class BidRepositoryFake implements BidRepository {
 	}
 
 	public List<Bid> findByUser(User u) {
-		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Bid> findByUserAndBidAcceptedIsNull(User u) {
+		return null;
+	}
+
+	public List<Bid> findByPropsAndBidAcceptedIsNull(Props p) {
 		return null;
 	}
 
