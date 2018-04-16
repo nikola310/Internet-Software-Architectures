@@ -40,7 +40,7 @@ public class BidManagerTests {
 
 		Assert.assertEquals(dto.getBidId(), bid.getBidId());
 		Assert.assertEquals(dto.getBidPrice(), bid.getBidPrice(), 0.01);
-		Assert.assertEquals(dto.isBidAccepted(), bid.isBidAccepted());
+		Assert.assertEquals(dto.isBidAccepted(), bid.getBidAccepted());
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class BidManagerTests {
 
 		Assert.assertEquals(dto.getBidId(), bid.getBidId());
 		Assert.assertEquals(dto.getBidPrice(), bid.getBidPrice(), 0.01);
-		Assert.assertEquals(dto.isBidAccepted(), bid.isBidAccepted());
+		Assert.assertEquals(dto.isBidAccepted(), bid.getBidAccepted());
 		mock.assertIsSatisfied();
 	}
 	
@@ -134,7 +134,7 @@ public class BidManagerTests {
 		Assert.assertEquals(dtoList.get(0).getBidPrice(), list.get(0)
 				.getBidPrice(), 0.01);
 		Assert.assertEquals(dtoList.get(0).isBidAccepted(), list.get(0)
-				.isBidAccepted());
+				.getBidAccepted());
 
 
 		Assert.assertEquals(dtoList.get(1).getBidId(), list.get(1)
@@ -142,7 +142,7 @@ public class BidManagerTests {
 		Assert.assertEquals(dtoList.get(1).getBidPrice(), list.get(1)
 				.getBidPrice(), 0.01);
 		Assert.assertEquals(dtoList.get(1).isBidAccepted(), list.get(1)
-				.isBidAccepted());		
+				.getBidAccepted());		
 		mock.assertIsSatisfied();
 	}
 }

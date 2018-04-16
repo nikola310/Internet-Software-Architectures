@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 15, 2018 9:26:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Rankscale" table="rankscale" catalog="isa" optimistic-lock="version">
+        <id name="scaleId" type="int">
+            <column name="SCALE_ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="user" class="com.management.entities.User" fetch="select">
+            <column name="USER_ID" not-null="true" />
+        </many-to-one>
+        <property name="scaleBronze" type="int">
+            <column name="SCALE_BRONZE" not-null="true" />
+        </property>
+        <property name="scaleSilver" type="int">
+            <column name="SCALE_SILVER" not-null="true" />
+        </property>
+        <property name="scaleGold" type="int">
+            <column name="SCALE_GOLD" not-null="true" />
+        </property>
+        <property name="scaleActive" type="boolean">
+            <column name="SCALE_ACTIVE" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

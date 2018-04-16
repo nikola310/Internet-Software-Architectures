@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 15, 2018 9:26:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.Props" table="props" catalog="isa" optimistic-lock="version">
+        <id name="propsId" type="int">
+            <column name="PROPS_ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="user" class="com.management.entities.User" fetch="select">
+            <column name="USER_ID" not-null="true" />
+        </many-to-one>
+        <property name="propsName" type="string">
+            <column name="PROPS_NAME" length="50" not-null="true" />
+        </property>
+        <property name="propsUsed" type="boolean">
+            <column name="PROPS_USED" not-null="true" />
+        </property>
+        <property name="propsDeadline" type="timestamp">
+            <column name="PROPS_DEADLINE" length="19" not-null="true" />
+        </property>
+        <property name="propsPrice" type="float">
+            <column name="PROPS_PRICE" precision="8" not-null="true" />
+        </property>
+        <property name="propsImage" type="binary">
+            <column name="PROPS_IMAGE" />
+        </property>
+        <property name="propsDesc" type="string">
+            <column name="PROPS_DESC" length="120" />
+        </property>
+        <property name="propsApproved" type="java.lang.Boolean">
+            <column name="PROPS_APPROVED" />
+        </property>
+        <set name="bids" table="bid" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PROPS_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Bid" />
+        </set>
+        <set name="reservations" table="reservation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PROPS_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Reservation" />
+        </set>
+    </class>
+</hibernate-mapping>

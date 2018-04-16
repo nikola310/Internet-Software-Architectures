@@ -1,9 +1,11 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,14 +36,16 @@ public class Performance implements java.io.Serializable {
 	private int perRank;
 	private byte[] perPoster;
 	private String perDescription;
-	private Set<Actorperformances> actorperformanceses = new HashSet<Actorperformances>(0);
+	private Set<Actorperformances> actorperformanceses = new HashSet<Actorperformances>(
+			0);
 	private Set<Event> events = new HashSet<Event>(0);
 
 	public Performance() {
 	}
 
-	public Performance(int perId, char perType, String perGenre, String perDirector, int perDuration,
-			Date perCreationDate, float perPrice, int perRank) {
+	public Performance(int perId, char perType, String perGenre,
+			String perDirector, int perDuration, Date perCreationDate,
+			float perPrice, int perRank) {
 		this.perId = perId;
 		this.perType = perType;
 		this.perGenre = perGenre;
@@ -52,9 +56,11 @@ public class Performance implements java.io.Serializable {
 		this.perRank = perRank;
 	}
 
-	public Performance(int perId, char perType, String perGenre, String perDirector, int perDuration,
-			Date perCreationDate, float perPrice, int perRank, byte[] perPoster, String perDescription,
-			Set<Actorperformances> actorperformanceses, Set<Event> events) {
+	public Performance(int perId, char perType, String perGenre,
+			String perDirector, int perDuration, Date perCreationDate,
+			float perPrice, int perRank, byte[] perPoster,
+			String perDescription, Set<Actorperformances> actorperformanceses,
+			Set<Event> events) {
 		this.perId = perId;
 		this.perType = perType;
 		this.perGenre = perGenre;
@@ -168,7 +174,8 @@ public class Performance implements java.io.Serializable {
 		return this.actorperformanceses;
 	}
 
-	public void setActorperformanceses(Set<Actorperformances> actorperformanceses) {
+	public void setActorperformanceses(
+			Set<Actorperformances> actorperformanceses) {
 		this.actorperformanceses = actorperformanceses;
 	}
 

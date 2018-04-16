@@ -1,9 +1,11 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,11 +38,13 @@ public class Props implements java.io.Serializable {
 	private String propsDesc;
 	private Boolean propsApproved;
 	private Set<Bid> bids = new HashSet<Bid>(0);
+	private Set<Reservation> reservations = new HashSet<Reservation>(0);
 
 	public Props() {
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed,
+			Date propsDeadline, float propsPrice) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -49,8 +53,10 @@ public class Props implements java.io.Serializable {
 		this.propsPrice = propsPrice;
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice,
-			byte[] propsImage, String propsDesc, Boolean propsApproved, Set<Bid> bids) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed,
+			Date propsDeadline, float propsPrice, byte[] propsImage,
+			String propsDesc, Boolean propsApproved, Set<Bid> bids,
+			Set<Reservation> reservations) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -61,6 +67,7 @@ public class Props implements java.io.Serializable {
 		this.propsDesc = propsDesc;
 		this.propsApproved = propsApproved;
 		this.bids = bids;
+		this.reservations = reservations;
 	}
 
 	@Id
@@ -140,7 +147,7 @@ public class Props implements java.io.Serializable {
 		this.propsDesc = propsDesc;
 	}
 
-	@Column(name = "PROPS_APPROVED", nullable = true)
+	@Column(name = "PROPS_APPROVED")
 	public Boolean getPropsApproved() {
 		return this.propsApproved;
 	}
@@ -156,6 +163,15 @@ public class Props implements java.io.Serializable {
 
 	public void setBids(Set<Bid> bids) {
 		this.bids = bids;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "props")
+	public Set<Reservation> getReservations() {
+		return this.reservations;
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 }

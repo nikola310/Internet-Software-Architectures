@@ -1,6 +1,11 @@
 package com.management.controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -118,5 +123,28 @@ public class BidController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST)
+	public ResponseEntity<BidDTO> setBid(@PathVariable("id") int id,
+			@Context HttpServletRequest request,
+			@Context HttpServletResponse response) {
+		BidDTO dto = manager.Read(id);
+		if (dto == null) {
+			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+		}
+		request.getSession().setAttribute("bid", dto);
+		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/current", method = RequestMethod.GET)
+	public ResponseEntity<BidDTO> getCurrentBid(
+			@Context HttpServletRequest request) {
+		BidDTO dto = (BidDTO) request.getSession().getAttribute("bid");
+		if (dto == null) {
+			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+		}
 	}
 }

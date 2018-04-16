@@ -1,8 +1,10 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +34,8 @@ public class CinemaTheatre implements java.io.Serializable {
 	public CinemaTheatre() {
 	}
 
-	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress) {
+	public CinemaTheatre(int ctId, String ctName, String ctStateid,
+			int ctPhone, String ctAdress) {
 		this.ctId = ctId;
 		this.ctName = ctName;
 		this.ctStateid = ctStateid;
@@ -40,8 +43,8 @@ public class CinemaTheatre implements java.io.Serializable {
 		this.ctAdress = ctAdress;
 	}
 
-	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress, String ctDescription,
-			Set<Hall> halls) {
+	public CinemaTheatre(int ctId, String ctName, String ctStateid,
+			int ctPhone, String ctAdress, String ctDescription, Set<Hall> halls) {
 		this.ctId = ctId;
 		this.ctName = ctName;
 		this.ctStateid = ctStateid;

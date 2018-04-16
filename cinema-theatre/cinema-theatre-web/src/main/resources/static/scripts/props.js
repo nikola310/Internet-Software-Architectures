@@ -66,9 +66,10 @@ function loadBids() {
 				});
 
 				var edit = $("<button/>", {
-					id : "edit-" + data[i].propsId,
+					id : "edit-" + data[i].bidId,
 					html : "Edit",
-					class : "ui-btn ui-shadow ui-corner-all"
+					class : "ui-btn ui-shadow ui-corner-all",
+					onclick: "setBid(this)"
 				});
 
 				var kol3 = $("<td/>", {
@@ -116,11 +117,20 @@ function loadOffers(){
 	});
 }
 
-function loadBids(id){
+function loadBidsByUserId(id){
 	$.get("bid/not-accepted/" + id, function(data){
 		console.log("bid not accepted response: " + data);
 	});
 }
+
+function setBid(e){
+	var bidID =  e.id.split(/-(.+)/)[1];
+	$.post("bid/set/" + bidID, function(data){
+		window.location = "editbid.html";
+	});
+}
+
+
 
 /*
  * function loadBids() {

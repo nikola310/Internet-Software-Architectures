@@ -1,5 +1,6 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,8 +30,8 @@ public class Friendslist implements java.io.Serializable {
 	public Friendslist() {
 	}
 
-	public Friendslist(int friendsId, User userByUseUserId2, User userByUseUserId, User userByUserId,
-			char friendsStatus) {
+	public Friendslist(int friendsId, User userByUseUserId2,
+			User userByUseUserId, User userByUserId, char friendsStatus) {
 		this.friendsId = friendsId;
 		this.userByUseUserId2 = userByUseUserId2;
 		this.userByUseUserId = userByUseUserId;
