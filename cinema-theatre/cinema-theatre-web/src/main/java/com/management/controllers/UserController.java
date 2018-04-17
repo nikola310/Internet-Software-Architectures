@@ -32,7 +32,7 @@ import com.management.mail.MailingInterface;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-	// HttpServletRequest request, HttpSession httpSession
+
 	@Autowired
 	private UserManagerInterface manager;
 
