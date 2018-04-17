@@ -1,8 +1,11 @@
 package com.management.mail;
 
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,16 +19,22 @@ public class Mailing implements MailingInterface {
 	private JavaMailSender mailSender;
 
 	public void sendRegistration(String mail, String token) {
-		String link = "localhost:8080/cinema-theatre/confirmation.html?token=";
+		try {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+		String link = "http://localhost:8080/cinema-theatre/confirmation.html?token=";
 		String subject = "Registration Confirmation";
 		String confirmationUrl = link + token;
-		String message = "Confirm your registration on this link: ";
+		String content = "Confirm your registration on this " + "<a href=\""+ confirmationUrl + "\">link.</a>";
+		
+		message.setContent(content, "text/html");
+		helper.setTo(mail);
+		helper.setSubject(subject);
 
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo(mail);
-		email.setSubject(subject);
-		email.setText(message + confirmationUrl);
-		mailSender.send(email);
+		mailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void sendInvitation(String mail, String friendsName,

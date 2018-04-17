@@ -38,7 +38,7 @@ public class UserControllerTests {
 		dto.setUserCity("Novi Sad");
 		dto.setUserEmail("pero@gmail.com");
 		dto.setUserPassword("123");
-		dto.setUserPhone(123456);
+		dto.setUserPhone("123456");
 		dto.setUserStateid("381");
 
 		UserManager manager = new UserManager(userRepository);

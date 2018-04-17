@@ -3,25 +3,35 @@
  */
 
 
-$( "#confrim" ).click(function() {
-	var domain = {
-	        userName: $("#useName").val(),
-	        userSurname: $("#useSurname").val(),
-	        userEmail: $("#userEmail").val(),
-	        userCity: $("#userCity").val(),
-	        userPhone: $("#userPhone").val(),
-	        userStateid: $("#userStateid").val(),
-	        userPassword: $("#userPassword").val()
-	    }
+function registrate() {
+	var regData = JSON.stringify({        
+	        "userEmail": $("#userEmail").val(),
+	        "userName": $("#userName").val(),
+	        "userSurname": $("#userSurname").val(),
+	        "userPassword": $("#userPassword").val(),
+	        "userCity": $("#userCity").val(),
+	        "userStateid": $("#userStateid").val(),
+	        "userPhone": $("#userPhone").val()
+	        
+	    });
+
 	
 	$.ajax({
         type: 'post',
-        url: 'http://localhost:8080/cinema-theatre/user',
-        data: $.toJSON(domain),
+        url: 'user',
+        data: regData,
         contentType: "application/json; charset=utf-8",
-        traditional: true,
+        dataType : "json",
         success: function (data) {
-            
-        }
+        	alert("User succesfully registered");
+        },
+        fail : function(data) {
+        	console.log(regData);
+			console.log(data);
+		},
+		error: function(data){
+			console.log(regData);
+			console.log(data);
+		}
     });	
-});
+}
