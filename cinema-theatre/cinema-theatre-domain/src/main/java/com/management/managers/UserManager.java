@@ -153,11 +153,11 @@ public class UserManager implements UserManagerInterface {
 			if (!dto.getPassword().equals(user.getUserPassword())) {
 				return false;
 			}
-			
+
 			if (!user.isUserActive()) {
 				return false;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -180,6 +180,25 @@ public class UserManager implements UserManagerInterface {
 		}
 
 		return profile;
+	}
+
+	public boolean Edit(RegistrationDTO dto) {
+		User user;
+		try {
+			user = userRepository.findUserByUserEmail(dto.getUserEmail());
+			user.setUserName(dto.getUserName());
+			user.setUserSurname(dto.getUserSurname());
+			user.setUserCity(dto.getUserCity());
+			user.setUserPhone(new Integer(dto.getUserPhone()));
+			user.setUserStateid(dto.getUserStateid());
+			user.setUserPassword(dto.getUserPassword());
+			
+			userRepository.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

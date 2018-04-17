@@ -92,6 +92,7 @@ public class UserController {
 			}
 
 			if (!manager.Login(dto)) {
+				System.err.println("Test");
 				return new ResponseEntity<LoginDTO>(dto, HttpStatus.NOT_FOUND);
 			}
 
@@ -113,6 +114,24 @@ public class UserController {
 		}
 		return new ResponseEntity<ProfileDTO>(dto, HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<RegistrationDTO> edit(@Validated @RequestBody RegistrationDTO dto) {
+
+		try {
+			if (dto == null) {
+				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+
+			if (!manager.Edit(dto)) {
+				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)

@@ -28,4 +28,6 @@ public interface UserManagerInterface {
 	public boolean Login (LoginDTO dto);
 	
 	public ProfileDTO ReadProfile(LoginDTO dto);
+	
+	public boolean Edit(RegistrationDTO dto);
 }
