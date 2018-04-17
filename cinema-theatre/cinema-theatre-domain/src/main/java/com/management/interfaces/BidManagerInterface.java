@@ -15,4 +15,8 @@ import com.management.entities.User;
 public interface BidManagerInterface extends ManagerInterface<BidDTO> {
 
 	public List<BidDTO> getBids(User user);
+	
+	public List<BidDTO> getNotAccepted(User user);
+	
+	public List<BidDTO> readBidsByProps(int id);
 }

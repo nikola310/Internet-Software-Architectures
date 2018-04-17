@@ -1,6 +1,11 @@
 package com.management.controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +57,7 @@ public class BidController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<BidDTO> addBid(@Validated @RequestBody BidDTO dto) {
-		
+
 		if (dto == null) {
 			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -81,18 +86,65 @@ public class BidController {
 
 		return new ResponseEntity<BidDTO>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<BidDTO>> getBidByName(@PathVariable("id") int id){
+	public ResponseEntity<List<BidDTO>> getBidByName(@PathVariable("id") int id) {
 		User user = new User();
 		user.setUserId(id);
-		try{
+		try {
 			List<BidDTO> list = manager.getBids(user);
 			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
+	@RequestMapping(value = "/byuser/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getForUser(@PathVariable("id") int id) {
+		User user = new User();
+		user.setUserId(id);
+		try {
+			List<BidDTO> list = manager.getNotAccepted(user);
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/not-accepted/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getNotAcceptedByProps(
+			@PathVariable("id") int id) {
+		try {
+			List<BidDTO> list = manager.readBidsByProps(id);
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST)
+	public ResponseEntity<BidDTO> setBid(@PathVariable("id") int id,
+			@Context HttpServletRequest request,
+			@Context HttpServletResponse response) {
+		BidDTO dto = manager.Read(id);
+		if (dto == null) {
+			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+		}
+		request.getSession().setAttribute("bid", dto);
+		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/current", method = RequestMethod.GET)
+	public ResponseEntity<BidDTO> getCurrentBid(
+			@Context HttpServletRequest request) {
+		BidDTO dto = (BidDTO) request.getSession().getAttribute("bid");
+		if (dto == null) {
+			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+		}
+	}
 }

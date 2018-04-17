@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 15, 2018 9:26:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.management.entities.User" table="user" catalog="isa" optimistic-lock="version">
+        <id name="userId" type="int">
+            <column name="USER_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="userEmail" type="string">
+            <column name="USER_EMAIL" length="50" not-null="true" />
+        </property>
+        <property name="userName" type="string">
+            <column name="USER_NAME" length="50" not-null="true" />
+        </property>
+        <property name="userSurname" type="string">
+            <column name="USER_SURNAME" length="50" not-null="true" />
+        </property>
+        <property name="userPassword" type="string">
+            <column name="USER_PASSWORD" length="50" not-null="true" />
+        </property>
+        <property name="userCity" type="string">
+            <column name="USER_CITY" length="50" not-null="true" />
+        </property>
+        <property name="userActive" type="boolean">
+            <column name="USER_ACTIVE" not-null="true" />
+        </property>
+        <property name="userCreationDate" type="timestamp">
+            <column name="USER_CREATION_DATE" length="19" not-null="true" />
+        </property>
+        <property name="userAdmin" type="char">
+            <column name="USER_ADMIN" length="1" not-null="true" />
+        </property>
+        <property name="userToken" type="string">
+            <column name="USER_TOKEN" length="100" not-null="true" />
+        </property>
+        <property name="userExpiration" type="timestamp">
+            <column name="USER_EXPIRATION" length="19" not-null="true" />
+        </property>
+        <property name="userStateid" type="string">
+            <column name="USER_STATEID" length="3" />
+        </property>
+        <property name="userPhone" type="java.lang.Integer">
+            <column name="USER_PHONE" />
+        </property>
+        <property name="userRank" type="java.lang.Integer">
+            <column name="USER_RANK" />
+        </property>
+        <set name="reservations" table="reservation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Reservation" />
+        </set>
+        <set name="histories" table="history" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.History" />
+        </set>
+        <set name="friendslistsForUseUserId2" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USE_USER_ID2" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Friendslist" />
+        </set>
+        <set name="propses" table="props" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Props" />
+        </set>
+        <set name="seats" table="seat" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" />
+            </key>
+            <one-to-many class="com.management.entities.Seat" />
+        </set>
+        <set name="bids" table="bid" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Bid" />
+        </set>
+        <set name="friendslistsForUseUserId" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USE_USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Friendslist" />
+        </set>
+        <set name="rankscales" table="rankscale" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Rankscale" />
+        </set>
+        <set name="friendslistsForUserId" table="friendslist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.management.entities.Friendslist" />
+        </set>
+    </class>
+</hibernate-mapping>

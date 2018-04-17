@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="icon" href="images/icon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="images/icon.ico" type="image/x-icon" />
+<script type="text/javascript" src="scripts/data-include.js"></script>
+<script type="text/javascript" src="scripts/edit-props.js"></script>
+<meta charset="UTF-8">
+<title>Edit props</title>
+</head>
+<body onload="read_props()">
+	<div data-include="header"></div>
+	<br />
+	<br />
+	<div>
+		<form onsubmit="return edit_props();">
+			<table class="props_table">
+				<tr>
+					<td>Name</td>
+					<td><input type="text" id="edit-name"></td>
+				</tr>
+				<tr>
+					<td>Description</td>
+					<td><input type="text" maxlength="200" id="edit-desc"></td>
+				</tr>
+				<tr>
+					<td>Deadline</td>
+					<td><input type="datetime-local" id="edit-date"></td>
+				</tr>
+				<tr>
+					<td>Image</td>
+					<td><img alt="Props image" src="" id="image-preview"> <input
+						id="edit-image" type="file" onchange="loadImage();" /></td>
+				</tr>
+				<tr>
+					<td>Price</td>
+					<td><input type="number" id="edit-price"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><button type="reset">Cancel</button> <input type="submit"
+						value="Edit" id="edit-btn"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<br />
+	<br />
+	<div data-include="footer"></div>
+</body>
+</html>

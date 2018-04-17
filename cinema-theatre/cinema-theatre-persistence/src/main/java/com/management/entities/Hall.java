@@ -1,8 +1,10 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +40,8 @@ public class Hall implements java.io.Serializable {
 		this.hallName = hallName;
 	}
 
-	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName, Set<Event> events, Set<Seat> seats) {
+	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName,
+			Set<Event> events, Set<Seat> seats) {
 		this.hallId = hallId;
 		this.cinemaTheatre = cinemaTheatre;
 		this.hallName = hallName;

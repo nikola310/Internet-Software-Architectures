@@ -1,5 +1,6 @@
 package com.management.entities;
-// Generated Apr 8, 2018 9:41:09 PM by Hibernate Tools 5.2.3.Final
+
+// Generated Apr 15, 2018 9:26:22 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,19 +40,25 @@ public class User implements java.io.Serializable {
 	private String userStateid;
 	private Integer userPhone;
 	private Integer userRank;
+	private Set<Reservation> reservations = new HashSet<Reservation>(0);
 	private Set<History> histories = new HashSet<History>(0);
-	private Set<Friendslist> friendslistsForUseUserId2 = new HashSet<Friendslist>(0);
+	private Set<Friendslist> friendslistsForUseUserId2 = new HashSet<Friendslist>(
+			0);
 	private Set<Props> propses = new HashSet<Props>(0);
 	private Set<Seat> seats = new HashSet<Seat>(0);
 	private Set<Bid> bids = new HashSet<Bid>(0);
-	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(0);
+	private Set<Friendslist> friendslistsForUseUserId = new HashSet<Friendslist>(
+			0);
+	private Set<Rankscale> rankscales = new HashSet<Rankscale>(0);
 	private Set<Friendslist> friendslistsForUserId = new HashSet<Friendslist>(0);
 
 	public User() {
 	}
 
-	public User(int userId, String userEmail, String userName, String userSurname, String userPassword, String userCity,
-			boolean userActive, Date userCreationDate, char userAdmin, String userToken, Date userExpiration) {
+	public User(int userId, String userEmail, String userName,
+			String userSurname, String userPassword, String userCity,
+			boolean userActive, Date userCreationDate, char userAdmin,
+			String userToken, Date userExpiration) {
 		this.userId = userId;
 		this.userEmail = userEmail;
 		this.userName = userName;
@@ -65,11 +72,15 @@ public class User implements java.io.Serializable {
 		this.userExpiration = userExpiration;
 	}
 
-	public User(int userId, String userEmail, String userName, String userSurname, String userPassword, String userCity,
-			boolean userActive, Date userCreationDate, char userAdmin, String userToken, Date userExpiration,
-			String userStateid, Integer userPhone, Integer userRank, Set<History> histories,
-			Set<Friendslist> friendslistsForUseUserId2, Set<Props> propses, Set<Seat> seats, Set<Bid> bids,
-			Set<Friendslist> friendslistsForUseUserId, Set<Friendslist> friendslistsForUserId) {
+	public User(int userId, String userEmail, String userName,
+			String userSurname, String userPassword, String userCity,
+			boolean userActive, Date userCreationDate, char userAdmin,
+			String userToken, Date userExpiration, String userStateid,
+			Integer userPhone, Integer userRank, Set<Reservation> reservations,
+			Set<History> histories, Set<Friendslist> friendslistsForUseUserId2,
+			Set<Props> propses, Set<Seat> seats, Set<Bid> bids,
+			Set<Friendslist> friendslistsForUseUserId,
+			Set<Rankscale> rankscales, Set<Friendslist> friendslistsForUserId) {
 		this.userId = userId;
 		this.userEmail = userEmail;
 		this.userName = userName;
@@ -84,12 +95,14 @@ public class User implements java.io.Serializable {
 		this.userStateid = userStateid;
 		this.userPhone = userPhone;
 		this.userRank = userRank;
+		this.reservations = reservations;
 		this.histories = histories;
 		this.friendslistsForUseUserId2 = friendslistsForUseUserId2;
 		this.propses = propses;
 		this.seats = seats;
 		this.bids = bids;
 		this.friendslistsForUseUserId = friendslistsForUseUserId;
+		this.rankscales = rankscales;
 		this.friendslistsForUserId = friendslistsForUserId;
 	}
 
@@ -225,6 +238,15 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Reservation> getReservations() {
+		return this.reservations;
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<History> getHistories() {
 		return this.histories;
 	}
@@ -238,7 +260,8 @@ public class User implements java.io.Serializable {
 		return this.friendslistsForUseUserId2;
 	}
 
-	public void setFriendslistsForUseUserId2(Set<Friendslist> friendslistsForUseUserId2) {
+	public void setFriendslistsForUseUserId2(
+			Set<Friendslist> friendslistsForUseUserId2) {
 		this.friendslistsForUseUserId2 = friendslistsForUseUserId2;
 	}
 
@@ -274,8 +297,18 @@ public class User implements java.io.Serializable {
 		return this.friendslistsForUseUserId;
 	}
 
-	public void setFriendslistsForUseUserId(Set<Friendslist> friendslistsForUseUserId) {
+	public void setFriendslistsForUseUserId(
+			Set<Friendslist> friendslistsForUseUserId) {
 		this.friendslistsForUseUserId = friendslistsForUseUserId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Rankscale> getRankscales() {
+		return this.rankscales;
+	}
+
+	public void setRankscales(Set<Rankscale> rankscales) {
+		this.rankscales = rankscales;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByUserId")

@@ -51,7 +51,6 @@ public class PropsManagerTests {
 		Assert.assertTrue(manager.Create(dto));
 
 		Props props = propsRepository.findOne(0);
-
 		Assert.assertEquals(dto.getPropsId(), props.getPropsId());
 		Assert.assertEquals(dto.getPropsName(), props.getPropsName());
 		Assert.assertEquals(dto.getPropsPrice(), props.getPropsPrice(), 0.1);

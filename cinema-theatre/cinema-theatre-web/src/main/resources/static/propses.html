@@ -46,15 +46,6 @@
 						<td><input type="number" id="props-price"></td>
 					</tr>
 					<tr>
-						<td>Used</td>
-						<td>
-							<fieldset>
-								<input type="radio" name="usedGroup" value="TRUE" checked>Yes
-								<input type="radio" name="usedGroup" value="FALSE">No
-							</fieldset>
-						</td>
-					</tr>
-					<tr>
 						<td></td>
 						<td><button type="reset">Cancel</button> <input type="submit"
 							value="Send"></td>
@@ -63,8 +54,33 @@
 			</form>
 		</div>
 		<div data-role="collapsible">
-			<h4>Manage offers</h4>
-			<div id="offers-container"></div>
+			<h4>Manage your offers</h4>
+			<table data-role="table" id="offers-table"
+				class="ui-body-a ui-responsive table-stripe">
+				<thead>
+					<tr class="ui-bar-a">
+						<th>Props</th>
+						<th data-priority="1">Price</th>
+						<th data-priority="2"></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div data-role="collapsible">
+			<h4>Choose offers</h4>
+			<table data-role="table" id="pick-offers-table"
+				class="ui-body-a ui-responsive table-stripe">
+				<thead>
+					<tr class="ui-bar-a">
+						<th>Props</th>
+						<th data-priority="1">Price</th>
+						<th data-priority="2">Feedback</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<br />

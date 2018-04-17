@@ -17,27 +17,20 @@ function loadImage() {
 
 function addNewProps() {
 
-	if(glob != null)
+	if (glob != null)
 		glob = glob.split(/,(.+)/)[1];
-	
-	var used;
-	if($("input[name=usedGroup]:checked").val() == "TRUE"){
-		used = true;
-	}else if($("input[name=usedGroup]:checked").val() == "FALSE"){
-		used = false;
-	}
-	
+
 	var dt = JSON.stringify({
 		"propsName" : $("#props-name").val(),
 		"propsDesc" : $("#props-desc").val(),
 		"propsDeadline" : new Date($("#props-date").val()).getTime(),
 		"propsImage" : glob,
 		"userId" : 1,
-		"propsUsed" : used,
+		"propsUsed" : true,
 		"propsPrice" : parseFloat($("#props-price").val()),
 		"propsApproved" : null
 	});
-	
+
 	$.ajax({
 		type : "POST",
 		url : "props",
@@ -51,7 +44,7 @@ function addNewProps() {
 		fail : function(data) {
 			console.log(data);
 		},
-		error: function(data){
+		error : function(data) {
 			console.log(data);
 		}
 	});
@@ -60,47 +53,142 @@ function addNewProps() {
 }
 
 function loadBids() {
-	var offers = $("#offers-container");
-	$.get("bid", function(data) {
+	$.get("bid/byuser/1", function(data) {
 
 		if (data.length > 0) {
-
 			for (i = 0; i < data.length; i++) {
-
-				/*var btn = "";
-				if (!data[i].bidAccepted)
-					btn = '<br/><input type="button" value="Accept">'
-
-				var paragraf = $("<p/>", {
-					html : "Props:" + data[i].bid + "<br/>Price: "
-							+ data[i].bidPrice + btn
+				var kol1 = $("<td/>", {
+					html : data[i].propsId
 				});
 
-				var div = $("<div/>", {
-					id : "bid-" + i,
-					html : paragraf[0].outerHTML
+				var kol2 = $("<td/>", {
+					html : data[i].bidPrice
 				});
-				div.attr("class", "bid-div");
 
-				offers.append(div[0].outerHTML);*/
-				
-				if(data[i].bidAccepted == null){
-				
-				var forma = $("<form/>", {
-					
+				var edit = $("<button/>", {
+					id : "edit-" + data[i].bidId,
+					html : "Edit",
+					class : "ui-btn ui-shadow ui-corner-all",
+					onclick: "setBid(this)"
 				});
-				
-					var btn = $("<input/>", {
-						type: "submit",
-						value: "Accept"
-					})
-				}
+
+				var kol3 = $("<td/>", {
+					html : edit[0].outerHTML
+				});
+
+				var red = $("<tr/>", {
+					html : kol1[0].outerHTML + kol2[0].outerHTML
+							+ kol3[0].outerHTML
+				});
+
+				$('#offers-table tbody').append(red[0].outerHTML);
 			}
+		} else {
+			var paragraf = $("<p/>", {
+				html : "There are no bids yet"
+			});
+			
+			var kol = $("<td/>", {
+				html: paragraf[0].outerHTML
+			});
 
+			var red = $("<tr/>", {
+				html : kol[0].outerHTML
+			});
+
+			$('#offers-table thead').remove();
+			$('#offers-table tbody').append(red[0].outerHTML);
 		}
-
-		if (offers[0].innerHTML == "")
-			offers[0].innerHTML = "<p>There are no bids yet.</p>";
 
 	});
 }
+
+function loadOffers(){
+	//prvo ucitavamo odobrene rekvizite koje je postavio korisnik
+	$.get("/props/byuser/1", function(data){
+		if(data.length > 0){
+			for(i = 0; i < data.length; i++){
+				loadBids(data[i].propsId);
+				
+			}
+		}else{
+			
+		}
+	});
+}
+
+function loadBidsByUserId(id){
+	$.get("bid/not-accepted/" + id, function(data){
+		console.log("bid not accepted response: " + data);
+	});
+}
+
+function setBid(e){
+	var bidID =  e.id.split(/-(.+)/)[1];
+	$.post("bid/set/" + bidID, function(data){
+		window.location = "editbid.html";
+	});
+}
+
+
+
+/*
+ * function loadBids() {
+	$.get("bid/byuser/1", function(data) {
+
+		if (data.length > 0) {
+			for (i = 0; i < data.length; i++) {
+
+				var kol1 = $("<td/>", {
+					html : data[i].propsId
+				});
+
+				var kol2 = $("<td/>", {
+					html : data[i].bidPrice
+				});
+
+				var accept = $("<button/>", {
+					id : "accept-" + data[i].propsId + "-byuser-"
+							+ data[i].userId,
+					html : "Accept"
+				});
+
+				var reject = $("<button/>", {
+					id : "reject-" + data[i].propsId + "-byuser-"
+							+ data[i].userId,
+					html : "Reject"
+				});
+
+				var kol3 = $("<td/>", {
+					html : accept[0].outerHTML + reject[0].outerHTML
+				});
+
+				var red = $("<tr/>", {
+					html : kol1[0].outerHTML + kol2[0].outerHTML
+							+ kol3[0].outerHTML
+				});
+
+				$('#pick-offers-table tbody').append(red[0].outerHTML);
+			}
+		} else {
+			var paragraf = $("<p/>", {
+				html : "There are no bids yet"
+			});
+			
+			var kol = $("<td/>", {
+				html: paragraf[0].outerHTML
+			});
+
+			var red = $("<tr/>", {
+				html : kol[0].outerHTML
+			});
+
+			$('#pick-offers-table thead').remove();
+			$('#pick-offers-table tbody').append(red[0].outerHTML);
+		}
+
+	});
+}
+ * 
+ * 
+ */
