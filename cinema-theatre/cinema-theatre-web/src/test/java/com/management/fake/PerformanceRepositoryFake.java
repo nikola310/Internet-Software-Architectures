@@ -26,6 +26,7 @@ public class PerformanceRepositoryFake implements PerformanceRepository{
 	public void deleteInBatch(Iterable<Performance> arg0) {
 		
 	}
+	
 
 	public List<Performance> findAll() {
 		return null;
