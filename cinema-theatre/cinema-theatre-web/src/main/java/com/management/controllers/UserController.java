@@ -3,6 +3,8 @@ package com.management.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +61,9 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<RegistrationDTO> addUser(
+			@Validated @RequestBody RegistrationDTO dto) {
 		try {
 			if (dto == null) {
 				return new ResponseEntity<RegistrationDTO>(HttpStatus.NOT_FOUND);
@@ -72,11 +75,12 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<RegistrationDTO>(HttpStatus.OK);
+		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO dto) {
+	public ResponseEntity<UserDTO> updateUser(
+			@Validated @RequestBody UserDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}

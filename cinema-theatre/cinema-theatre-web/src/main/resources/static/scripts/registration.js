@@ -24,6 +24,7 @@ function registrate() {
         dataType : "json",
         success: function (data) {
         	alert("User succesfully registered");
+        	window.location.replace("fanzone.html");
         },
         fail : function(data) {
         	console.log(regData);
@@ -34,4 +35,5 @@ function registrate() {
 			console.log(data);
 		}
     });	
+	return false;
 }
