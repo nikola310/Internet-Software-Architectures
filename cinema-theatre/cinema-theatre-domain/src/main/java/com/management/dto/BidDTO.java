@@ -14,8 +14,6 @@ public class BidDTO {
 	@NotNull
 	@Min(1)
 	private float bidPrice;
-	private Boolean bidAccepted;
-	@NotNull
 	private int userId;
 	@NotNull
 	private int propsId;
@@ -34,14 +32,6 @@ public class BidDTO {
 
 	public void setBidPrice(float bidPrice) {
 		this.bidPrice = bidPrice;
-	}
-
-	public Boolean isBidAccepted() {
-		return bidAccepted;
-	}
-
-	public void setBidAccepted(Boolean bidAccepted) {
-		this.bidAccepted = bidAccepted;
 	}
 
 	public int isUserId() {

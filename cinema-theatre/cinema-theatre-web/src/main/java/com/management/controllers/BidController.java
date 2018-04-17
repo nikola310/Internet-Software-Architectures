@@ -3,8 +3,8 @@ package com.management.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -124,16 +124,27 @@ public class BidController {
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST)
-	public ResponseEntity<BidDTO> setBid(@PathVariable("id") int id,
-			@Context HttpServletRequest request,
-			@Context HttpServletResponse response) {
+//	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST)
+//	public ResponseEntity<BidDTO> setBid(@PathVariable("id") int id,
+//			@Context HttpServletRequest request) {
+//		BidDTO dto = manager.Read(id);
+//		if (dto == null) {
+//			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+//		}
+//		request.getSession().setAttribute("bid", dto);
+//		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+//	}
+	
+	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST, 
+			produces = MediaType.TEXT_PLAIN)
+	public ResponseEntity<String> setBid(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
 		BidDTO dto = manager.Read(id);
 		if (dto == null) {
-			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Error handling", HttpStatus.NOT_FOUND);
 		}
 		request.getSession().setAttribute("bid", dto);
-		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+		return new ResponseEntity<String>("redirect:/editbid.html", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
@@ -145,5 +156,18 @@ public class BidController {
 		} else {
 			return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
 		}
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public ResponseEntity<BidDTO> newBid(@Validated @RequestBody BidDTO dto,
+			@Context HttpServletRequest request) {
+		if (dto == null) {
+			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+		}
+		int userId = 1; // ((User)request.getSession().getAttribute("user")).getUserId();
+		dto.setUserId(userId);
+		manager.Create(dto);
+
+		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
 	}
 }

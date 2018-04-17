@@ -153,6 +153,11 @@ public class UserManager implements UserManagerInterface {
 			if (!dto.getPassword().equals(user.getUserPassword())) {
 				return false;
 			}
+			
+			if (!user.isUserActive()) {
+				return false;
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

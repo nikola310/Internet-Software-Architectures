@@ -42,7 +42,6 @@ public class RankscaleManagerTests {
 		Assert.assertTrue(manager.Create(dto));
 
 		Rankscale entity = repository.findOne(0);
-		Assert.assertEquals(dto.getScaleId(), entity.getScaleId());
 		Assert.assertEquals(dto.getScaleBronze(), entity.getScaleBronze());
 		Assert.assertEquals(dto.getScaleGold(), entity.getScaleGold());
 		Assert.assertEquals(dto.getScaleSilver(), entity.getScaleSilver());
@@ -100,7 +99,6 @@ public class RankscaleManagerTests {
 		// Assert
 		Assert.assertNotNull(dto);
 
-		Assert.assertEquals(dto.getScaleId(), entity.getScaleId());
 		Assert.assertEquals(dto.getScaleBronze(), entity.getScaleBronze());
 		Assert.assertEquals(dto.getScaleGold(), entity.getScaleGold());
 		Assert.assertEquals(dto.getScaleSilver(), entity.getScaleSilver());
@@ -148,8 +146,6 @@ public class RankscaleManagerTests {
 		// Assert
 		Assert.assertNotNull(dtoList);
 
-		Assert.assertEquals(dtoList.get(0).getScaleId(), list.get(0)
-				.getScaleId());
 		Assert.assertEquals(dtoList.get(0).getScaleBronze(), list.get(0)
 				.getScaleBronze());
 		Assert.assertEquals(dtoList.get(0).getScaleGold(), list.get(0)
@@ -159,8 +155,6 @@ public class RankscaleManagerTests {
 		Assert.assertEquals(dtoList.get(0).isScaleActive(), list.get(0)
 				.isScaleActive());
 		
-		Assert.assertEquals(dtoList.get(1).getScaleId(), list.get(1)
-				.getScaleId());
 		Assert.assertEquals(dtoList.get(1).getScaleBronze(), list.get(1)
 				.getScaleBronze());
 		Assert.assertEquals(dtoList.get(1).getScaleGold(), list.get(1)

@@ -1,6 +1,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,6 @@ public class RankscaleManager implements RankscaleManagerInterface {
 			return false;
 		}
 		rankscaleRepository.save(tmp);
-		
 		return true;
 	}
 
@@ -114,6 +114,24 @@ public class RankscaleManager implements RankscaleManagerInterface {
 		}
 		
 		return true;
+	}
+
+	public List<RankscaleDTO> getActive() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<Rankscale> listEntities = (ArrayList<Rankscale>) rankscaleRepository.getRankscaleByScaleActiveIsTrue();
+		ArrayList<RankscaleDTO> listDTO = new ArrayList<RankscaleDTO>();
+
+		for (Rankscale tmp : listEntities) {
+			try {
+				RankscaleDTO dto = mapper.map(tmp, RankscaleDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
 	}
 
 }

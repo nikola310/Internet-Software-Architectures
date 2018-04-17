@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
+
 		try {
 			if (dto == null) {
 				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
@@ -100,17 +102,17 @@ public class UserController {
 		}
 		return new ResponseEntity<LoginDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ResponseEntity<ProfileDTO> profile(@Context HttpServletRequest request) {
 		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
 		ProfileDTO dto = manager.ReadProfile(sessionDTO);
-		
+
 		if (dto == null) {
 			return new ResponseEntity<ProfileDTO>(dto, HttpStatus.NOT_FOUND);
 		}
-		
 		return new ResponseEntity<ProfileDTO>(dto, HttpStatus.OK);
+
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)

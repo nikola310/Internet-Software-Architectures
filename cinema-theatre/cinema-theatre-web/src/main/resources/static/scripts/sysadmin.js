@@ -306,3 +306,37 @@ var userID = parseInt(e.id.split(/-(.+)/)[1]);
 	
 	return false;
 }
+
+function setRanks(){
+	var bronze = parseInt($("#rank-bronze").val());
+	var silver = parseInt($("#rank-silver").val());
+	var gold = parseInt($("#rank-gold").val());
+	
+	if(bronze > silver || silver > gold || bronze > gold){
+		alert("Please input correct values (gold > silver > bronze)");
+	}else{
+		var dt = JSON.stringify({
+			"bronze" : bronze,
+			"silver" : silver,
+			"gold" : gold
+		});
+		
+		$.ajax({
+			type : "POST",
+			url : "rankscale/set",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			data : dt,
+			success : function(data) {
+				alert("Rank succesfully set.");
+			},
+			fail : function(data) {
+				console.log(data);
+			},
+			error : function(data) {
+				console.log(data);
+			}
+		});
+	}
+	return false;
+}

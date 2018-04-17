@@ -8,7 +8,6 @@ function loadPropses() {
 	var ads = $("#ads-container");
 	$.get("props", function(data) {
 		if (data.length > 0) {
-			console.log("Broj rekvizita: " + data.length);
 			
 			for(i = 0; i < data.length; i++){
 				
@@ -25,17 +24,14 @@ function loadPropses() {
 					html: data[i].propsName
 				});
 				
-				/*var img = $("<img/>", {
-					width: 80,
-					height: 80
-				});*/
-				
 				var img = $("<img/>");
 				
 				if(data[i].propsImage != null){
 					img.attr("src", "data:application/unknown;base64, " + data[i].propsImage);
+					img.attr("alt", data[i].propsDesc);
 				}else{
-					img.attr("src", "");
+					img.attr("src", "images/no-img.png");
+					img.attr("alt", "No image.")
 				}
 				
 				if(data[i].propsUsed){
@@ -61,8 +57,9 @@ function loadPropses() {
 					ads.append(div[0].outerHTML);
 				}else{
 					var buyBtn = $("<button/>", {
-						value: "Make a reservation",
-						id: "reservation-" + data[i].propsId
+						html: "Make a reservation",
+						id: "reservation-" + data[i].propsId,
+						onclick: "make_reservation(this)"
 					});
 					
 					div[0].innerHTML = naslov[0].outerHTML + img[0].outerHTML + desc[0].outerHTML + buyBtn[0].outerHTML;
@@ -98,7 +95,6 @@ function createBid(e){
 		dataType : "json",
 		success : function(data) {
 			alert("Bid succesfully created");
-			//window.location = "fanzone.html";
 		},
 		fail : function(data) {
 			console.log(data);
@@ -109,4 +105,29 @@ function createBid(e){
 	});
 	
 	return false;
+}
+
+function make_reservation(e){
+	console.log(e);
+	var propsID =  e.id.split(/-(.+)/)[1];
+	var dt = JSON.stringify({
+		"propsId" : propsID
+	});
+	
+	$.ajax({
+		type : "POST",
+		url : "reservation/add",
+		data : dt,
+		contentType : "application/json; charset=utf-8",
+		dataType : "json",
+		success : function(data) {
+			alert("Reservation succesfully created");
+		},
+		fail : function(data) {
+			console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
 }

@@ -31,7 +31,7 @@ public class BidControllerTests {
 		bidRepository = new BidRepositoryFake();
 
 		BidDTO dto = new BidDTO();
-		dto.setBidAccepted(false);
+		// dto.setBidAccepted(false);
 		dto.setBidPrice(500);
 		BidManager manager = new BidManager(bidRepository);
 		BidController controller = new BidController(manager);

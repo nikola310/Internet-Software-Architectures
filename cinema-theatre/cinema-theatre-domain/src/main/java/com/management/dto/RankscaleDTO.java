@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  */
 public class RankscaleDTO {
 
-	private int scaleId;
+	private int propsId;
 	@NotNull
 	private int userId;
 	@NotNull
@@ -24,12 +24,13 @@ public class RankscaleDTO {
 	@NotNull
 	private boolean scaleActive;
 
-	public int getScaleId() {
-		return scaleId;
+	public RankscaleDTO(int scaleBronze, int scaleSilver, int scaleGold) {
+		this.scaleBronze = scaleBronze;
+		this.scaleSilver = scaleSilver;
+		this.scaleGold = scaleGold;
 	}
 
-	public void setScaleId(int scaleId) {
-		this.scaleId = scaleId;
+	public RankscaleDTO() {
 	}
 
 	public int getUserId() {
@@ -70,5 +71,13 @@ public class RankscaleDTO {
 
 	public void setScaleActive(boolean scaleActive) {
 		this.scaleActive = scaleActive;
+	}
+
+	public int getPropsId() {
+		return propsId;
+	}
+
+	public void setPropsId(int propsId) {
+		this.propsId = propsId;
 	}
 }

@@ -119,15 +119,12 @@ function add_official() {
 		"propsDesc" : $("#props-desc").val(),
 		"propsDeadline" : new Date($("#props-date").val()).getTime(),
 		"propsImage" : glob,
-		"userId" : 1,
-		"propsUsed" : false,
 		"propsPrice" : parseFloat($("#props-price").val()),
-		"propsApproved" : true
 	});
 
 	$.ajax({
 		type : "POST",
-		url : "props",
+		url : "props/official",
 		data : dt,
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
