@@ -13,7 +13,7 @@ import com.management.repositories.RankscaleRepository;
 public class RankscaleRepositoryFake implements RankscaleRepository {
 
 	private Rankscale entity;
-	
+
 	public List<Rankscale> findAll() {
 		return null;
 	}
@@ -110,6 +110,10 @@ public class RankscaleRepositoryFake implements RankscaleRepository {
 
 	public <S extends Rankscale> boolean exists(Example<S> example) {
 		return false;
+	}
+
+	public List<Rankscale> getRankscaleByScaleActiveIsTrue() {
+		return null;
 	}
 
 }

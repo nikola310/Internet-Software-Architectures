@@ -105,13 +105,15 @@ public class RankscaleRepositoryFake implements RankscaleRepository {
 	}
 
 	public <S extends Rankscale> long count(Example<S> example) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public <S extends Rankscale> boolean exists(Example<S> example) {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public List<Rankscale> getRankscaleByScaleActiveIsTrue() {
+		return null;
 	}
 
 }

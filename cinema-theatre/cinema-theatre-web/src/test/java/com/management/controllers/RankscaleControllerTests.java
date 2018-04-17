@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.management.dto.CreateRankscaleDTO;
 import com.management.dto.RankscaleDTO;
 import com.management.entities.Rankscale;
 import com.management.entities.User;
@@ -31,22 +32,27 @@ public class RankscaleControllerTests {
 		repository = new RankscaleRepositoryFake();
 
 		RankscaleDTO dto = new RankscaleDTO();
-		dto.setScaleActive(false);
+		dto.setScaleActive(true);
 		dto.setScaleBronze(500);
 		dto.setScaleGold(1000);
 		dto.setScaleSilver(750);
-		dto.setUserId(0);
+		dto.setUserId(1);
+		
+		CreateRankscaleDTO cr = new CreateRankscaleDTO();
+		cr.setBronze(500);
+		cr.setGold(1000);
+		cr.setSilver(750);
 		RankscaleManager manager = new RankscaleManager(repository);
 		RankscaleController controller = new RankscaleController(manager);
 
 		// Act and assert
 		Assert.assertNotNull(controller);
-		Assert.assertEquals(controller.addRankscale(dto),
+		Assert.assertEquals(controller.addRankscale(cr),
 				new ResponseEntity<RankscaleDTO>(dto, HttpStatus.OK));
 	}
 
 	@Test
-	public void DeletingReservation_ReturnsOK() {
+	public void DeletingRankscale_ReturnsOK() {
 		// Arrange
 		Mockery mock = new Mockery();
 		repository = mock.mock(RankscaleRepository.class);

@@ -2,6 +2,9 @@ package com.management.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.CreateReservationDTO;
 import com.management.dto.ReservationDTO;
 import com.management.interfaces.ReservationManagerInterface;
 
@@ -57,9 +61,10 @@ public class ReservationController {
 			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<ReservationDTO> updateReservation(@RequestBody ReservationDTO dto) {
+	public ResponseEntity<ReservationDTO> updateReservation(
+			@RequestBody ReservationDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -67,13 +72,31 @@ public class ReservationController {
 			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<ReservationDTO> deleteReservation(@PathVariable("id") int id) {
+	public ResponseEntity<ReservationDTO> deleteReservation(
+			@PathVariable("id") int id) {
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ResponseEntity<CreateReservationDTO> addNew(
+			@Validated @RequestBody CreateReservationDTO dto,
+			@Context HttpServletRequest request) {
+		if (dto == null) {
+			return new ResponseEntity<CreateReservationDTO>(
+					HttpStatus.NOT_FOUND);
+		} else {
+			ReservationDTO tmp = new ReservationDTO();
+			tmp.setPropsId(dto.getPropsId());
+			int userId = 1; // ((User)request.getSession().getAttribute("user")).getUserId();
+			tmp.setUserId(userId);
+			manager.Create(tmp);
+			return new ResponseEntity<CreateReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
 }

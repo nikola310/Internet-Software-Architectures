@@ -2,6 +2,9 @@ package com.management.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.CreatePropsDTO;
 import com.management.dto.PropsDTO;
 import com.management.interfaces.PropsManagerInterface;
 
@@ -107,11 +111,49 @@ public class PropsController {
 
 		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/byuser/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<PropsDTO>> propsByUser(@PathVariable("id") int id){
+	public ResponseEntity<List<PropsDTO>> propsByUser(@PathVariable("id") int id) {
 		List<PropsDTO> list = manager.getPropsByUser(id);
-		
+
 		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/used", method = RequestMethod.POST)
+	public ResponseEntity<CreatePropsDTO> createUsed(
+			@RequestBody CreatePropsDTO dto, @Context HttpServletRequest request) {
+		if (dto == null) {
+			return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			// int userId =
+			// ((User)request.getSession().getAttribute("user")).getUserId();
+			int userId = 1;
+			PropsDTO tmp = new PropsDTO(dto.getPropsName(),
+					dto.getPropsDeadline(), dto.getPropsPrice(), userId,
+					dto.getPropsImage(), dto.getPropsDesc());
+			tmp.setPropsApproved(null);
+			tmp.setPropsUsed(true);
+			manager.Create(tmp);
+			return new ResponseEntity<CreatePropsDTO>(dto, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/official", method = RequestMethod.POST)
+	public ResponseEntity<CreatePropsDTO> createOfficial(
+			@RequestBody CreatePropsDTO dto, @Context HttpServletRequest request) {
+		if (dto == null) {
+			return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			// int userId =
+			// ((User)request.getSession().getAttribute("user")).getUserId();
+			int userId = 1;
+			PropsDTO tmp = new PropsDTO(dto.getPropsName(),
+					dto.getPropsDeadline(), dto.getPropsPrice(), userId,
+					dto.getPropsImage(), dto.getPropsDesc());
+			tmp.setPropsApproved(null);
+			tmp.setPropsUsed(false);
+			manager.Create(tmp);
+			return new ResponseEntity<CreatePropsDTO>(dto, HttpStatus.OK);
+		}
 	}
 }

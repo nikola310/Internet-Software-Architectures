@@ -25,21 +25,17 @@ function addNewProps() {
 		"propsDesc" : $("#props-desc").val(),
 		"propsDeadline" : new Date($("#props-date").val()).getTime(),
 		"propsImage" : glob,
-		"userId" : 1,
-		"propsUsed" : true,
 		"propsPrice" : parseFloat($("#props-price").val()),
-		"propsApproved" : null
 	});
 
 	$.ajax({
 		type : "POST",
-		url : "props",
+		url : "props/used",
 		data : dt,
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
 		success : function(data) {
 			alert("Prop succesfully registered");
-			window.location = "fanzone.html";
 		},
 		fail : function(data) {
 			console.log(data);
@@ -126,11 +122,10 @@ function loadBidsByUserId(id){
 function setBid(e){
 	var bidID =  e.id.split(/-(.+)/)[1];
 	$.post("bid/set/" + bidID, function(data){
-		window.location = "editbid.html";
+		//window.location = "editbid.html";
+		console.log(data);
 	});
 }
-
-
 
 /*
  * function loadBids() {

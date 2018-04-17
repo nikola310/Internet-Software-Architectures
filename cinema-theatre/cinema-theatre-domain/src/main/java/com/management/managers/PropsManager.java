@@ -33,10 +33,11 @@ public class PropsManager implements PropsManagerInterface {
 	public boolean Create(PropsDTO dto) {
 		ModelMapper mapper = new ModelMapper();
 		Props props;
-
 		try {
 			props = mapper.map(dto, Props.class);
-			System.out.println(props.getUser().getUserId());
+			
+			props.setPropsApproved(null);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

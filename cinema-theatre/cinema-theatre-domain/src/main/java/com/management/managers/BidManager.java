@@ -39,6 +39,7 @@ public class BidManager implements BidManagerInterface {
 
 		try {
 			bid = mapper.map(dto, Bid.class);
+			bid.setBidAccepted(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

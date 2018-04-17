@@ -1,5 +1,7 @@
 package com.management.interfaces;
 
+import java.util.List;
+
 import com.management.dto.RankscaleDTO;
 
 /**
@@ -9,4 +11,5 @@ import com.management.dto.RankscaleDTO;
  */
 public interface RankscaleManagerInterface extends ManagerInterface<RankscaleDTO> {
 
+	public List<RankscaleDTO> getActive();
 }
