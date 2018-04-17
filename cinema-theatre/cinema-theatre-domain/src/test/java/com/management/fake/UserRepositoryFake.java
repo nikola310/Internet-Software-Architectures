@@ -116,11 +116,11 @@ public class UserRepositoryFake implements UserRepository{
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.management.repositories.UserRepository#findByToken(java.lang.String)
-	 */
 	public User findUserByUserToken(String token) {
-		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public User findUserByUserEmail(String email) {
 		return null;
 	}
 }

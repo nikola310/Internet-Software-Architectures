@@ -14,17 +14,16 @@ import com.management.repositories.UserRepository;
  * @author Zivko Stanisic
  *
  */
-public class UserRepositoryFake implements UserRepository{
-	
+public class UserRepositoryFake implements UserRepository {
+
 	private User entity;
-	
 
 	public void deleteAllInBatch() {
-		
+
 	}
 
 	public void deleteInBatch(Iterable<User> arg0) {
-		
+
 	}
 
 	public List<User> findAll() {
@@ -48,7 +47,7 @@ public class UserRepositoryFake implements UserRepository{
 	}
 
 	public void flush() {
-		
+
 	}
 
 	public User getOne(Integer arg0) {
@@ -72,19 +71,19 @@ public class UserRepositoryFake implements UserRepository{
 	}
 
 	public void delete(Integer arg0) {
-		
+
 	}
 
 	public void delete(User arg0) {
-		
+
 	}
 
 	public void delete(Iterable<? extends User> arg0) {
-		
+
 	}
 
 	public void deleteAll() {
-		
+
 	}
 
 	public boolean exists(Integer arg0) {
@@ -116,11 +115,11 @@ public class UserRepositoryFake implements UserRepository{
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.management.repositories.UserRepository#findByToken(java.lang.String)
-	 */
 	public User findUserByUserToken(String token) {
-		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public User findUserByUserEmail(String email) {
 		return null;
 	}
 }

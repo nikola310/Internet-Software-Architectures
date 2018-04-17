@@ -14,17 +14,16 @@ import com.management.repositories.ActorPerformancesRepository;
  * @author Zivko Stanisic
  *
  */
-public class ActorPerformancesRepositoryFake implements ActorPerformancesRepository{
+public class ActorPerformancesRepositoryFake implements ActorPerformancesRepository {
 
 	private Actorperformances entity;
-	
+
 	public void deleteAllInBatch() {
-		
+
 	}
-	
 
 	public void deleteInBatch(Iterable<Actorperformances> arg0) {
-		
+
 	}
 
 	public List<Actorperformances> findAll() {
@@ -48,7 +47,7 @@ public class ActorPerformancesRepositoryFake implements ActorPerformancesReposit
 	}
 
 	public void flush() {
-		
+
 	}
 
 	public Actorperformances getOne(Integer arg0) {
@@ -72,19 +71,19 @@ public class ActorPerformancesRepositoryFake implements ActorPerformancesReposit
 	}
 
 	public void delete(Integer arg0) {
-		
+
 	}
 
 	public void delete(Actorperformances arg0) {
-		
+
 	}
 
 	public void delete(Iterable<? extends Actorperformances> arg0) {
-		
+
 	}
 
 	public void deleteAll() {
-		
+
 	}
 
 	public boolean exists(Integer arg0) {

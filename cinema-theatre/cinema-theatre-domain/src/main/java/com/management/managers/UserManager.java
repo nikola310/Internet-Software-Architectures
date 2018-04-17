@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.management.dto.LoginDTO;
+import com.management.dto.ProfileDTO;
 import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.entities.User;
@@ -143,6 +145,36 @@ public class UserManager implements UserManagerInterface {
 		}
 
 		return true;
+	}
+
+	public boolean Login(LoginDTO dto) {
+		try {
+			User user = userRepository.findUserByUserEmail(dto.getEmail());
+			if (!dto.getPassword().equals(user.getUserPassword())) {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public ProfileDTO ReadProfile(LoginDTO dto) {
+		if (!Login(dto)) {
+			return null;
+		}
+		ProfileDTO profile = new ProfileDTO();
+		try {
+			ModelMapper mapper = new ModelMapper();
+			User user = userRepository.findUserByUserEmail(dto.getEmail());
+			profile = mapper.map(user, ProfileDTO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return profile;
 	}
 
 }
