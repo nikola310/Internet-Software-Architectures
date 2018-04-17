@@ -1,6 +1,5 @@
 package com.management.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,8 +28,7 @@ public class RegistrationDTO {
 	private String userCity;
 	@Size(min = 3, max = 3)
 	private String userStateid;
-	@Min(0)
-	private Integer userPhone;
+	private String userPhone;
 
 	public String getUserEmail() {
 		return userEmail;
@@ -80,11 +78,11 @@ public class RegistrationDTO {
 		this.userStateid = userStateid;
 	}
 
-	public Integer getUserPhone() {
+	public String getUserPhone() {
 		return userPhone;
 	}
 
-	public void setUserPhone(Integer userPhone) {
+	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
 

@@ -22,6 +22,7 @@ public class SeatRepositoryFake implements SeatRepository{
 	public void deleteAllInBatch() {
 		
 	}
+	
 
 	public void deleteInBatch(Iterable<Seat> arg0) {
 		

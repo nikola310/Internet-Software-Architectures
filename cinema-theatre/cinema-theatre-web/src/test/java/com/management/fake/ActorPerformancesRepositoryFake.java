@@ -21,6 +21,7 @@ public class ActorPerformancesRepositoryFake implements ActorPerformancesReposit
 	public void deleteAllInBatch() {
 		
 	}
+	
 
 	public void deleteInBatch(Iterable<Actorperformances> arg0) {
 		

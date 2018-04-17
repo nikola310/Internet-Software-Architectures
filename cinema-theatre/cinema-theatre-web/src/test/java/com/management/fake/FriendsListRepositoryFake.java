@@ -23,6 +23,7 @@ public class FriendsListRepositoryFake implements FriendsListRepository{
 		
 	}
 
+	
 	public void deleteInBatch(Iterable<Friendslist> arg0) {
 		
 	}

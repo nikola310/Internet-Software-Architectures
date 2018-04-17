@@ -61,14 +61,17 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
-		if (dto == null) {
-			return new ResponseEntity<RegistrationDTO>(HttpStatus.NOT_FOUND);
-		}
-		String token = UUID.randomUUID().toString();
-		
-		mailingManager.sendRegistration(dto.getUserEmail(), token);
-		manager.Create(dto, token);
+		try {
+			if (dto == null) {
+				return new ResponseEntity<RegistrationDTO>(HttpStatus.NOT_FOUND);
+			}
+			String token = UUID.randomUUID().toString();
 
+			mailingManager.sendRegistration(dto.getUserEmail(), token);
+			manager.Create(dto, token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return new ResponseEntity<RegistrationDTO>(HttpStatus.OK);
 	}
 
@@ -94,51 +97,51 @@ public class UserController {
 
 		return new ResponseEntity<UserDTO>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/normal/{ID}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setUserAsNormal(@PathVariable("ID") int ID){
+	public ResponseEntity<UserDTO> setUserAsNormal(@PathVariable("ID") int ID) {
 		UserDTO dto = manager.Read(ID);
-		if(dto.equals(null))
+		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
-		
+
 		dto.setUserAdmin('N');
 		manager.Update(dto);
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/fanzone/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setFZAdmin(@PathVariable("id") int id){
+	public ResponseEntity<UserDTO> setFZAdmin(@PathVariable("id") int id) {
 		UserDTO dto = manager.Read(id);
-		if(dto.equals(null))
+		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
-		
+
 		dto.setUserAdmin('F');
 		manager.Update(dto);
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/ct/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setCTAdmin(@PathVariable("id") int id){
+	public ResponseEntity<UserDTO> setCTAdmin(@PathVariable("id") int id) {
 		UserDTO dto = manager.Read(id);
-		if(dto.equals(null))
+		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
-		
+
 		dto.setUserAdmin('C');
 		manager.Update(dto);
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/system/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setSysAdmin(@PathVariable("id") int id){
+	public ResponseEntity<UserDTO> setSysAdmin(@PathVariable("id") int id) {
 		UserDTO dto = manager.Read(id);
-		if(dto.equals(null))
+		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
-		
+
 		dto.setUserAdmin('S');
 		manager.Update(dto);
 		return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	public UserManagerInterface getManager() {
 		return manager;
 	}

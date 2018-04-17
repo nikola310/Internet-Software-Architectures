@@ -37,6 +37,7 @@ public class UserManager implements UserManagerInterface {
 			if (token == null) {
 				return false;
 			}
+			user.setUserPhone(new Integer(dto.getUserPhone()));
 			Date expiration = new Date();
 			expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
 

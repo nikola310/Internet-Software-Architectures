@@ -21,6 +21,7 @@ public class ActorRepositoryFake implements ActorRepository{
 	public void deleteAllInBatch() {
 		
 	}
+	
 
 	public void deleteInBatch(Iterable<Actor> arg0) {
 		
