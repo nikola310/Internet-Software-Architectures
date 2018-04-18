@@ -28,7 +28,6 @@ public class SeatManagerTests {
 
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
-		dto.setSeatTaken(true);
 		SeatManager manager = new SeatManager(seatRepository);
 
 		// Act and assert
@@ -39,7 +38,6 @@ public class SeatManagerTests {
 
 		Assert.assertEquals(dto.getSeatId(), seat.getSeatId());
 		Assert.assertEquals(dto.getSeatModified(), seat.getSeatModified());
-		Assert.assertEquals(dto.isSeatTaken(), seat.isSeatTaken());
 	}
 
 	@Test
@@ -71,7 +69,6 @@ public class SeatManagerTests {
 
 		final Seat seat = new Seat();
 		seat.setSeatModified(new Date());
-		seat.setSeatTaken(true);
 
 		mock.checking(new Expectations() {
 			{
@@ -90,7 +87,6 @@ public class SeatManagerTests {
 
 		Assert.assertEquals(dto.getSeatId(), seat.getSeatId());
 		Assert.assertEquals(dto.getSeatModified(), seat.getSeatModified());
-		Assert.assertEquals(dto.isSeatTaken(), seat.isSeatTaken());
 
 		mock.assertIsSatisfied();
 	}
@@ -105,11 +101,9 @@ public class SeatManagerTests {
 
 		Seat seat1 = new Seat();
 		seat1.setSeatModified(new Date());
-		seat1.setSeatTaken(true);
 
 		Seat seat2 = new Seat();
 		seat2.setSeatModified(new Date());
-		seat2.setSeatTaken(false);
 
 		list.add(seat1);
 		list.add(seat2);
@@ -131,11 +125,9 @@ public class SeatManagerTests {
 
 		Assert.assertEquals(listDTO.get(0).getSeatId(), list.get(0).getSeatId());
 		Assert.assertEquals(listDTO.get(0).getSeatModified(), list.get(0).getSeatModified());
-		Assert.assertEquals(listDTO.get(0).isSeatTaken(), list.get(0).isSeatTaken());
 
 		Assert.assertEquals(listDTO.get(1).getSeatId(), list.get(1).getSeatId());
 		Assert.assertEquals(listDTO.get(1).getSeatModified(), list.get(1).getSeatModified());
-		Assert.assertEquals(listDTO.get(1).isSeatTaken(), list.get(1).isSeatTaken());
 
 		mock.assertIsSatisfied();
 	}

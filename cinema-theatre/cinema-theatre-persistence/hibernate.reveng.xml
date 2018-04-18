@@ -2,38 +2,20 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-<type-mapping>
-	<sql-type jdbc-type="INTEGER" hibernate-type="int"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer"
-		not-null="false">
-	</sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="BIT" hibernate-type="boolean"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="TIMESTAMP" hibernate-type="timestamp"
-		length="19" not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50"
-		not-null="true">
-	</sql-type>
-	<sql-type jdbc-type="CHAR" hibernate-type="java.lang.Character"
-		length="1" not-null="false">
-	</sql-type>
-</type-mapping>
-
-<table-filter match-catalog="isa" match-name=".*"/>
+  <table-filter match-catalog="isa" match-name="actor"/>
+  <table-filter match-catalog="isa" match-name="actorperformances"/>
+  <table-filter match-catalog="isa" match-name="bid"/>
+  <table-filter match-catalog="isa" match-name="cinema_theatre"/>
+  <table-filter match-catalog="isa" match-name="event"/>
+  <table-filter match-catalog="isa" match-name="friendslist"/>
+  <table-filter match-catalog="isa" match-name="hall"/>
+  <table-filter match-catalog="isa" match-name="history"/>
+  <table-filter match-catalog="isa" match-name="performance"/>
+  <table-filter match-catalog="isa" match-name="props"/>
+  <table-filter match-catalog="isa" match-name="rankscale"/>
+  <table-filter match-catalog="isa" match-name="reservation"/>
+  <table-filter match-catalog="isa" match-name="seat"/>
+  <table-filter match-catalog="isa" match-name="segment"/>
+  <table-filter match-catalog="isa" match-name="ticket"/>
+  <table-filter match-catalog="isa" match-name="user"/>
 </hibernate-reverse-engineering>

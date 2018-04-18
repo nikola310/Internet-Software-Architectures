@@ -12,8 +12,6 @@ public class SeatDTO {
 	
 	private int seatId;
 	@NotNull
-	private boolean seatTaken;
-	@NotNull
 	private Date seatModified;
 	
 	public int getSeatId() {
@@ -22,14 +20,6 @@ public class SeatDTO {
 	
 	public void setSeatId(int seatId) {
 		this.seatId = seatId;
-	}
-	
-	public boolean isSeatTaken() {
-		return seatTaken;
-	}
-	
-	public void setSeatTaken(boolean seatTaken) {
-		this.seatTaken = seatTaken;
 	}
 	
 	public Date getSeatModified() {
