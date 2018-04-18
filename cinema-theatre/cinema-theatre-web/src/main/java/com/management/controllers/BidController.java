@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.BidDTO;
@@ -124,27 +125,17 @@ public class BidController {
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
-//	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST)
-//	public ResponseEntity<BidDTO> setBid(@PathVariable("id") int id,
-//			@Context HttpServletRequest request) {
-//		BidDTO dto = manager.Read(id);
-//		if (dto == null) {
-//			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
-//		}
-//		request.getSession().setAttribute("bid", dto);
-//		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
-//	}
-	
-	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST, 
-			produces = MediaType.TEXT_PLAIN)
+	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN)
 	public ResponseEntity<String> setBid(@PathVariable("id") int id,
 			@Context HttpServletRequest request) {
 		BidDTO dto = manager.Read(id);
 		if (dto == null) {
-			return new ResponseEntity<String>("Error handling", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Error handling",
+					HttpStatus.NOT_FOUND);
 		}
 		request.getSession().setAttribute("bid", dto);
-		return new ResponseEntity<String>("redirect:/editbid.html", HttpStatus.OK);
+		return new ResponseEntity<String>("redirect:/editbid.html",
+				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
@@ -169,5 +160,33 @@ public class BidController {
 		manager.Create(dto);
 
 		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+	}
+
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCurrentBid(@RequestParam("id") int id,
+			@Context HttpServletRequest request) {
+		
+		request.getSession().removeAttribute("bid");
+		if (!manager.Delete(id)) {
+			System.out.println("usao u if!");
+			return new ResponseEntity<String>("Could not delete bid.",
+					HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>("Bid succesfully deleted.",
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "set/price", method = RequestMethod.POST)
+	public ResponseEntity<String> setPrice(@RequestParam("price") int price,
+			@Context HttpServletRequest request) {
+		 if (price == 0) {
+			 return new ResponseEntity<String>("Value not allowed", HttpStatus.NOT_FOUND);
+		 }
+		 BidDTO bid = (BidDTO) request.getSession().getAttribute("bid");
+		 bid.setBidPrice(price);
+		 manager.Update(bid);
+		 request.getSession().setAttribute("bid", bid);
+		return new ResponseEntity<String>("Success!", HttpStatus.OK);
 	}
 }

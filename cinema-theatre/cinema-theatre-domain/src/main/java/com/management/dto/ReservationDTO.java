@@ -11,7 +11,6 @@ public class ReservationDTO {
 	private int reservationId;
 	@NotNull
 	private int propsId;
-	@NotNull
 	private int userId;
 	
 	public int getReservationId() {

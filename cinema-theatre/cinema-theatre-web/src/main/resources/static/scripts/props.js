@@ -122,8 +122,7 @@ function loadBidsByUserId(id){
 function setBid(e){
 	var bidID =  e.id.split(/-(.+)/)[1];
 	$.post("bid/set/" + bidID, function(data){
-		//window.location = "editbid.html";
-		console.log(data);
+		window.location.replace("editbid.html");
 	});
 }
 

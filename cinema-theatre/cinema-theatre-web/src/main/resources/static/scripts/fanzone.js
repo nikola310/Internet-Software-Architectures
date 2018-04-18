@@ -108,7 +108,6 @@ function createBid(e){
 }
 
 function make_reservation(e){
-	console.log(e);
 	var propsID =  e.id.split(/-(.+)/)[1];
 	var dt = JSON.stringify({
 		"propsId" : propsID

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="icon" href="images/icon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="images/icon.ico" type="image/x-icon" />
 <script type="text/javascript" src="scripts/data-include.js"></script>
 <script type="text/javascript" src="scripts/editbid.js"></script>
 <meta charset="UTF-8">
@@ -12,7 +14,19 @@
 	<div data-include="header"></div>
 	<br />
 	<br />
-	
+	<form onsubmit="return edit_bid();" id="edit-bid">
+		<table class="registrationTable">
+			<tr>
+				<td>Change price:</td>
+				<td><input type="number" id="bid-price"></td>
+			</tr>
+			<tr>
+				<td><button type="reset">Cancel</button></td>
+				<td><input type="submit" value="Edit" id="edit-btn"></td>
+			</tr>
+		</table>
+	</form>
+	<button onclick="return delete_bid(this);" id="delete-btn">Delete bid</button>
 	<br />
 	<br />
 	<div data-include="footer"></div>

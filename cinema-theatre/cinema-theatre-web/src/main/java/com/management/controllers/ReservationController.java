@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.management.dto.CreateReservationDTO;
 import com.management.dto.ReservationDTO;
 import com.management.interfaces.ReservationManagerInterface;
 
@@ -84,19 +83,16 @@ public class ReservationController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity<CreateReservationDTO> addNew(
-			@Validated @RequestBody CreateReservationDTO dto,
+	public ResponseEntity<ReservationDTO> addNew(
+			@Validated @RequestBody ReservationDTO dto,
 			@Context HttpServletRequest request) {
 		if (dto == null) {
-			return new ResponseEntity<CreateReservationDTO>(
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {
-			ReservationDTO tmp = new ReservationDTO();
-			tmp.setPropsId(dto.getPropsId());
 			int userId = 1; // ((User)request.getSession().getAttribute("user")).getUserId();
-			tmp.setUserId(userId);
-			manager.Create(tmp);
-			return new ResponseEntity<CreateReservationDTO>(dto, HttpStatus.OK);
+			dto.setUserId(userId);
+			manager.Create(dto);
+			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
 }
