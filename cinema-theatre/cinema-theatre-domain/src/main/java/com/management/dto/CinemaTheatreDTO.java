@@ -21,6 +21,8 @@ public class CinemaTheatreDTO {
 	private String ctAdress;
 	@Size(min = 1, max = 200)
 	private String ctDescription;
+	@NotNull
+	private char ctType;
 	
 	public String getCtStateid() {
 		return ctStateid;
@@ -59,4 +61,11 @@ public class CinemaTheatreDTO {
 	public void setCtDescription(String ctDescription) {
 		this.ctDescription = ctDescription;
 	}
+	public char getCtType() {
+		return ctType;
+	}
+	public void setCtType(char ctType) {
+		this.ctType = ctType;
+	}
+	
 }
