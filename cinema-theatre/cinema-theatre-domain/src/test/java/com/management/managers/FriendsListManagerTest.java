@@ -28,7 +28,7 @@ public class FriendsListManagerTest {
 		FriendslistDTO dto = new FriendslistDTO();
 		dto.setFriendsStatus('P');
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListManager manager = new FriendsListManager();
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -54,7 +54,7 @@ public class FriendsListManagerTest {
 		});
 
 		// Act and assert
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListManager manager = new FriendsListManager();
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -77,7 +77,7 @@ public class FriendsListManagerTest {
 			}
 		});
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListManager manager = new FriendsListManager();
 
 		// Act
 		FriendslistDTO dto = manager.Read(1);
@@ -114,7 +114,7 @@ public class FriendsListManagerTest {
 			}
 		});
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
+		FriendsListManager manager = new FriendsListManager();
 
 		// Act
 		ArrayList<FriendslistDTO> listDTO = manager.ReadAll();

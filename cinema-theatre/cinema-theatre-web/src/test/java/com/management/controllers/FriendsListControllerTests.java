@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
 import com.management.fake.FriendsListRepositoryFake;
-import com.management.managers.FriendsListManager;
 import com.management.repositories.FriendsListRepository;
 
 /**
@@ -32,8 +31,8 @@ public class FriendsListControllerTests {
 		FriendslistDTO dto = new FriendslistDTO();
 		dto.setFriendsStatus('P');
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
-		FriendsListController controller = new FriendsListController(manager);
+		//FriendsListManager manager = new FriendsListManager();
+		FriendsListController controller = new FriendsListController();
 
 		// Act and assert
 		Assert.assertNotNull(controller);
@@ -55,8 +54,8 @@ public class FriendsListControllerTests {
 		});
 
 		// Act and assert
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
-		FriendsListController controller = new FriendsListController(manager);
+		//FriendsListManager manager = new FriendsListManager();
+		FriendsListController controller = new FriendsListController();
 
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.deleteFriendsList(1), new ResponseEntity<FriendslistDTO>(HttpStatus.OK));
@@ -80,8 +79,8 @@ public class FriendsListControllerTests {
 			}
 		});
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
-		FriendsListController controller = new FriendsListController(manager);
+		//FriendsListManager manager = new FriendsListManager();
+		FriendsListController controller = new FriendsListController();
 
 		// Act
 		ResponseEntity<FriendslistDTO> response = controller.getFriendslist(1);
@@ -118,8 +117,8 @@ public class FriendsListControllerTests {
 			}
 		});
 
-		FriendsListManager manager = new FriendsListManager(friendsListRepository);
-		FriendsListController controller = new FriendsListController(manager);
+		//FriendsListManager manager = new FriendsListManager();
+		FriendsListController controller = new FriendsListController();
 
 		// Act
 		ResponseEntity<List<FriendslistDTO>> response = controller.getFriendslists();
