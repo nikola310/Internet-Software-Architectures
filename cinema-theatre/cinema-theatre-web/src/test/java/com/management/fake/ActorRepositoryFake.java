@@ -14,17 +14,16 @@ import com.management.repositories.ActorRepository;
  * @author Zivko Stanisic
  *
  */
-public class ActorRepositoryFake implements ActorRepository{
-	
+public class ActorRepositoryFake implements ActorRepository {
+
 	private Actor entity;
 
 	public void deleteAllInBatch() {
-		
+
 	}
-	
 
 	public void deleteInBatch(Iterable<Actor> arg0) {
-		
+
 	}
 
 	public List<Actor> findAll() {
@@ -48,7 +47,7 @@ public class ActorRepositoryFake implements ActorRepository{
 	}
 
 	public void flush() {
-		
+
 	}
 
 	public Actor getOne(Integer arg0) {
@@ -72,19 +71,19 @@ public class ActorRepositoryFake implements ActorRepository{
 	}
 
 	public void delete(Integer arg0) {
-		
+
 	}
 
 	public void delete(Actor arg0) {
-		
+
 	}
 
 	public void delete(Iterable<? extends Actor> arg0) {
-		
+
 	}
 
 	public void deleteAll() {
-		
+
 	}
 
 	public boolean exists(Integer arg0) {

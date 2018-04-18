@@ -11,4 +11,5 @@ import com.management.entities.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	public User findUserByUserToken(String token);
+	public User findUserByUserEmail(String email);
 }

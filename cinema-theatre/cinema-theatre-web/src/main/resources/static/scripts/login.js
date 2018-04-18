@@ -3,27 +3,21 @@
  */
 
 
-function registrate() {
+function login() {
 	var regData = JSON.stringify({        
-	        "userEmail": $("#userEmail").val(),
-	        "userName": $("#userName").val(),
-	        "userSurname": $("#userSurname").val(),
-	        "userPassword": $("#userPassword").val(),
-	        "userCity": $("#userCity").val(),
-	        "userStateid": $("#userStateid").val(),
-	        "userPhone": $("#userPhone").val()
-	        
+	        "email": $("#mail").val(),
+	        "password": $("#password").val()        
 	    });
 
 	
 	$.ajax({
         type: 'post',
-        url: 'user',
+        url: 'user/login',
         data: regData,
         contentType: "application/json; charset=utf-8",
         dataType : "json",
         success: function (data) {
-        	window.location.replace("mailCheck.html");
+        	window.location.replace("index.html");
         },
         fail : function(data) {
         	console.log(regData);

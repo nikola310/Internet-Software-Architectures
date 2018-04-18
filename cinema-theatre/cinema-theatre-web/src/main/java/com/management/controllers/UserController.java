@@ -3,6 +3,9 @@ package com.management.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.LoginDTO;
+import com.management.dto.ProfileDTO;
 import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 import com.management.interfaces.UserManagerInterface;
@@ -62,11 +67,11 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<RegistrationDTO> addUser(
-			@Validated @RequestBody RegistrationDTO dto) {
+	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
+
 		try {
 			if (dto == null) {
-				return new ResponseEntity<RegistrationDTO>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
 			}
 			String token = UUID.randomUUID().toString();
 
@@ -74,13 +79,63 @@ public class UserController {
 			manager.Create(dto, token);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<LoginDTO> login(@Validated @RequestBody LoginDTO dto, @Context HttpServletRequest request) {
+		try {
+			if (dto == null) {
+				return new ResponseEntity<LoginDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+
+			if (!manager.Login(dto)) {
+				System.err.println("Test");
+				return new ResponseEntity<LoginDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+
+			request.getSession().setAttribute("user", dto);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<LoginDTO>(dto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ResponseEntity<ProfileDTO> profile(@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+		ProfileDTO dto = manager.ReadProfile(sessionDTO);
+
+		if (dto == null) {
+			return new ResponseEntity<ProfileDTO>(dto, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<ProfileDTO>(dto, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<RegistrationDTO> edit(@Validated @RequestBody RegistrationDTO dto) {
+
+		try {
+			if (dto == null) {
+				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+
+			if (!manager.Edit(dto)) {
+				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> updateUser(
-			@Validated @RequestBody UserDTO dto) {
+	public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}

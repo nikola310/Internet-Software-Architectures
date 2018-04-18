@@ -2,6 +2,8 @@ package com.management.interfaces;
 
 import java.util.ArrayList;
 
+import com.management.dto.LoginDTO;
+import com.management.dto.ProfileDTO;
 import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
 
@@ -22,4 +24,10 @@ public interface UserManagerInterface {
 	public boolean Delete(int id);
 
 	public boolean Confirmation(String token);
+	
+	public boolean Login (LoginDTO dto);
+	
+	public ProfileDTO ReadProfile(LoginDTO dto);
+	
+	public boolean Edit(RegistrationDTO dto);
 }

@@ -14,19 +14,17 @@ import com.management.repositories.PerformanceRepository;
  * @author Zivko Stanisic
  *
  */
-public class PerformanceRepositoryFake implements PerformanceRepository{
+public class PerformanceRepositoryFake implements PerformanceRepository {
 
 	private Performance entity;
-	
 
 	public void deleteAllInBatch() {
-		
+
 	}
 
 	public void deleteInBatch(Iterable<Performance> arg0) {
-		
+
 	}
-	
 
 	public List<Performance> findAll() {
 		return null;
@@ -49,7 +47,7 @@ public class PerformanceRepositoryFake implements PerformanceRepository{
 	}
 
 	public void flush() {
-		
+
 	}
 
 	public Performance getOne(Integer arg0) {
@@ -73,19 +71,19 @@ public class PerformanceRepositoryFake implements PerformanceRepository{
 	}
 
 	public void delete(Integer arg0) {
-		
+
 	}
 
 	public void delete(Performance arg0) {
-		
+
 	}
 
 	public void delete(Iterable<? extends Performance> arg0) {
-		
+
 	}
 
 	public void deleteAll() {
-		
+
 	}
 
 	public boolean exists(Integer arg0) {

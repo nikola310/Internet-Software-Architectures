@@ -32,7 +32,6 @@ public class SeatControllerTests {
 
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
-		dto.setSeatTaken(true);
 		SeatManager manager = new SeatManager(seatRepository);
 		SeatController controller = new SeatController(manager);
 
@@ -72,7 +71,6 @@ public class SeatControllerTests {
 
 		final Seat seat = new Seat();
 		seat.setSeatModified(new Date());
-		seat.setSeatTaken(true);
 
 		mock.checking(new Expectations() {
 			{
@@ -105,11 +103,9 @@ public class SeatControllerTests {
 
 		Seat seat1 = new Seat();
 		seat1.setSeatModified(new Date());
-		seat1.setSeatTaken(true);
 
 		Seat seat2 = new Seat();
 		seat2.setSeatModified(new Date());
-		seat2.setSeatTaken(false);
 
 		list.add(seat1);
 		list.add(seat2);
