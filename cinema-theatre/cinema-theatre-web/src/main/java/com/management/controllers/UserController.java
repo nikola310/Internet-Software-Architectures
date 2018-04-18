@@ -115,6 +115,16 @@ public class UserController {
 		return new ResponseEntity<ProfileDTO>(dto, HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ResponseEntity<LoginDTO> logout(@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+		
+		request.getSession().invalidate();
+		
+		return new ResponseEntity<LoginDTO>(sessionDTO, HttpStatus.OK);
+
+	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<RegistrationDTO> edit(@Validated @RequestBody RegistrationDTO dto) {

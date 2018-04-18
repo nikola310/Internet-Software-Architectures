@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.management.dto.FriendDTO;
 import com.management.dto.FriendslistDTO;
 import com.management.dto.ProfileDTO;
 import com.management.dto.UserBasicDTO;
@@ -127,9 +128,54 @@ public class FriendsListManager implements FriendsListManagerInterface {
 		return retVal;
 	}
 
-	public ArrayList<UserBasicDTO> GetFriendsBasicInformation(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<FriendDTO> GetFriendsBasicInformation(String email) {
+		ArrayList<FriendDTO> retVal = new ArrayList<FriendDTO>();
+
+		try {
+			User user = userRepository.findUserByUserEmail(email);
+			ArrayList<Friendslist> frindslist = (ArrayList<Friendslist>) friendsListRepository.findAll();
+
+			for (Friendslist tmp : frindslist) {
+				if (tmp.getUserByUserId() == user) {
+					if (tmp.getFriendsStatus() == 'A') {
+						User friend = tmp.getUserByUseUserId();
+						FriendDTO dto = new FriendDTO();
+						dto.setSurname(friend.getUserSurname());
+						dto.setName(friend.getUserName());
+						dto.setId(tmp.getFriendsId());
+						dto.setStatus("A");
+						retVal.add(dto);
+					}
+
+				} else if (tmp.getUserByUseUserId() == user) {
+					if (tmp.getFriendsStatus() == 'A') {
+
+						User friend = tmp.getUserByUserId();
+						FriendDTO dto = new FriendDTO();
+						dto.setSurname(friend.getUserSurname());
+						dto.setName(friend.getUserName());
+						dto.setId(tmp.getFriendsId());
+						dto.setStatus("A");
+						retVal.add(dto);
+
+					} else if (tmp.getFriendsStatus() == 'P') {
+
+						User friend = tmp.getUserByUserId();
+						FriendDTO dto = new FriendDTO();
+						dto.setSurname(friend.getUserSurname());
+						dto.setName(friend.getUserName());
+						dto.setId(tmp.getFriendsId());
+						dto.setStatus("P");
+						retVal.add(dto);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return retVal;
 	}
 
 	public boolean IsFriend(String email, int id) {
@@ -142,7 +188,15 @@ public class FriendsListManager implements FriendsListManagerInterface {
 			for (Friendslist tmp : frindslist) {
 				if (tmp.getUserByUserId() == user) {
 					if (tmp.getUserByUseUserId() == friend) {
-						return true;
+						if (tmp.getFriendsStatus() == 'A' || tmp.getFriendsStatus() == 'P') {
+							return true;
+						}
+					}
+				} else if (tmp.getUserByUseUserId() == user) {
+					if (tmp.getUserByUserId() == friend) {
+						if (tmp.getFriendsStatus() == 'A' || tmp.getFriendsStatus() == 'P') {
+							return true;
+						}
 					}
 				}
 			}
@@ -184,6 +238,34 @@ public class FriendsListManager implements FriendsListManagerInterface {
 			return null;
 		}
 		return dto;
+	}
+
+	public boolean Accept(int id) {
+		try {
+			Friendslist list = friendsListRepository.findOne(id);
+			list.setFriendsStatus('A');
+			friendsListRepository.save(list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean Refuse(int id) {
+		try {
+			Friendslist list = friendsListRepository.findOne(id);
+			list.setFriendsStatus('R');
+			friendsListRepository.save(list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.FriendDTO;
 import com.management.dto.FriendslistDTO;
 import com.management.dto.LoginDTO;
 import com.management.dto.ProfileDTO;
@@ -37,6 +38,33 @@ public class FriendsListController {
 	@Autowired
 	private MailingInterface mailManager;
 
+	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> accept(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Accept(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> refuse(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Refuse(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> remove(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/peoples", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<UserBasicDTO>> peoples(@Context HttpServletRequest request) {
 		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
@@ -48,6 +76,20 @@ public class FriendsListController {
 		}
 
 		return new ResponseEntity<ArrayList<UserBasicDTO>>(dto, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/friends", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<FriendDTO>> friends(@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+
+		ArrayList<FriendDTO> dto = manager.GetFriendsBasicInformation(sessionDTO.getEmail());
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<FriendDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<FriendDTO>>(dto, HttpStatus.OK);
 
 	}
 
@@ -65,7 +107,7 @@ public class FriendsListController {
 	@RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ProfileDTO> profile(@Context HttpServletRequest request, @PathVariable int id) {
 		ProfileDTO dto = manager.GEtFriend(id);
-		
+
 		if (dto == null) {
 			return new ResponseEntity<ProfileDTO>(dto, HttpStatus.NOT_FOUND);
 		}

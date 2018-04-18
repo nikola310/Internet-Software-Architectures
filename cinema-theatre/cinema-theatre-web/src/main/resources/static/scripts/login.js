@@ -30,3 +30,9 @@ function login() {
     });	
 	return false;
 }
+
+function logout() {
+	$.get("user/logout", function(data) {
+		window.location.replace("index.html");
+	});
+}
