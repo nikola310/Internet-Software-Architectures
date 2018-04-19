@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.interfaces.CinemaTheatreManagerInterface;
 
@@ -27,11 +28,19 @@ import com.management.interfaces.CinemaTheatreManagerInterface;
 @RequestMapping(value = "/cinema-theatre")
 public class CinemaTheatreController {
 
+	@Autowired
 	private CinemaTheatreManagerInterface manager;
 
-	@Autowired
-	public CinemaTheatreController(CinemaTheatreManagerInterface manager) {
-		this.manager = manager;
+	@RequestMapping(value = "/basic", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<CinemaTheatreBasicDTO>> peoples() {
+		ArrayList<CinemaTheatreBasicDTO> dto = manager.GetAllCinemaTheatreBasicInformation();
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<CinemaTheatreBasicDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<CinemaTheatreBasicDTO>>(dto, HttpStatus.OK);
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -51,7 +60,7 @@ public class CinemaTheatreController {
 
 		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/theatres", method = RequestMethod.GET)
 	public ResponseEntity<List<CinemaTheatreDTO>> getTheatres() {
 		List<CinemaTheatreDTO> list = manager.ReadAllTheatres();
@@ -60,17 +69,17 @@ public class CinemaTheatreController {
 		}
 		return new ResponseEntity<List<CinemaTheatreDTO>>(list, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/cinemas", method = RequestMethod.GET)
 	public ResponseEntity<List<CinemaTheatreDTO>> getCinemas() {
-		
+
 		List<CinemaTheatreDTO> list = manager.ReadAllCinemas();
 		if (list == null) {
 			return new ResponseEntity<List<CinemaTheatreDTO>>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<CinemaTheatreDTO>>(list, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/selected", method = RequestMethod.GET)
 	public ResponseEntity<CinemaTheatreDTO> getSelected(@Context HttpServletRequest request) {
 		CinemaTheatreDTO dto = (CinemaTheatreDTO) request.getSession().getAttribute("ctSelected");
@@ -90,9 +99,10 @@ public class CinemaTheatreController {
 
 		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}/select", method = RequestMethod.POST)
-	public ResponseEntity<CinemaTheatreDTO> selectCinemaTheatre(@PathVariable("id") int id, @Context HttpServletRequest request) {
+	public ResponseEntity<CinemaTheatreDTO> selectCinemaTheatre(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
 		CinemaTheatreDTO dto = manager.Read(id);
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);

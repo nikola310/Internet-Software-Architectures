@@ -21,6 +21,20 @@ $(document).ready(
 				}
 
 			});
+			
+				$.get("cinema-theatre/basic", function(data) {
+					console.log(data);
+					$('#description').text("List of all cinemas and theatres: ");
+					if (data.length > 0) {
+						for (i = 0; i < data.length; i++) {
+							$('#links').append(
+									'<li><a href="cinemaTheatreProfile.html?id='
+											+ data[i].id + '">' + data[i].name
+											+ '</a></li>');
+						}
+					}
+
+				});
 		});
 
 function accept(id) {

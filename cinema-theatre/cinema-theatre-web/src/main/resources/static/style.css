@@ -503,3 +503,28 @@ input.text {
 .props_table{
 	font-size: 13px;
 }
+
+/* Seats in cinema. */
+.outerCanvas {
+    border-style: solid;
+    border-color: white;
+    text-align: center;
+    padding-left: 31%;
+}
+
+.seat{
+    border-style: solid;
+    border-color: white;
+    height : 40px;
+    width : 40px;
+}
+
+.outerSeats {
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+    max-width:550px;
+    padding-left: 30px;
+    padding-right: 30px;
+    
+}

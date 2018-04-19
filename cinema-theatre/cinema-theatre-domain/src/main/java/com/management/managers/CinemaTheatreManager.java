@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
 import com.management.interfaces.CinemaTheatreManagerInterface;
@@ -135,5 +136,24 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 		}
 
 		return true;
+	}
+
+	public ArrayList<CinemaTheatreBasicDTO> GetAllCinemaTheatreBasicInformation() {
+		
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreBasicDTO> listDTO = new ArrayList<CinemaTheatreBasicDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+
+				CinemaTheatreBasicDTO dto = new CinemaTheatreBasicDTO();
+				dto.setId(tmp.getCtId());
+				dto.setName(tmp.getCtName());
+				listDTO.add(dto);
+				
+				System.out.println(dto.getName());
+
+		}
+
+		return listDTO;
 	}
 }
