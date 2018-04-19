@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
+
+import com.management.dto.HallEventDTO;
+
 import com.management.dto.LoginDTO;
 import com.management.entities.User;
+
 import com.management.interfaces.CinemaTheatreManagerInterface;
 import com.management.interfaces.UserManagerInterface;
 
@@ -34,6 +38,7 @@ public class CinemaTheatreController {
 	@Autowired
 	private UserManagerInterface userManager;
 
+	@Autowired
 	private CinemaTheatreManagerInterface manager;
 
 	@RequestMapping(value = "/basic", method = RequestMethod.GET)
@@ -48,6 +53,18 @@ public class CinemaTheatreController {
 
 	}
 
+	@RequestMapping(value = "/halls/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<HallEventDTO>> halls(@PathVariable int id) {
+		ArrayList<HallEventDTO> dto = manager.GetAllHallEvents(id);
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<HallEventDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<HallEventDTO>>(dto, HttpStatus.OK);
+
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CinemaTheatreDTO>> getCinemaTheatres() {
 
@@ -57,8 +74,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<CinemaTheatreDTO> getCinemaTheatre(
-			@PathVariable int id) {
+	public ResponseEntity<CinemaTheatreDTO> getCinemaTheatre(@PathVariable int id) {
 		CinemaTheatreDTO dto = manager.Read(id);
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
@@ -68,8 +84,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(
-			@Validated @RequestBody CinemaTheatreDTO dto) {
+	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -80,8 +95,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<CinemaTheatreDTO> updateCinemaTheatre(
-			@Validated @RequestBody CinemaTheatreDTO dto) {
+	public ResponseEntity<CinemaTheatreDTO> updateCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -92,8 +106,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<CinemaTheatreDTO> deleteCinemaTheatre(
-			@PathVariable("id") int id) {
+	public ResponseEntity<CinemaTheatreDTO> deleteCinemaTheatre(@PathVariable("id") int id) {
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -102,8 +115,7 @@ public class CinemaTheatreController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public ResponseEntity<String> newCinemaTheatre(
-			@Validated @RequestBody CinemaTheatreDTO dto,
+	public ResponseEntity<String> newCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto,
 			@Context HttpServletRequest request) {
 		if (dto == null) {
 			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
@@ -121,7 +133,6 @@ public class CinemaTheatreController {
 
 		manager.Create(dto);
 
-		return new ResponseEntity<String>("Cinema-theatre added successfully",
-				HttpStatus.OK);
+		return new ResponseEntity<String>("Cinema-theatre added successfully", HttpStatus.OK);
 	}
 }

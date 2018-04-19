@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
+import com.management.dto.HallEventDTO;
 import com.management.entities.CinemaTheatre;
+import com.management.entities.Event;
+import com.management.entities.Hall;
+import com.management.entities.Performance;
 import com.management.interfaces.CinemaTheatreManagerInterface;
 import com.management.repositories.CinemaTheatreRepository;
 
@@ -57,7 +61,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 		return dto;
 	}
-	
+
 	public ArrayList<CinemaTheatreDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
@@ -75,7 +79,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 		return listDTO;
 	}
-	
+
 	public ArrayList<CinemaTheatreDTO> ReadAllTheatres() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
@@ -84,7 +88,8 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 		for (CinemaTheatre tmp : listEntities) {
 			try {
 				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
-				if(dto.getCtType() == 'T')listDTO.add(dto);
+				if (dto.getCtType() == 'T')
+					listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
 				return null;
@@ -93,7 +98,7 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 		return listDTO;
 	}
-	
+
 	public ArrayList<CinemaTheatreDTO> ReadAllCinemas() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
@@ -102,7 +107,8 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 		for (CinemaTheatre tmp : listEntities) {
 			try {
 				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
-				if(dto.getCtType() == 'C')listDTO.add(dto);
+				if (dto.getCtType() == 'C')
+					listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
 				return null;
@@ -139,21 +145,47 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 	}
 
 	public ArrayList<CinemaTheatreBasicDTO> GetAllCinemaTheatreBasicInformation() {
-		
+
 		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
 		ArrayList<CinemaTheatreBasicDTO> listDTO = new ArrayList<CinemaTheatreBasicDTO>();
 
 		for (CinemaTheatre tmp : listEntities) {
 
-				CinemaTheatreBasicDTO dto = new CinemaTheatreBasicDTO();
-				dto.setId(tmp.getCtId());
-				dto.setName(tmp.getCtName());
-				listDTO.add(dto);
-				
-				System.out.println(dto.getName());
+			CinemaTheatreBasicDTO dto = new CinemaTheatreBasicDTO();
+			dto.setId(tmp.getCtId());
+			dto.setName(tmp.getCtName());
+			listDTO.add(dto);
+
+			System.out.println(dto.getName());
 
 		}
 
 		return listDTO;
+	}
+
+	public ArrayList<HallEventDTO> GetAllHallEvents(int id) {
+		ArrayList<HallEventDTO> retVal = new ArrayList<HallEventDTO>();
+		try {
+			CinemaTheatre entity = cinemaTheatreRepository.findOne(id);
+			
+			for (Hall hall : entity.getHalls()) {
+				for (Event event : hall.getEvents()) {
+					Performance per = event.getPerformance();
+					HallEventDTO dto = new HallEventDTO();
+					dto.setId(hall.getHallId());
+					dto.setHall(hall.getHallName());
+					dto.setPerformance(per.getPerDescription());
+					dto.setDate(event.getEventDate().toString());
+					retVal.add(dto);
+					
+					System.err.println(dto.getHall());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return retVal;
 	}
 }
