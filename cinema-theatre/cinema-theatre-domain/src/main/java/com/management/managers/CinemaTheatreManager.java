@@ -74,6 +74,42 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 		return listDTO;
 	}
+	
+	public ArrayList<CinemaTheatreDTO> ReadAllTheatres() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+			try {
+				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
+				if(dto.getCtType() == 'T')listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+	
+	public ArrayList<CinemaTheatreDTO> ReadAllCinemas() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+			try {
+				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
+				if(dto.getCtType() == 'C')listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 
 	public boolean Update(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();

@@ -1,6 +1,10 @@
 package com.management.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +51,34 @@ public class CinemaTheatreController {
 
 		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/theatres", method = RequestMethod.GET)
+	public ResponseEntity<List<CinemaTheatreDTO>> getTheatres() {
+		List<CinemaTheatreDTO> list = manager.ReadAllTheatres();
+		if (list == null) {
+			return new ResponseEntity<List<CinemaTheatreDTO>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<CinemaTheatreDTO>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/cinemas", method = RequestMethod.GET)
+	public ResponseEntity<List<CinemaTheatreDTO>> getCinemas() {
+		
+		List<CinemaTheatreDTO> list = manager.ReadAllCinemas();
+		if (list == null) {
+			return new ResponseEntity<List<CinemaTheatreDTO>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<CinemaTheatreDTO>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/selected", method = RequestMethod.GET)
+	public ResponseEntity<CinemaTheatreDTO> getSelected(@Context HttpServletRequest request) {
+		CinemaTheatreDTO dto = (CinemaTheatreDTO) request.getSession().getAttribute("ctSelected");
+		if (dto == null) {
+			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CinemaTheatreDTO> addCinemaTheatre(@Validated @RequestBody CinemaTheatreDTO dto) {
@@ -57,6 +89,17 @@ public class CinemaTheatreController {
 		manager.Create(dto);
 
 		return new ResponseEntity<CinemaTheatreDTO>(dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}/select", method = RequestMethod.POST)
+	public ResponseEntity<CinemaTheatreDTO> selectCinemaTheatre(@PathVariable("id") int id, @Context HttpServletRequest request) {
+		CinemaTheatreDTO dto = manager.Read(id);
+		if (dto == null) {
+			return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.NOT_FOUND);
+		}
+		request.getSession().setAttribute("ctSelected", dto);
+
+		return new ResponseEntity<CinemaTheatreDTO>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
