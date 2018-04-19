@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.LoginDTO;
 import com.management.dto.ReservationDTO;
+import com.management.entities.User;
 import com.management.interfaces.ReservationManagerInterface;
+import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Nikola Stojanovic
@@ -26,6 +30,9 @@ import com.management.interfaces.ReservationManagerInterface;
 @RequestMapping(value = "/reservation")
 public class ReservationController {
 
+	@Autowired
+	private UserManagerInterface userManager;
+	
 	private ReservationManagerInterface manager;
 
 	@Autowired
@@ -71,10 +78,32 @@ public class ReservationController {
 			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ReservationDTO> deleteReservation(
-			@PathVariable("id") int id) {
+			@RequestParam("id") int id) {
+		
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<ReservationDTO>(HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ReservationDTO> deleteReservation(
+			@PathVariable("id") int id, @Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<ReservationDTO>(HttpStatus.FORBIDDEN);
+		}
+		
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {

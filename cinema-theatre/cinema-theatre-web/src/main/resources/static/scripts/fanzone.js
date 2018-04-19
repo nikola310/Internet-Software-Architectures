@@ -31,7 +31,7 @@ function loadPropses() {
 					img.attr("alt", data[i].propsDesc);
 				}else{
 					img.attr("src", "images/no-img.png");
-					img.attr("alt", "No image.")
+					img.attr("alt", "No image.");
 				}
 				
 				if(data[i].propsUsed){

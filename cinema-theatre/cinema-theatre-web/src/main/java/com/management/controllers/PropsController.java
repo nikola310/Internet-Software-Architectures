@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CreatePropsDTO;
 import com.management.dto.LoginDTO;
 import com.management.dto.PropsDTO;
+import com.management.entities.Props;
+import com.management.entities.Reservation;
 import com.management.entities.User;
 import com.management.interfaces.PropsManagerInterface;
+import com.management.interfaces.ReservationManagerInterface;
 import com.management.interfaces.UserManagerInterface;
 
 /**
@@ -30,6 +34,9 @@ import com.management.interfaces.UserManagerInterface;
 @RestController
 @RequestMapping(value = "/props")
 public class PropsController {
+
+	@Autowired
+	private ReservationManagerInterface reservationManager;
 
 	@Autowired
 	private UserManagerInterface userManager;
@@ -80,7 +87,34 @@ public class PropsController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<PropsDTO> deleteProps(@PathVariable("id") int id) {
+	public ResponseEntity<PropsDTO> deleteProps(@RequestParam("id") int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<PropsDTO>(HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<PropsDTO> deleteProps(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<PropsDTO>(HttpStatus.FORBIDDEN);
+		}
+
+		Props p = new Props();
+		p.setPropsId(id);
+		for (Reservation r : reservationManager.getByProps(p)) {
+			reservationManager.Delete(r.getReservationId());
+		}
+
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -111,8 +145,17 @@ public class PropsController {
 	@RequestMapping(value = "/approve/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<PropsDTO> approveProps(@PathVariable("id") int id,
 			@Context HttpServletRequest request) {
-		if (request.getSession().getAttribute("user") == null)
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
+		if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<PropsDTO>(HttpStatus.FORBIDDEN);
+		}
 
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(true);
@@ -123,8 +166,17 @@ public class PropsController {
 	@RequestMapping(value = "/reject/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<PropsDTO> rejectProps(@PathVariable("id") int id,
 			@Context HttpServletRequest request) {
-		if (request.getSession().getAttribute("user") == null)
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
 			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
+		if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<PropsDTO>(HttpStatus.FORBIDDEN);
+		}
 
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(false);
@@ -152,11 +204,15 @@ public class PropsController {
 		if (dto == null) {
 			return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
 		} else {
-			// int userId =
-			// ((User)request.getSession().getAttribute("user")).getUserId();
-			int userId = 1;
+			LoginDTO lg = ((LoginDTO) request.getSession().getAttribute("user"));
+			if (lg == null)
+				return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
+			User u = userManager.getUser(lg);
+			if (u == null) {
+				return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
+			}
 			PropsDTO tmp = new PropsDTO(dto.getPropsName(),
-					dto.getPropsDeadline(), dto.getPropsPrice(), userId,
+					dto.getPropsDeadline(), dto.getPropsPrice(), u.getUserId(),
 					dto.getPropsImage(), dto.getPropsDesc());
 			tmp.setPropsApproved(null);
 			tmp.setPropsUsed(true);
@@ -166,21 +222,70 @@ public class PropsController {
 	}
 
 	@RequestMapping(value = "/official", method = RequestMethod.POST)
-	public ResponseEntity<CreatePropsDTO> createOfficial(
+	public ResponseEntity<String> createOfficial(
 			@RequestBody CreatePropsDTO dto, @Context HttpServletRequest request) {
 		if (dto == null) {
-			return new ResponseEntity<CreatePropsDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
 		} else {
-			// int userId =
-			// ((User)request.getSession().getAttribute("user")).getUserId();
-			int userId = 1;
+			LoginDTO lg = ((LoginDTO) request.getSession().getAttribute("user"));
+			if (lg == null)
+				return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+			User u = userManager.getUser(lg);
+			if (u == null) {
+				return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+			} else if (u.getUserAdmin() != 'F') {
+				return new ResponseEntity<String>("Error", HttpStatus.FORBIDDEN);
+			}
+
 			PropsDTO tmp = new PropsDTO(dto.getPropsName(),
-					dto.getPropsDeadline(), dto.getPropsPrice(), userId,
+					dto.getPropsDeadline(), dto.getPropsPrice(), u.getUserId(),
 					dto.getPropsImage(), dto.getPropsDesc());
-			tmp.setPropsApproved(null);
+			tmp.setPropsApproved(true);
 			tmp.setPropsUsed(false);
 			manager.Create(tmp);
-			return new ResponseEntity<CreatePropsDTO>(dto, HttpStatus.OK);
+			return new ResponseEntity<String>("Props created successfully",
+					HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/set", method = RequestMethod.POST)
+	public ResponseEntity<String> setCurrentProps(
+			@RequestParam("propsId") int propsId,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = ((LoginDTO) request.getSession().getAttribute("user"));
+		if (lg == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+		User u = userManager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<String>("Error", HttpStatus.FORBIDDEN);
+		}
+
+		PropsDTO props = manager.Read(propsId);
+		request.getSession().setAttribute("props", props);
+		return new ResponseEntity<String>("All ok!", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/current", method = RequestMethod.GET)
+	public ResponseEntity<PropsDTO> getCurrent(
+			@Context HttpServletRequest request) {
+		LoginDTO lg = ((LoginDTO) request.getSession().getAttribute("user"));
+		if (lg == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		User u = userManager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<PropsDTO>(HttpStatus.FORBIDDEN);
+		}
+
+		PropsDTO dto = (PropsDTO) request.getSession().getAttribute("props");
+
+		if (dto == null) {
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<PropsDTO>(dto, HttpStatus.OK);
 		}
 	}
 }

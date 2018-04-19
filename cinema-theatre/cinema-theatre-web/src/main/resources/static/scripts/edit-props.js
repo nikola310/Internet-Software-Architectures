@@ -16,15 +16,22 @@ function loadImage() {
 
 function read_props() {
 
-	$.get("props/2", function(data) {
+	$.get("props/current", function(data) {
 		console.log(data)
 		if (data != null) {
 			$("#edit-name").val(data.propsName);
 			$("#edit-desc").val(data.propsDesc);
 			$("#edit-date").val(
 					new Date(data.propsDeadline).toISOString().slice(0, -1));
-			$("#image-preview").attr("src",
-					"data:application/unknown;base64, " + data.propsImage);
+			if (data.propsImage != null) {
+				$("#image-preview").attr("src",
+						"data:application/unknown;base64, " + data.propsImage);
+				$("#image-preview").attr("alt", data.propsDesc);
+			} else {
+				$("#image-preview").attr("src", "images/no-img.png");
+				$("#image-preview").attr("alt", "No image.");
+			}
+
 			$("#edit-price").val(data.propsPrice);
 			$("#edit-btn").attr("props-id", data.propsId);
 			$("#edit-btn").attr("user-id", data.userId);
@@ -37,13 +44,13 @@ function read_props() {
 function edit_props() {
 	var propsID = $("#edit-btn").attr("props-id");
 	var userID = $("#edit-btn").attr("user-id");
-	
-	if(glob != null){
+
+	if (glob != null) {
 		glob = glob.split(/,(.+)/)[1];
-	}else{
+	} else {
 		glob = $("#image-preview").attr("src").split(/,(.+)/)[1].substring(1);
 	}
-	
+
 	var dt = JSON.stringify({
 		"propsId" : parseInt(propsID),
 		"propsName" : $("#edit-name").val(),
@@ -55,7 +62,7 @@ function edit_props() {
 		"propsPrice" : parseFloat($("#edit-price").val()),
 		"propsApproved" : null
 	});
-	
+
 	$.ajax({
 		type : "PUT",
 		url : "props",
@@ -65,14 +72,15 @@ function edit_props() {
 		success : function(data) {
 			console.log(data);
 			alert("Prop succesfully modified");
+			window.location.replace("fzadmin.html");
 		},
 		fail : function(data) {
 			console.log(data);
 		},
-		error: function(data){
+		error : function(data) {
 			console.log(data);
 		}
 	});
-	
+
 	return false;
 }
