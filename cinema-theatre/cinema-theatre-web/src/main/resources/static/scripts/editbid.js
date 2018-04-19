@@ -18,6 +18,7 @@ function edit_bid(){
 		success : function(data) {
 			console.log(data);
 			alert("Bid succesfully modified");
+			window.location.replace("propses.html");
 		},
 		fail : function(data) {
 			console.log(data);

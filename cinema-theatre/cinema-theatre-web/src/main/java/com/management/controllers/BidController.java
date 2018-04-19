@@ -168,16 +168,25 @@ public class BidController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public ResponseEntity<BidDTO> newBid(@Validated @RequestBody BidDTO dto,
+	public ResponseEntity<String> newBid(@Validated @RequestBody BidDTO dto,
 			@Context HttpServletRequest request) {
 		if (dto == null) {
-			return new ResponseEntity<BidDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
 		}
-		int userId = 1; // ((User)request.getSession().getAttribute("user")).getUserId();
-		dto.setUserId(userId);
+
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (lg == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		dto.setUserId(u.getUserId());
 		manager.Create(dto);
 
-		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
+		return new ResponseEntity<String>("All ok", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -197,14 +206,23 @@ public class BidController {
 	@RequestMapping(value = "set/price", method = RequestMethod.POST)
 	public ResponseEntity<String> setPrice(@RequestParam("price") int price,
 			@Context HttpServletRequest request) {
-		if (price == 0) {
+		if (price == 0) 
 			return new ResponseEntity<String>("Value not allowed",
 					HttpStatus.NOT_FOUND);
-		}
+		
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null) 
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+		
 		BidDTO bid = (BidDTO) request.getSession().getAttribute("bid");
 		bid.setBidPrice(price);
 		manager.Update(bid);
 		request.getSession().setAttribute("bid", bid);
 		return new ResponseEntity<String>("Success!", HttpStatus.OK);
 	}
+
 }

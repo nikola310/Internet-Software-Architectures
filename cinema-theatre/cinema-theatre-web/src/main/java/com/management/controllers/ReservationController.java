@@ -32,7 +32,7 @@ public class ReservationController {
 
 	@Autowired
 	private UserManagerInterface userManager;
-	
+
 	private ReservationManagerInterface manager;
 
 	@Autowired
@@ -78,11 +78,11 @@ public class ReservationController {
 			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ReservationDTO> deleteReservation(
 			@RequestParam("id") int id) {
-		
+
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -103,7 +103,7 @@ public class ReservationController {
 		} else if (u.getUserAdmin() != 'F') {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.FORBIDDEN);
 		}
-		
+
 		if (!manager.Delete(id)) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
 		} else {
@@ -117,11 +117,18 @@ public class ReservationController {
 			@Context HttpServletRequest request) {
 		if (dto == null) {
 			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
-		} else {
-			int userId = 1; // ((User)request.getSession().getAttribute("user")).getUserId();
-			dto.setUserId(userId);
-			manager.Create(dto);
-			return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 		}
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null)
+			return new ResponseEntity<ReservationDTO>(HttpStatus.NOT_FOUND);
+
+		dto.setUserId(u.getUserId());
+		manager.Create(dto);
+		return new ResponseEntity<ReservationDTO>(dto, HttpStatus.OK);
 	}
+
 }

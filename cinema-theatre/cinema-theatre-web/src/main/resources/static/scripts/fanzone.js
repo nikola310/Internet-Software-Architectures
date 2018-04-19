@@ -82,17 +82,14 @@ function createBid(e){
 	
 	dt = JSON.stringify({
 		"bidPrice" : parseFloat($("#bid-value-" + propsID).val()),
-		"userId" : 1,
 		"propsId" : parseInt(propsID),
-		"propsAccepted" : null
 	});
 	
 	$.ajax({
 		type : "POST",
-		url : "bid",
+		url : "bid/new",
 		data : dt,
 		contentType : "application/json; charset=utf-8",
-		dataType : "json",
 		success : function(data) {
 			alert("Bid succesfully created");
 		},
