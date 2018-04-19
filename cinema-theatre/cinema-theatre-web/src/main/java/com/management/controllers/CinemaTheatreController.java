@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
+import com.management.dto.HallEventDTO;
 import com.management.interfaces.CinemaTheatreManagerInterface;
 
 /**
@@ -40,6 +41,18 @@ public class CinemaTheatreController {
 		}
 
 		return new ResponseEntity<ArrayList<CinemaTheatreBasicDTO>>(dto, HttpStatus.OK);
+
+	}
+	
+	@RequestMapping(value = "/halls/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<HallEventDTO>> halls(@PathVariable int id) {
+		ArrayList<HallEventDTO> dto = manager.GetAllHallEvents(id);
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<HallEventDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<HallEventDTO>>(dto, HttpStatus.OK);
 
 	}
 

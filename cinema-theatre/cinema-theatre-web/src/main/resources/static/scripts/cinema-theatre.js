@@ -11,6 +11,8 @@ $(document).ready(function() {
 		$("#ctAdress").text(data.ctAdress);
 		$("#ctDescription").text(data.ctDescription);
 		$("#ctPhone").text(data.ctPhone);
+		
+		$('#ctTable').append('<tr><td><a href="halls.html?id=' + id +'">See repertoar.</a></td></tr>');
 
 	});
 });
