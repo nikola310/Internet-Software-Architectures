@@ -17,6 +17,7 @@ function login() {
         contentType: "application/json; charset=utf-8",
         dataType : "json",
         success: function (data) {
+        	alert("Login successful.");
         	window.location.replace("index.html");
         },
         fail : function(data) {

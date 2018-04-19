@@ -37,8 +37,10 @@ function loadNotCheckedOffers() {
 						if (data[i].propsImage != null) {
 							img.attr("src", "data:application/unknown;base64, "
 									+ data[i].propsImage);
+							img.attr("alt", data[i].propsDesc);
 						} else {
-							img.attr("src", "");
+							img.attr("src", "images/no-img.png");
+							img.attr("alt", "No image.")
 						}
 						cell3.innerHTML = img[0].outerHTML;
 

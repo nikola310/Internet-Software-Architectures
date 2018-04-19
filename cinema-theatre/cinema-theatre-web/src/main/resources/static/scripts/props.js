@@ -49,7 +49,7 @@ function addNewProps() {
 }
 
 function loadBids() {
-	$.get("bid/byuser/1", function(data) {
+	$.get("bid/byuser", function(data) {
 
 		if (data.length > 0) {
 			for (i = 0; i < data.length; i++) {

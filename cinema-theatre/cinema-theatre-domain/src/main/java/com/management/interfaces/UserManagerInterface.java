@@ -6,6 +6,7 @@ import com.management.dto.LoginDTO;
 import com.management.dto.ProfileDTO;
 import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
+import com.management.entities.User;
 
 /**
  * @author Zivko Stanisic
@@ -30,4 +31,6 @@ public interface UserManagerInterface {
 	public ProfileDTO ReadProfile(LoginDTO dto);
 	
 	public boolean Edit(RegistrationDTO dto);
+	
+	public User getUser(LoginDTO dto);
 }

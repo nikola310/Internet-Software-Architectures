@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CreatePropsDTO;
+import com.management.dto.LoginDTO;
 import com.management.dto.PropsDTO;
+import com.management.entities.User;
 import com.management.interfaces.PropsManagerInterface;
+import com.management.interfaces.UserManagerInterface;
 
 /**
  * 
@@ -27,6 +30,9 @@ import com.management.interfaces.PropsManagerInterface;
 @RestController
 @RequestMapping(value = "/props")
 public class PropsController {
+
+	@Autowired
+	private UserManagerInterface userManager;
 
 	private PropsManagerInterface manager;
 
@@ -83,14 +89,31 @@ public class PropsController {
 	}
 
 	@RequestMapping(value = "/not-checked", method = RequestMethod.GET)
-	public ResponseEntity<List<PropsDTO>> getNotChecked() {
+	public ResponseEntity<List<PropsDTO>> getNotChecked(
+			@Context HttpServletRequest request) {
+		LoginDTO dto = (LoginDTO) request.getSession().getAttribute("user");
+		if (dto == null)
+			return new ResponseEntity<List<PropsDTO>>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(dto);
+		if (u == null)
+			return new ResponseEntity<List<PropsDTO>>(HttpStatus.NOT_FOUND);
+
+		if (u.getUserAdmin() != 'F') {
+			return new ResponseEntity<List<PropsDTO>>(HttpStatus.FORBIDDEN);
+		}
+
 		List<PropsDTO> list = manager.getNullAllowedProps();
 
 		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/approve/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<PropsDTO> approveProps(@PathVariable("id") int id) {
+	public ResponseEntity<PropsDTO> approveProps(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		if (request.getSession().getAttribute("user") == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(true);
 		manager.Update(dto);
@@ -98,7 +121,11 @@ public class PropsController {
 	}
 
 	@RequestMapping(value = "/reject/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<PropsDTO> rejectProps(@PathVariable("id") int id) {
+	public ResponseEntity<PropsDTO> rejectProps(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		if (request.getSession().getAttribute("user") == null)
+			return new ResponseEntity<PropsDTO>(HttpStatus.NOT_FOUND);
+
 		PropsDTO dto = manager.Read(id);
 		dto.setPropsApproved(false);
 		manager.Update(dto);
@@ -137,7 +164,7 @@ public class PropsController {
 			return new ResponseEntity<CreatePropsDTO>(dto, HttpStatus.OK);
 		}
 	}
-	
+
 	@RequestMapping(value = "/official", method = RequestMethod.POST)
 	public ResponseEntity<CreatePropsDTO> createOfficial(
 			@RequestBody CreatePropsDTO dto, @Context HttpServletRequest request) {

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.BidDTO;
+import com.management.dto.LoginDTO;
 import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
+import com.management.interfaces.UserManagerInterface;
 
 /**
  * 
@@ -29,6 +31,9 @@ import com.management.interfaces.BidManagerInterface;
 @RestController
 @RequestMapping(value = "/bid")
 public class BidController {
+
+	@Autowired
+	private UserManagerInterface userManager;
 
 	private BidManagerInterface manager;
 
@@ -100,10 +105,19 @@ public class BidController {
 		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/byuser/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<BidDTO>> getForUser(@PathVariable("id") int id) {
-		User user = new User();
-		user.setUserId(id);
+	@RequestMapping(value = "/byuser", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getForUser(
+			@Context HttpServletRequest request) {
+		LoginDTO log = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (log == null)
+			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+
+		User user = userManager.getUser(log);
+
+		if (user == null)
+			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+
 		try {
 			List<BidDTO> list = manager.getNotAccepted(user);
 			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
@@ -128,6 +142,10 @@ public class BidController {
 	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN)
 	public ResponseEntity<String> setBid(@PathVariable("id") int id,
 			@Context HttpServletRequest request) {
+		if (request.getSession().getAttribute("user") == null) {
+			return new ResponseEntity<String>("Error handling",
+					HttpStatus.NOT_FOUND);
+		}
 		BidDTO dto = manager.Read(id);
 		if (dto == null) {
 			return new ResponseEntity<String>("Error handling",
@@ -162,11 +180,10 @@ public class BidController {
 		return new ResponseEntity<BidDTO>(dto, HttpStatus.OK);
 	}
 
-
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteCurrentBid(@RequestParam("id") int id,
 			@Context HttpServletRequest request) {
-		
+
 		request.getSession().removeAttribute("bid");
 		if (!manager.Delete(id)) {
 			System.out.println("usao u if!");
@@ -180,13 +197,14 @@ public class BidController {
 	@RequestMapping(value = "set/price", method = RequestMethod.POST)
 	public ResponseEntity<String> setPrice(@RequestParam("price") int price,
 			@Context HttpServletRequest request) {
-		 if (price == 0) {
-			 return new ResponseEntity<String>("Value not allowed", HttpStatus.NOT_FOUND);
-		 }
-		 BidDTO bid = (BidDTO) request.getSession().getAttribute("bid");
-		 bid.setBidPrice(price);
-		 manager.Update(bid);
-		 request.getSession().setAttribute("bid", bid);
+		if (price == 0) {
+			return new ResponseEntity<String>("Value not allowed",
+					HttpStatus.NOT_FOUND);
+		}
+		BidDTO bid = (BidDTO) request.getSession().getAttribute("bid");
+		bid.setBidPrice(price);
+		manager.Update(bid);
+		request.getSession().setAttribute("bid", bid);
 		return new ResponseEntity<String>("Success!", HttpStatus.OK);
 	}
 }

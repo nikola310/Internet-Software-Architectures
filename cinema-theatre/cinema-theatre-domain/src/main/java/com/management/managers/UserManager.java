@@ -201,4 +201,11 @@ public class UserManager implements UserManagerInterface {
 		return true;
 	}
 
+	public User getUser(LoginDTO dto) {
+		User user = userRepository.findUserByUserEmail(dto.getEmail());
+		if(user == null)
+			return null;
+		return user;
+	}
+
 }

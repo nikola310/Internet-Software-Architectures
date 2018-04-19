@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import com.management.dto.LoginDTO;
 import com.management.dto.ProfileDTO;
 import com.management.dto.RegistrationDTO;
 import com.management.dto.UserDTO;
+import com.management.entities.User;
 import com.management.interfaces.UserManagerInterface;
 import com.management.mail.MailingInterface;
 
@@ -67,11 +67,13 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<RegistrationDTO> addUser(@Validated @RequestBody RegistrationDTO dto) {
+	public ResponseEntity<RegistrationDTO> addUser(
+			@Validated @RequestBody RegistrationDTO dto) {
 
 		try {
 			if (dto == null) {
-				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<RegistrationDTO>(dto,
+						HttpStatus.NOT_FOUND);
 			}
 			String token = UUID.randomUUID().toString();
 
@@ -79,13 +81,15 @@ public class UserController {
 			manager.Create(dto, token);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<RegistrationDTO>(dto,
+					HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<LoginDTO> login(@Validated @RequestBody LoginDTO dto, @Context HttpServletRequest request) {
+	public ResponseEntity<LoginDTO> login(@Validated @RequestBody LoginDTO dto,
+			@Context HttpServletRequest request) {
 		try {
 			if (dto == null) {
 				return new ResponseEntity<LoginDTO>(dto, HttpStatus.NOT_FOUND);
@@ -105,8 +109,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ResponseEntity<ProfileDTO> profile(@Context HttpServletRequest request) {
-		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+	public ResponseEntity<ProfileDTO> profile(
+			@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute(
+				"user");
 		ProfileDTO dto = manager.ReadProfile(sessionDTO);
 
 		if (dto == null) {
@@ -127,25 +133,30 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-	public ResponseEntity<RegistrationDTO> edit(@Validated @RequestBody RegistrationDTO dto) {
+	public ResponseEntity<RegistrationDTO> edit(
+			@Validated @RequestBody RegistrationDTO dto) {
 
 		try {
 			if (dto == null) {
-				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<RegistrationDTO>(dto,
+						HttpStatus.NOT_FOUND);
 			}
 
 			if (!manager.Edit(dto)) {
-				return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<RegistrationDTO>(dto,
+						HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<RegistrationDTO>(dto,
+					HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<RegistrationDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO dto) {
+	public ResponseEntity<UserDTO> updateUser(
+			@Validated @RequestBody UserDTO dto) {
 		if (dto == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
@@ -168,7 +179,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/normal/{ID}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setUserAsNormal(@PathVariable("ID") int ID) {
+	public ResponseEntity<UserDTO> setUserAsNormal(@PathVariable("ID") int ID,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+
+		User u = manager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'S') {
+			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
+		}
+
 		UserDTO dto = manager.Read(ID);
 		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
@@ -179,7 +202,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/fanzone/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setFZAdmin(@PathVariable("id") int id) {
+	public ResponseEntity<UserDTO> setFZAdmin(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+
+		User u = manager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'S') {
+			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
+		}
+
 		UserDTO dto = manager.Read(id);
 		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
@@ -190,7 +225,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/ct/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setCTAdmin(@PathVariable("id") int id) {
+	public ResponseEntity<UserDTO> setCTAdmin(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+
+		User u = manager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'S') {
+			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
+		}
+
 		UserDTO dto = manager.Read(id);
 		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
@@ -201,7 +248,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/system/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> setSysAdmin(@PathVariable("id") int id) {
+	public ResponseEntity<UserDTO> setSysAdmin(@PathVariable("id") int id,
+			@Context HttpServletRequest request) {
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+
+		User u = manager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'S') {
+			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
+		}
+
 		UserDTO dto = manager.Read(id);
 		if (dto.equals(null))
 			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);

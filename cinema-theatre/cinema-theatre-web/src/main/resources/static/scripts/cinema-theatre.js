@@ -12,7 +12,7 @@ $(document).ready(function() {
 		$("#ctDescription").text(data.ctDescription);
 		$("#ctPhone").text(data.ctPhone);
 		
-		$('#ctTable').append('<tr><td><a href="halls.html?id=' + id +'">See repertoar.</a></td></tr>');
+		$('#ctTable').append('<tr><td><a href="halls.html?id=' + id +'">See repertoire.</a></td></tr>');
 
 	});
 });
