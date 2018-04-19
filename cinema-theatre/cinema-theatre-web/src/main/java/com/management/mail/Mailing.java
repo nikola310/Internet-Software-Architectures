@@ -42,8 +42,15 @@ public class Mailing implements MailingInterface {
 
 	}
 
-	public void sendFriendRequest(String mail, String friendsName, int token) {
+	public void sendFriendRequest(String mail, String friendsName) {
+		String subject = "Friend request.";
+		String message = "Dear " + friendsName + ", someone want's to make friendship with you!";
 
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(mail);
+		email.setSubject(subject);
+		email.setText(message);
+		mailSender.send(email);
 	}
 
 	public void sendBidAcceptedNotification(String mail, String propsName) {

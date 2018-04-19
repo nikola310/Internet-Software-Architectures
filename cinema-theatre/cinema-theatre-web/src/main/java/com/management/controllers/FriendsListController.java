@@ -1,6 +1,10 @@
 package com.management.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.FriendDTO;
 import com.management.dto.FriendslistDTO;
+import com.management.dto.LoginDTO;
+import com.management.dto.ProfileDTO;
+import com.management.dto.UserBasicDTO;
 import com.management.interfaces.FriendsListManagerInterface;
+import com.management.mail.MailingInterface;
 
 /**
  * @author Zivko Stanisic
@@ -23,11 +32,99 @@ import com.management.interfaces.FriendsListManagerInterface;
 @RequestMapping(value = "/friends-list")
 public class FriendsListController {
 
+	@Autowired
 	private FriendsListManagerInterface manager;
 
 	@Autowired
-	public FriendsListController(FriendsListManagerInterface manager) {
-		this.manager = manager;
+	private MailingInterface mailManager;
+
+	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> accept(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Accept(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> refuse(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Refuse(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> remove(@Context HttpServletRequest request, @PathVariable int id) {
+		if (!manager.Delete(id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/peoples", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<UserBasicDTO>> peoples(@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+
+		ArrayList<UserBasicDTO> dto = manager.GetUserBasicInformation(sessionDTO.getEmail());
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<UserBasicDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<UserBasicDTO>>(dto, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/friends", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<FriendDTO>> friends(@Context HttpServletRequest request) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+
+		ArrayList<FriendDTO> dto = manager.GetFriendsBasicInformation(sessionDTO.getEmail());
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<FriendDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<FriendDTO>>(dto, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/is-friend/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> isFriend(@Context HttpServletRequest request, @PathVariable int id) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (!manager.IsFriend(sessionDTO.getEmail(), id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("true", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ProfileDTO> profile(@Context HttpServletRequest request, @PathVariable int id) {
+		ProfileDTO dto = manager.GEtFriend(id);
+
+		if (dto == null) {
+			return new ResponseEntity<ProfileDTO>(dto, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<ProfileDTO>(dto, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/add-friend/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> addFriend(@Context HttpServletRequest request, @PathVariable int id) {
+		LoginDTO sessionDTO = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (!manager.AddFriend(sessionDTO.getEmail(), id)) {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+		ProfileDTO friend = manager.GEtFriend(id);
+		mailManager.sendFriendRequest(friend.getUserEmail(), friend.getUserName());
+		return new ResponseEntity<String>("true", HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

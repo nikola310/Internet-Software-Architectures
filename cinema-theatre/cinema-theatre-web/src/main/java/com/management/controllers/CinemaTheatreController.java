@@ -1,5 +1,6 @@
 package com.management.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.dto.LoginDTO;
 import com.management.entities.User;
@@ -34,9 +36,16 @@ public class CinemaTheatreController {
 
 	private CinemaTheatreManagerInterface manager;
 
-	@Autowired
-	public CinemaTheatreController(CinemaTheatreManagerInterface manager) {
-		this.manager = manager;
+	@RequestMapping(value = "/basic", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<CinemaTheatreBasicDTO>> peoples() {
+		ArrayList<CinemaTheatreBasicDTO> dto = manager.GetAllCinemaTheatreBasicInformation();
+
+		if (dto == null) {
+			return new ResponseEntity<ArrayList<CinemaTheatreBasicDTO>>(dto, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<ArrayList<CinemaTheatreBasicDTO>>(dto, HttpStatus.OK);
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

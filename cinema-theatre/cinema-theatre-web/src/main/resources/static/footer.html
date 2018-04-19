@@ -14,16 +14,22 @@
 
 		<form onsubmit="return login()">
 			<label for="userName">Name:</label> <input type="text" size="10"
-				name="mail" id="mail" /> <label for="password">Password:</label>
-			<input type="password" size="10" name="password" id="password" />
+				name="mail" id="mail" /> <label for="password">Password:</label> <input
+				type="password" size="10" name="password" id="password" />
 			<div style="text-align: right;">
 				<a href="registration.html">Register</a> | <input type="submit"
 					class="button" value="Go!" name="registration" id="registration" />
 			</div>
+			<a onclick="logout()">Log out.</a>
 		</form>
 	</div>
 </div>
 <br class="clear" />
+<h4>
+	<span id="description"></span>
+</h4>
+<ul class="links" id="links">
+</ul>
 </div>
 </div>
 <div id="footer" class="fixed">

@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
 import com.management.fake.CinemaTheatreRepositoryFake;
-import com.management.managers.CinemaTheatreManager;
 import com.management.repositories.CinemaTheatreRepository;
 
 /**
@@ -35,8 +34,8 @@ public class CinemaTheatreControllerTests {
 		dto.setCtName("Bioskop");
 		dto.setCtPhone(1234567890);
 
-		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
-		CinemaTheatreController controller = new CinemaTheatreController(manager);
+		//CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController();
 
 		// Act and assert
 		Assert.assertNotNull(controller);
@@ -58,8 +57,8 @@ public class CinemaTheatreControllerTests {
 		});
 
 		// Act and assert
-		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
-		CinemaTheatreController controller = new CinemaTheatreController(manager);
+		//CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController();
 
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.deleteCinemaTheatre(1), new ResponseEntity<CinemaTheatreDTO>(HttpStatus.OK));
@@ -87,8 +86,8 @@ public class CinemaTheatreControllerTests {
 			}
 		});
 
-		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
-		CinemaTheatreController controller = new CinemaTheatreController(manager);
+		//CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController();
 
 		// Act
 		ResponseEntity<CinemaTheatreDTO> response = controller.getCinemaTheatre(1);
@@ -133,8 +132,8 @@ public class CinemaTheatreControllerTests {
 			}
 		});
 
-		CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
-		CinemaTheatreController controller = new CinemaTheatreController(manager);
+		//CinemaTheatreManager manager = new CinemaTheatreManager(cinemaTheatreRepository);
+		CinemaTheatreController controller = new CinemaTheatreController();
 
 		// Act
 		ResponseEntity<List<CinemaTheatreDTO>> response = controller.getCinemaTheatres();

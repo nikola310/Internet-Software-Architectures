@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.management.dto.CinemaTheatreBasicDTO;
 import com.management.dto.CinemaTheatreDTO;
 import com.management.entities.CinemaTheatre;
 import com.management.interfaces.CinemaTheatreManagerInterface;
@@ -74,6 +75,42 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 
 		return listDTO;
 	}
+	
+	public ArrayList<CinemaTheatreDTO> ReadAllTheatres() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+			try {
+				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
+				if(dto.getCtType() == 'T')listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+	
+	public ArrayList<CinemaTheatreDTO> ReadAllCinemas() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreDTO> listDTO = new ArrayList<CinemaTheatreDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+			try {
+				CinemaTheatreDTO dto = mapper.map(tmp, CinemaTheatreDTO.class);
+				if(dto.getCtType() == 'C')listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
 
 	public boolean Update(CinemaTheatreDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -99,5 +136,24 @@ public class CinemaTheatreManager implements CinemaTheatreManagerInterface {
 		}
 
 		return true;
+	}
+
+	public ArrayList<CinemaTheatreBasicDTO> GetAllCinemaTheatreBasicInformation() {
+		
+		ArrayList<CinemaTheatre> listEntities = (ArrayList<CinemaTheatre>) cinemaTheatreRepository.findAll();
+		ArrayList<CinemaTheatreBasicDTO> listDTO = new ArrayList<CinemaTheatreBasicDTO>();
+
+		for (CinemaTheatre tmp : listEntities) {
+
+				CinemaTheatreBasicDTO dto = new CinemaTheatreBasicDTO();
+				dto.setId(tmp.getCtId());
+				dto.setName(tmp.getCtName());
+				listDTO.add(dto);
+				
+				System.out.println(dto.getName());
+
+		}
+
+		return listDTO;
 	}
 }
