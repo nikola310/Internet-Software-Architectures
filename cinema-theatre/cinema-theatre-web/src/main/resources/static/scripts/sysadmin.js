@@ -15,11 +15,10 @@ function addNewCT() {
 	$.ajax({
 		type : "POST",
 		data : dt,
-		url : "cinema-theatre",
+		url : "cinema-theatre/new",
 		contentType : "application/json; charset=utf-8",
-		dataType : "json",
 		success : function(data) {
-			console.log("Cinema/theatre created succesfully.");
+			alert(data);
 		},
 		fail : function(data) {
 			console.log(data);

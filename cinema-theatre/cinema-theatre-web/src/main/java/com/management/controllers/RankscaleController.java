@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CreateRankscaleDTO;
+import com.management.dto.LoginDTO;
 import com.management.dto.RankscaleDTO;
+import com.management.entities.User;
 import com.management.interfaces.RankscaleManagerInterface;
+import com.management.interfaces.UserManagerInterface;
 
 /**
  * @author Nikola Stojanovic
@@ -26,6 +29,9 @@ import com.management.interfaces.RankscaleManagerInterface;
 @RestController
 @RequestMapping(value = "/rankscale")
 public class RankscaleController {
+
+	@Autowired
+	private UserManagerInterface userManager;
 
 	private RankscaleManagerInterface manager;
 
@@ -87,26 +93,36 @@ public class RankscaleController {
 			return new ResponseEntity<RankscaleDTO>(HttpStatus.OK);
 		}
 	}
-	
+
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
 	public ResponseEntity<RankscaleDTO> setRanks(
 			@Validated @RequestBody CreateRankscaleDTO dto,
 			@Context HttpServletRequest request) {
 		if (dto == null) {
 			return new ResponseEntity<RankscaleDTO>(HttpStatus.NOT_FOUND);
-		} else {
-			RankscaleDTO tmp = new RankscaleDTO(dto.getBronze(),
-					dto.getSilver(), dto.getGold());
-			tmp.setScaleActive(true);
-			int userId = 1; //((User)request.getSession().getAttribute("user")).getUserId();
-			tmp.setUserId(userId);
-			List<RankscaleDTO> list = manager.getActive();
-			for(RankscaleDTO r : list){
-				r.setScaleActive(false);
-				manager.Update(r);
-			}
-			manager.Create(tmp);
-			return new ResponseEntity<RankscaleDTO>(tmp, HttpStatus.OK);
 		}
+		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
+		if (lg == null)
+			return new ResponseEntity<RankscaleDTO>(HttpStatus.NOT_FOUND);
+
+		User u = userManager.getUser(lg);
+		if (u == null) {
+			return new ResponseEntity<RankscaleDTO>(HttpStatus.NOT_FOUND);
+		} else if (u.getUserAdmin() != 'S') {
+			return new ResponseEntity<RankscaleDTO>(HttpStatus.FORBIDDEN);
+		}
+
+		RankscaleDTO tmp = new RankscaleDTO(dto.getBronze(), dto.getSilver(),
+				dto.getGold());
+		tmp.setScaleActive(true);
+		tmp.setUserId(u.getUserId());
+		List<RankscaleDTO> list = manager.getActive();
+		for (RankscaleDTO r : list) {
+			r.setScaleActive(false);
+			manager.Update(r);
+		}
+		manager.Create(tmp);
+		return new ResponseEntity<RankscaleDTO>(tmp, HttpStatus.OK);
 	}
+
 }
