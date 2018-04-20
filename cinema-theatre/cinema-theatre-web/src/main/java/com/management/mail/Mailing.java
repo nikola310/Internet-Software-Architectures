@@ -62,9 +62,8 @@ public class Mailing implements MailingInterface {
 	@SuppressWarnings("unused")
 	public void sendBidAcceptedNotification(String mail, String propsName) {
 		String subject = "Your bid is accepted!";
-		String link = "localhost:8080/cinema-theatre/fanzone.html?propsid=";
 		String message = "Congratulations! Your bid for " + propsName
-				+ " is accepted. You can see props status here: ";
+				+ " is accepted.";
 
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(mail);
@@ -76,9 +75,8 @@ public class Mailing implements MailingInterface {
 	@SuppressWarnings("unused")
 	public void sendBidRejectedNotification(String mail, String propsName) {
 		String subject = "Your bid is rejected!";
-		String link = "localhost:8080/cinema-theatre/fanzone.html?propsid=";
 		String message = "Unfortunately, your bid for " + propsName
-				+ " is rejected. You can see props status here: ";
+				+ " is rejected.";
 
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(mail);

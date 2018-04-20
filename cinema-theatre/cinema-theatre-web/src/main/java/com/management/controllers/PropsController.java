@@ -1,6 +1,7 @@
 package com.management.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,8 @@ public class PropsController {
 		List<PropsDTO> retVal = new ArrayList<PropsDTO>();
 		for(PropsDTO dto : list){
 			if(dto.isPropsApproved() == null){
+				continue;
+			}else if(new Date().compareTo(dto.getPropsDeadline()) >= 0){
 				continue;
 			}else if(dto.isPropsApproved()){
 				retVal.add(dto);

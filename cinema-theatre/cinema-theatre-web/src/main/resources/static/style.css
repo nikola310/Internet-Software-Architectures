@@ -484,6 +484,7 @@ input.text {
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	padding: 5px;
+	margin-bottom: 0.2em;
 }
 
 /* Okvir oko ponude */
@@ -497,6 +498,7 @@ input.text {
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	padding: 5px;
+	margin-bottom: 0.2em;
 }
 
 /* Tabela koja sadrzi formu za rekvizite */

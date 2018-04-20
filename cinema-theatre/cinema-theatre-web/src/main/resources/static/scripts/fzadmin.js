@@ -76,6 +76,7 @@ function acceptOffer(e) {
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
 		success : function(data) {
+			alert("Offer accepted.");
 			$("#table-check").find("tr:gt(0)").remove();
 			loadNotCheckedOffers();
 		},
@@ -97,6 +98,7 @@ function rejectOffer(e) {
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",
 		success : function(data) {
+			alert("Offer rejected.");
 			$("#table-check").find("tr:gt(0)").remove();
 			loadNotCheckedOffers();
 		},

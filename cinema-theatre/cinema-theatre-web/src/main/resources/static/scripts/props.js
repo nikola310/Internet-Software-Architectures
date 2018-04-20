@@ -154,11 +154,11 @@ function loadOffers() {
 	});
 }
 
-function loadBidsByUserId(id) {
+/*function loadBidsByUserId(id) {
 	$.get("bid/not-accepted/" + id, function(data) {
 		console.log("bid not accepted response: " + data);
 	});
-}
+}*/
 
 function setBid(e) {
 	var bidID = e.id.split(/-(.+)/)[1];
@@ -174,7 +174,9 @@ function acceptOffer(e){
 		url : "bid/accept",
 		data : { "bidId" : bidID },
 		success : function(data) {
-			alert("Bid rejected.");
+			alert("Bid accepted.");
+			$("#pick-offers-table").find("tr:gt(0)").remove();
+			loadOffers();
 		},
 		fail : function(data) {
 			console.log(data);
@@ -193,6 +195,8 @@ function rejectOffer(e){
 		data : { "bidId" : bidID },
 		success : function(data) {
 			alert("Bid rejected.");
+			$("#pick-offers-table").find("tr:gt(0)").remove();
+			loadOffers();
 		},
 		fail : function(data) {
 			console.log(data);
