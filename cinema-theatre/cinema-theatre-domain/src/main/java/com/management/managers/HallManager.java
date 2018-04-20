@@ -1,6 +1,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.HallDTO;
+import com.management.entities.CinemaTheatre;
 import com.management.entities.Hall;
+import com.management.entities.Seat;
 import com.management.interfaces.HallManagerInterface;
+import com.management.repositories.CinemaTheatreRepository;
 import com.management.repositories.HallRepository;
+import com.management.repositories.SeatRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,14 +23,16 @@ import com.management.repositories.HallRepository;
  */
 @Service
 @Transactional
-public class HallManager implements HallManagerInterface{
-	
+public class HallManager implements HallManagerInterface {
+
+	@Autowired
 	private HallRepository hallRepository;
 
 	@Autowired
-	public HallManager(HallRepository hallRepository) {
-		this.hallRepository = hallRepository;
-	}
+	private SeatRepository seatRepository;
+
+	@Autowired
+	private CinemaTheatreRepository cinemaTheatreRepository;
 
 	public boolean Create(HallDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -33,6 +40,21 @@ public class HallManager implements HallManagerInterface{
 
 		try {
 			hall = mapper.map(dto, Hall.class);
+
+			CinemaTheatre ct = cinemaTheatreRepository.findOne(dto.getCtId());
+			hall.setCinemaTheatre(ct);
+			hallRepository.save(hall);
+
+			for (int i = 0; i < dto.getLen(); i++) {
+				Seat seat = new Seat();
+				seat.setSeatModified(new Date());
+				seat.setSeatTaken(false);
+				seat.setHall(hall);
+				seatRepository.save(seat);
+				hall.getSeats().add(seat);
+
+			}
+			hallRepository.save(hall);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			return false;

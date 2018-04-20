@@ -31,7 +31,7 @@ public class HallControllerTests {
 
 		HallDTO dto = new HallDTO();
 		dto.setHallName("A1");
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 		HallController controller = new HallController(manager);
 
 		// Act and assert
@@ -53,7 +53,7 @@ public class HallControllerTests {
 		});
 
 		// Act and assert
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 		HallController controller = new HallController(manager);
 
 		Assert.assertNotNull(controller);
@@ -78,7 +78,7 @@ public class HallControllerTests {
 			}
 		});
 
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 		HallController controller = new HallController(manager);
 
 		// Act
@@ -116,7 +116,7 @@ public class HallControllerTests {
 			}
 		});
 
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 		HallController controller = new HallController(manager);
 
 		// Act

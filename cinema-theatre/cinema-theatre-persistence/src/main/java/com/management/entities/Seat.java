@@ -27,24 +27,30 @@ import org.hibernate.annotations.GenericGenerator;
 public class Seat implements java.io.Serializable {
 
 	private int seatId;
-	private Segment segment;
+	private Hall hall;
+	//private Segment segment;
 	private Date seatModified;
+	private boolean seatTaken;
+	
+
 	private Set<Ticket> tickets = new HashSet<Ticket>(0);
 
 	public Seat() {
 	}
 
-	public Seat(int seatId, Segment segment, Date seatModified) {
+	public Seat(int seatId, Segment segment, Date seatModified, boolean seatTaken) {
 		this.seatId = seatId;
-		this.segment = segment;
+	//	this.segment = segment;
 		this.seatModified = seatModified;
+		this.seatTaken = seatTaken;
 	}
 
-	public Seat(int seatId, Segment segment, Date seatModified, Set<Ticket> tickets) {
+	public Seat(int seatId, Segment segment, Date seatModified, Set<Ticket> tickets, boolean seatTaken) {
 		this.seatId = seatId;
-		this.segment = segment;
+	//	this.segment = segment;
 		this.seatModified = seatModified;
 		this.tickets = tickets;
+		this.seatTaken = seatTaken;
 	}
 
 	@Id
@@ -59,15 +65,15 @@ public class Seat implements java.io.Serializable {
 		this.seatId = seatId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEG_ID", nullable = false)
 	public Segment getSegment() {
 		return this.segment;
-	}
+	}*/
 
-	public void setSegment(Segment segment) {
+	/*public void setSegment(Segment segment) {
 		this.segment = segment;
-	}
+	}*/
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SEAT_MODIFIED", nullable = false, length = 19)
@@ -86,6 +92,25 @@ public class Seat implements java.io.Serializable {
 
 	public void setTickets(Set<Ticket> tickets) {
 		this.tickets = tickets;
+	}
+	
+	@Column(name = "SEAT_TAKEN", nullable = false)
+	public boolean isSeatTaken() {
+		return seatTaken;
+	}
+
+	public void setSeatTaken(boolean seatTaken) {
+		this.seatTaken = seatTaken;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "HALL_ID", nullable = false)
+	public Hall getHall() {
+		return this.hall;
+	}
+
+	public void setHall(Hall hall) {
+		this.hall = hall;
 	}
 
 }

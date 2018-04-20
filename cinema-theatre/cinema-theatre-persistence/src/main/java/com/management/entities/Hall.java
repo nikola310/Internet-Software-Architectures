@@ -28,6 +28,7 @@ public class Hall implements java.io.Serializable {
 	private String hallName;
 	private Set<Event> events = new HashSet<Event>(0);
 	private Set<Segment> segments = new HashSet<Segment>(0);
+	private Set<Seat> seats = new HashSet<Seat>(0);
 
 	public Hall() {
 	}
@@ -93,6 +94,15 @@ public class Hall implements java.io.Serializable {
 
 	public void setSegments(Set<Segment> segments) {
 		this.segments = segments;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
+	public Set<Seat> getSeats() {
+		return this.seats;
+	}
+
+	public void setSeats(Set<Seat> seats) {
+		this.seats = seats;
 	}
 
 }
