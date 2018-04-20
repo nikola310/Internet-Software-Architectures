@@ -296,6 +296,11 @@ public class BidController {
 		for (BidDTO dto : tmp) {
 			if (dto.getBidId() == bidId) {
 				manager.acceptBid(dto);
+
+				PropsDTO pDto = propsManager.Read(dto.getPropsId());
+				pDto.setPropsApproved(false);
+				propsManager.Update(pDto);
+
 				mailingManager.sendBidAcceptedNotification(
 						userManager.Read(dto.getUserId()).getUserEmail(),
 						propsManager.Read(dto.getPropsId()).getPropsName());
