@@ -59,7 +59,6 @@ public class Mailing implements MailingInterface {
 		mailSender.send(email);
 	}
 
-	@SuppressWarnings("unused")
 	public void sendBidAcceptedNotification(String mail, String propsName) {
 		String subject = "Your bid is accepted!";
 		String message = "Congratulations! Your bid for " + propsName
@@ -72,7 +71,6 @@ public class Mailing implements MailingInterface {
 		mailSender.send(email);
 	}
 
-	@SuppressWarnings("unused")
 	public void sendBidRejectedNotification(String mail, String propsName) {
 		String subject = "Your bid is rejected!";
 		String message = "Unfortunately, your bid for " + propsName
