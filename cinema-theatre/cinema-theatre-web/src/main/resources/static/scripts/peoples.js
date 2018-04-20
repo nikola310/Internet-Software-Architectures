@@ -4,7 +4,6 @@
 var id;
 $(document).ready(
 		function() {
-			id = getUrlParameter('id');
 			$.get("friends-list/peoples", function(data) {
 
 				if (data.length > 0) {

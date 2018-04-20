@@ -27,7 +27,7 @@ public class HallManagerTests {
 
 		HallDTO dto = new HallDTO();
 		dto.setHallName("A1");
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -53,7 +53,7 @@ public class HallManagerTests {
 		});
 
 		// Act and assert
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -76,7 +76,7 @@ public class HallManagerTests {
 			}
 		});
 
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 
 		// Act
 		HallDTO dto = manager.Read(1);
@@ -114,7 +114,7 @@ public class HallManagerTests {
 			}
 		});
 
-		HallManager manager = new HallManager(hallRepository);
+		HallManager manager = new HallManager();
 
 		// Act
 		ArrayList<HallDTO> listDTO = manager.ReadAll();
