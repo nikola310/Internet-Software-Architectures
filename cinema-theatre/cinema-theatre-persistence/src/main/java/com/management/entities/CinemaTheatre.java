@@ -1,8 +1,10 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,30 +29,28 @@ public class CinemaTheatre implements java.io.Serializable {
 	private int ctPhone;
 	private String ctAdress;
 	private String ctDescription;
-	private char ctType;
 	private Set<Hall> halls = new HashSet<Hall>(0);
 
 	public CinemaTheatre() {
 	}
 
-	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress, char ctType) {
+	public CinemaTheatre(int ctId, String ctName, String ctStateid,
+			int ctPhone, String ctAdress) {
 		this.ctId = ctId;
 		this.ctName = ctName;
 		this.ctStateid = ctStateid;
 		this.ctPhone = ctPhone;
 		this.ctAdress = ctAdress;
-		this.ctType = ctType;
 	}
 
-	public CinemaTheatre(int ctId, String ctName, String ctStateid, int ctPhone, String ctAdress, String ctDescription,
-			char ctType, Set<Hall> halls) {
+	public CinemaTheatre(int ctId, String ctName, String ctStateid,
+			int ctPhone, String ctAdress, String ctDescription, Set<Hall> halls) {
 		this.ctId = ctId;
 		this.ctName = ctName;
 		this.ctStateid = ctStateid;
 		this.ctPhone = ctPhone;
 		this.ctAdress = ctAdress;
 		this.ctDescription = ctDescription;
-		this.ctType = ctType;
 		this.halls = halls;
 	}
 
@@ -109,15 +109,6 @@ public class CinemaTheatre implements java.io.Serializable {
 
 	public void setCtDescription(String ctDescription) {
 		this.ctDescription = ctDescription;
-	}
-
-	@Column(name = "CT_TYPE", nullable = false, length = 1)
-	public char getCtType() {
-		return this.ctType;
-	}
-
-	public void setCtType(char ctType) {
-		this.ctType = ctType;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cinemaTheatre")

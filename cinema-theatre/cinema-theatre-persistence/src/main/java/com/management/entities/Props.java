@@ -1,9 +1,11 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +43,8 @@ public class Props implements java.io.Serializable {
 	public Props() {
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed,
+			Date propsDeadline, float propsPrice) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;
@@ -50,8 +53,10 @@ public class Props implements java.io.Serializable {
 		this.propsPrice = propsPrice;
 	}
 
-	public Props(int propsId, User user, String propsName, boolean propsUsed, Date propsDeadline, float propsPrice,
-			byte[] propsImage, String propsDesc, Boolean propsApproved, Set<Bid> bids, Set<Reservation> reservations) {
+	public Props(int propsId, User user, String propsName, boolean propsUsed,
+			Date propsDeadline, float propsPrice, byte[] propsImage,
+			String propsDesc, Boolean propsApproved, Set<Bid> bids,
+			Set<Reservation> reservations) {
 		this.propsId = propsId;
 		this.user = user;
 		this.propsName = propsName;

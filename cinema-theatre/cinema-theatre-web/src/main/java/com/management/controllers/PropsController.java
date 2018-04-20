@@ -1,5 +1,6 @@
 package com.management.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,8 +52,15 @@ public class PropsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PropsDTO>> getProps() {
 		List<PropsDTO> list = manager.ReadAll();
-
-		return new ResponseEntity<List<PropsDTO>>(list, HttpStatus.OK);
+		List<PropsDTO> retVal = new ArrayList<PropsDTO>();
+		for(PropsDTO dto : list){
+			if(dto.isPropsApproved() == null){
+				continue;
+			}else if(dto.isPropsApproved()){
+				retVal.add(dto);
+			}
+		}
+		return new ResponseEntity<List<PropsDTO>>(retVal, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

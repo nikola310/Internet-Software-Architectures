@@ -101,15 +101,8 @@ function loadBids() {
 
 function loadOffers(){
 	//prvo ucitavamo odobrene rekvizite koje je postavio korisnik
-	$.get("/props/byuser/1", function(data){
-		if(data.length > 0){
-			for(i = 0; i < data.length; i++){
-				loadBids(data[i].propsId);
-				
-			}
-		}else{
-			
-		}
+	$.get("bid/offers", function(data){
+		console.log(data);
 	});
 }
 

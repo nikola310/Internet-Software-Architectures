@@ -1,5 +1,7 @@
 package com.management.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.BidDTO;
 import com.management.dto.LoginDTO;
+import com.management.dto.PropsDTO;
 import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
+import com.management.interfaces.PropsManagerInterface;
 import com.management.interfaces.UserManagerInterface;
 
 /**
@@ -32,6 +36,9 @@ import com.management.interfaces.UserManagerInterface;
 @RequestMapping(value = "/bid")
 public class BidController {
 
+	@Autowired
+	private PropsManagerInterface propsManager;
+	
 	@Autowired
 	private UserManagerInterface userManager;
 
@@ -223,6 +230,36 @@ public class BidController {
 		manager.Update(bid);
 		request.getSession().setAttribute("bid", bid);
 		return new ResponseEntity<String>("Success!", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/offers", method = RequestMethod.GET)
+	public ResponseEntity<List<BidDTO>> getOffersForYourBids(
+			@Context HttpServletRequest request) {
+		LoginDTO log = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (log == null)
+			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+
+		User user = userManager.getUser(log);
+
+		if (user == null)
+			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+
+		List<PropsDTO> propses = propsManager.getPropsByUser(user.getUserId());
+		ArrayList<BidDTO> list = new ArrayList<BidDTO>();
+
+		for (PropsDTO dto : propses) {
+			if (new Date().compareTo(dto.getPropsDeadline()) < 0) {
+				list.addAll(manager.readBidsByProps(dto.getPropsId()));
+			}
+		}
+
+		try {
+			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
 	}
 
 }
