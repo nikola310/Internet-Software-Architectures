@@ -35,6 +35,8 @@ function read_props() {
 			$("#edit-price").val(data.propsPrice);
 			$("#edit-btn").attr("props-id", data.propsId);
 			$("#edit-btn").attr("user-id", data.userId);
+			$("#edit-btn").attr("props-used", data.propsUsed);
+			$("#edit-btn").attr("props-approved", data.propsApproved);
 		}
 	});
 
@@ -44,7 +46,23 @@ function read_props() {
 function edit_props() {
 	var propsID = $("#edit-btn").attr("props-id");
 	var userID = $("#edit-btn").attr("user-id");
-
+	
+	var used;
+	if($("#edit-btn").attr("props-used") == "true"){
+		used = true;
+	}else{
+		used = false;
+	}
+	
+	var approved;
+	if($("#props-approved").attr("props-used") == "true"){
+		approved = true;
+	}else if($("#props-approved").attr("props-used") == "false"){
+		approved = false;
+	}else{
+		approved = null;
+	}
+	
 	if (glob != null) {
 		glob = glob.split(/,(.+)/)[1];
 	} else {
@@ -58,7 +76,7 @@ function edit_props() {
 		"propsDeadline" : new Date($("#edit-date").val()).getTime(),
 		"propsImage" : glob,
 		"userId" : userID,
-		"propsUsed" : true,
+		"propsUsed" : used,
 		"propsPrice" : parseFloat($("#edit-price").val()),
 		"propsApproved" : null
 	});

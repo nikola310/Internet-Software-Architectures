@@ -36,7 +36,7 @@ public class PropsManager implements PropsManagerInterface {
 		try {
 			props = mapper.map(dto, Props.class);
 			
-			props.setPropsApproved(null);
+			//props.setPropsApproved(null);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
