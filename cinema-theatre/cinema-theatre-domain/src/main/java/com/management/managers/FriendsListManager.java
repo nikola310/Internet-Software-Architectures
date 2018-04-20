@@ -107,7 +107,7 @@ public class FriendsListManager implements FriendsListManagerInterface {
 
 	public ArrayList<UserBasicDTO> GetUserBasicInformation(String email) {
 		ArrayList<UserBasicDTO> retVal = new ArrayList<UserBasicDTO>();
-
+		
 		try {
 			ArrayList<User> listEntities = (ArrayList<User>) userRepository.findAll();
 			for (User user : listEntities) {

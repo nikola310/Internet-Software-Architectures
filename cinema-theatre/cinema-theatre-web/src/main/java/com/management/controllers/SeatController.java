@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.SeatDTO;
+import com.management.dto.SeatTakenDTO;
 import com.management.interfaces.SeatManagerInterface;
+import com.management.mail.MailingInterface;
 
 /**
  * @author Zivko Stanisic
@@ -28,6 +30,36 @@ public class SeatController {
 	@Autowired
 	public SeatController(SeatManagerInterface manager) {
 		this.manager = manager;
+	}
+	
+	@Autowired
+	private MailingInterface mailingManager;
+	
+	@RequestMapping(value = "/take-seat", method = RequestMethod.POST)
+	public ResponseEntity<SeatTakenDTO> takeSeat(@Validated @RequestBody SeatTakenDTO dto) {
+		if (dto == null) {
+			return new ResponseEntity<SeatTakenDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		if (!manager.TakeSeat(dto)) {
+			return new ResponseEntity<SeatTakenDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		mailingManager.sendInvitation(dto.getEmail());
+		return new ResponseEntity<SeatTakenDTO>(dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/leave-seat", method = RequestMethod.POST)
+	public ResponseEntity<SeatTakenDTO> leaveSeat(@Validated @RequestBody SeatTakenDTO dto) {
+		if (dto == null) {
+			return new ResponseEntity<SeatTakenDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		if (!manager.LeaveSeat(dto)) {
+			return new ResponseEntity<SeatTakenDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<SeatTakenDTO>(dto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

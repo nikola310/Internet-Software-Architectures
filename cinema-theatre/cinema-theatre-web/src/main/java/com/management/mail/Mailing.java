@@ -37,9 +37,15 @@ public class Mailing implements MailingInterface {
 		}
 	}
 
-	public void sendInvitation(String mail, String friendsName,
-			String eventName, int friendToken, int eventToken) {
+	public void sendInvitation(String mail) {
+		String subject = "Event reservation";
+		String message = "You reserved a seat.";
 
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(mail);
+		email.setSubject(subject);
+		email.setText(message);
+		mailSender.send(email);
 	}
 
 	public void sendFriendRequest(String mail, String friendsName) {
@@ -53,6 +59,7 @@ public class Mailing implements MailingInterface {
 		mailSender.send(email);
 	}
 
+	@SuppressWarnings("unused")
 	public void sendBidAcceptedNotification(String mail, String propsName) {
 		String subject = "Your bid is accepted!";
 		String link = "localhost:8080/cinema-theatre/fanzone.html?propsid=";
@@ -66,6 +73,7 @@ public class Mailing implements MailingInterface {
 		mailSender.send(email);
 	}
 
+	@SuppressWarnings("unused")
 	public void sendBidRejectedNotification(String mail, String propsName) {
 		String subject = "Your bid is rejected!";
 		String link = "localhost:8080/cinema-theatre/fanzone.html?propsid=";

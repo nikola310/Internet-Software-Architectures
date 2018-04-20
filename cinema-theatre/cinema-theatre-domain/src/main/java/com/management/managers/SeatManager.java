@@ -1,6 +1,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.SeatDTO;
+import com.management.dto.SeatTakenDTO;
 import com.management.entities.Seat;
+import com.management.entities.User;
 import com.management.interfaces.SeatManagerInterface;
 import com.management.repositories.SeatRepository;
+import com.management.repositories.UserRepository;
 
 /**
  * @author Zivko Stanisic
@@ -18,14 +22,13 @@ import com.management.repositories.SeatRepository;
  */
 @Service
 @Transactional
-public class SeatManager implements SeatManagerInterface{
-	
+public class SeatManager implements SeatManagerInterface {
+
+	@Autowired
 	private SeatRepository seatRepository;
 
 	@Autowired
-	public SeatManager(SeatRepository seatRepository) {
-		this.seatRepository = seatRepository;
-	}
+	private UserRepository userRepository;
 
 	public boolean Create(SeatDTO dto) {
 		ModelMapper mapper = new ModelMapper();
@@ -56,7 +59,7 @@ public class SeatManager implements SeatManagerInterface{
 
 		return dto;
 	}
-	
+
 	public ArrayList<SeatDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
 		ArrayList<Seat> listEntities = (ArrayList<Seat>) seatRepository.findAll();
@@ -86,7 +89,7 @@ public class SeatManager implements SeatManagerInterface{
 			return false;
 		}
 		seatRepository.save(tmp);
-		
+
 		return true;
 	}
 
@@ -97,7 +100,50 @@ public class SeatManager implements SeatManagerInterface{
 			exc.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
+	}
+
+	public boolean TakeSeat(SeatTakenDTO dto) {
+		try {
+			Seat seat = seatRepository.findOne(dto.getId());
+			Date now = new Date();
+
+			if (seat.getSeatModified().before(now)) {
+				if (!seat.isSeatTaken()) {
+					seat.setSeatModified(now);
+					seat.setUser(userRepository.findUserByUserEmail(dto.getEmail()));
+					seat.setSeatTaken(true);
+					seatRepository.save(seat);
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return false;
+	}
+
+	public boolean LeaveSeat(SeatTakenDTO dto) {
+		try {
+			Seat seat = seatRepository.findOne(dto.getId());
+			User user = userRepository.findUserByUserEmail(dto.getEmail());
+
+			if (user == seat.getUser()) {
+				if (seat.isSeatTaken()) {
+					seat.setUser(null);
+					seat.setSeatTaken(false);
+					seatRepository.save(seat);
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return false;
 	}
 }

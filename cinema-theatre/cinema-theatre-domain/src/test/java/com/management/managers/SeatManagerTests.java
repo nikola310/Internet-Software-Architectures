@@ -28,7 +28,7 @@ public class SeatManagerTests {
 
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -54,7 +54,7 @@ public class SeatManagerTests {
 		});
 
 		// Act and assert
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -77,7 +77,7 @@ public class SeatManagerTests {
 			}
 		});
 
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 
 		// Act
 		SeatDTO dto = manager.Read(1);
@@ -115,7 +115,7 @@ public class SeatManagerTests {
 			}
 		});
 
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 
 		// Act
 		ArrayList<SeatDTO> listDTO = manager.ReadAll();

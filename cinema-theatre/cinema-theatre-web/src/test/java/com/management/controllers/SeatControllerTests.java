@@ -32,7 +32,7 @@ public class SeatControllerTests {
 
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 		SeatController controller = new SeatController(manager);
 
 		// Act and assert
@@ -54,7 +54,7 @@ public class SeatControllerTests {
 		});
 
 		// Act and assert
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 		SeatController controller = new SeatController(manager);
 
 		Assert.assertNotNull(controller);
@@ -79,7 +79,7 @@ public class SeatControllerTests {
 			}
 		});
 
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 		SeatController controller = new SeatController(manager);
 
 		// Act
@@ -117,7 +117,7 @@ public class SeatControllerTests {
 			}
 		});
 
-		SeatManager manager = new SeatManager(seatRepository);
+		SeatManager manager = new SeatManager();
 		SeatController controller = new SeatController(manager);
 
 		// Act

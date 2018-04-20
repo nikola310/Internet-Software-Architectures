@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.management.mail;
 
 /**
@@ -11,7 +8,7 @@ public interface MailingInterface {
 
 	public void sendRegistration(String mail, String token);
 	
-	public void sendInvitation(String mail, String friendsName, String eventName, int friendToken, int eventToken);
+	public void sendInvitation(String mail);
 	
 	public void sendFriendRequest(String mail, String friendsName);
 	
