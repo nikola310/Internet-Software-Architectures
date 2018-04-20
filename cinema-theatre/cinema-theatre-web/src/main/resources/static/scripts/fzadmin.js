@@ -68,7 +68,6 @@ function loadNotCheckedOffers() {
 }
 
 function acceptOffer(e) {
-	console.log(e.id);
 	var propsID = e.id.split(/-+/)[2];
 
 	$.ajax({

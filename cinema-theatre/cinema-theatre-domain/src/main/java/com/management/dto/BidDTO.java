@@ -34,7 +34,7 @@ public class BidDTO {
 		this.bidPrice = bidPrice;
 	}
 
-	public int isUserId() {
+	public int getUserId() {
 		return userId;
 	}
 

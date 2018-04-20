@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.management.interfaces;
 
 import java.util.List;
@@ -19,4 +16,8 @@ public interface BidManagerInterface extends ManagerInterface<BidDTO> {
 	public List<BidDTO> getNotAccepted(User user);
 	
 	public List<BidDTO> readBidsByProps(int id);
+	
+	public boolean acceptBid(BidDTO dto);
+	
+	public boolean rejectBid(BidDTO dto);
 }

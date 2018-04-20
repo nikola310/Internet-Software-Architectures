@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.BidDTO;
 import com.management.dto.LoginDTO;
+import com.management.dto.OfferDTO;
 import com.management.dto.PropsDTO;
 import com.management.entities.User;
 import com.management.interfaces.BidManagerInterface;
 import com.management.interfaces.PropsManagerInterface;
 import com.management.interfaces.UserManagerInterface;
+import com.management.mail.MailingInterface;
 
 /**
  * 
@@ -37,8 +39,11 @@ import com.management.interfaces.UserManagerInterface;
 public class BidController {
 
 	@Autowired
+	private MailingInterface mailingManager;
+
+	@Autowired
 	private PropsManagerInterface propsManager;
-	
+
 	@Autowired
 	private UserManagerInterface userManager;
 
@@ -213,53 +218,111 @@ public class BidController {
 	@RequestMapping(value = "set/price", method = RequestMethod.POST)
 	public ResponseEntity<String> setPrice(@RequestParam("price") int price,
 			@Context HttpServletRequest request) {
-		if (price == 0) 
+		if (price == 0)
 			return new ResponseEntity<String>("Value not allowed",
 					HttpStatus.NOT_FOUND);
-		
+
 		LoginDTO lg = (LoginDTO) request.getSession().getAttribute("user");
 		if (lg == null)
 			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
 
 		User u = userManager.getUser(lg);
-		if (u == null) 
+		if (u == null)
 			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
-		
+
 		BidDTO bid = (BidDTO) request.getSession().getAttribute("bid");
 		bid.setBidPrice(price);
 		manager.Update(bid);
 		request.getSession().setAttribute("bid", bid);
 		return new ResponseEntity<String>("Success!", HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/offers", method = RequestMethod.GET)
-	public ResponseEntity<List<BidDTO>> getOffersForYourBids(
+	public ResponseEntity<List<OfferDTO>> getOffersForYourBids(
 			@Context HttpServletRequest request) {
 		LoginDTO log = (LoginDTO) request.getSession().getAttribute("user");
 
 		if (log == null)
-			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<OfferDTO>>(HttpStatus.NOT_FOUND);
 
 		User user = userManager.getUser(log);
 
 		if (user == null)
-			return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<OfferDTO>>(HttpStatus.NOT_FOUND);
 
 		List<PropsDTO> propses = propsManager.getPropsByUser(user.getUserId());
-		ArrayList<BidDTO> list = new ArrayList<BidDTO>();
-
+		ArrayList<BidDTO> tmp = new ArrayList<BidDTO>();
 		for (PropsDTO dto : propses) {
 			if (new Date().compareTo(dto.getPropsDeadline()) < 0) {
-				list.addAll(manager.readBidsByProps(dto.getPropsId()));
+				tmp.addAll(manager.readBidsByProps(dto.getPropsId()));
 			}
 		}
 
+		ArrayList<OfferDTO> list = new ArrayList<OfferDTO>();
+		for (BidDTO dto : tmp) {
+			list.add(new OfferDTO(dto.getBidId(), dto.getBidPrice(),
+					propsManager.Read(dto.getPropsId()).getPropsName()));
+		}
+
 		try {
-			return new ResponseEntity<List<BidDTO>>(list, HttpStatus.OK);
+			return new ResponseEntity<List<OfferDTO>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<List<BidDTO>>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<List<OfferDTO>>(HttpStatus.NOT_FOUND);
 	}
 
+	@RequestMapping(value = "/accept", method = RequestMethod.POST)
+	public ResponseEntity<String> acceptBid(@RequestParam("bidId") int bidId,
+			@Context HttpServletRequest request) {
+		LoginDTO log = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (log == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		User user = userManager.getUser(log);
+
+		if (user == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		List<PropsDTO> propses = propsManager.getPropsByUser(user.getUserId());
+		ArrayList<BidDTO> tmp = new ArrayList<BidDTO>();
+		for (PropsDTO dto : propses) {
+			if (new Date().compareTo(dto.getPropsDeadline()) < 0) {
+				tmp.addAll(manager.readBidsByProps(dto.getPropsId()));
+			}
+		}
+
+		for (BidDTO dto : tmp) {
+			if (dto.getBidId() == bidId) {
+				manager.acceptBid(dto);
+				mailingManager.sendBidAcceptedNotification(
+						userManager.Read(dto.getUserId()).getUserEmail(),
+						propsManager.Read(dto.getPropsId()).getPropsName());
+			} else {
+				manager.rejectBid(dto);
+				mailingManager.sendBidRejectedNotification(
+						userManager.Read(dto.getUserId()).getUserEmail(),
+						propsManager.Read(dto.getPropsId()).getPropsName());
+			}
+		}
+
+		return new ResponseEntity<String>("All ok", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/reject", method = RequestMethod.POST)
+	public ResponseEntity<String> rejectBid(@RequestParam("bidId") int bidId,
+			@Context HttpServletRequest request) {
+		LoginDTO log = (LoginDTO) request.getSession().getAttribute("user");
+
+		if (log == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		User user = userManager.getUser(log);
+
+		if (user == null)
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<String>("All ok", HttpStatus.OK);
+	}
 }
