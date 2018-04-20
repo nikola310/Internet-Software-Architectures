@@ -1,8 +1,10 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +29,6 @@ public class Hall implements java.io.Serializable {
 	private CinemaTheatre cinemaTheatre;
 	private String hallName;
 	private Set<Event> events = new HashSet<Event>(0);
-	private Set<Segment> segments = new HashSet<Segment>(0);
 	private Set<Seat> seats = new HashSet<Seat>(0);
 
 	public Hall() {
@@ -39,12 +40,13 @@ public class Hall implements java.io.Serializable {
 		this.hallName = hallName;
 	}
 
-	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName, Set<Event> events, Set<Segment> segments) {
+	public Hall(int hallId, CinemaTheatre cinemaTheatre, String hallName,
+			Set<Event> events, Set<Seat> seats) {
 		this.hallId = hallId;
 		this.cinemaTheatre = cinemaTheatre;
 		this.hallName = hallName;
 		this.events = events;
-		this.segments = segments;
+		this.seats = seats;
 	}
 
 	@Id
@@ -87,15 +89,6 @@ public class Hall implements java.io.Serializable {
 		this.events = events;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
-	public Set<Segment> getSegments() {
-		return this.segments;
-	}
-
-	public void setSegments(Set<Segment> segments) {
-		this.segments = segments;
-	}
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
 	public Set<Seat> getSeats() {
 		return this.seats;

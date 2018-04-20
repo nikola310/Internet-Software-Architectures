@@ -62,7 +62,7 @@ public class Mailing implements MailingInterface {
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(mail);
 		email.setSubject(subject);
-		email.setText(message + link);
+		email.setText(message);
 		mailSender.send(email);
 	}
 
@@ -75,7 +75,7 @@ public class Mailing implements MailingInterface {
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(mail);
 		email.setSubject(subject);
-		email.setText(message + link);
+		email.setText(message);
 		mailSender.send(email);
 	}
 }

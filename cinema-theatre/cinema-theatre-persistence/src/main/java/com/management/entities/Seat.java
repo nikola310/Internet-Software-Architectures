@@ -1,9 +1,9 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,29 +27,27 @@ public class Seat implements java.io.Serializable {
 
 	private int seatId;
 	private Hall hall;
-	//private Segment segment;
-	private Date seatModified;
+	private User user;
 	private boolean seatTaken;
-	
-
-	private Set<Ticket> tickets = new HashSet<Ticket>(0);
+	private Date seatModified;
 
 	public Seat() {
 	}
 
-	public Seat(int seatId, Segment segment, Date seatModified, boolean seatTaken) {
+	public Seat(int seatId, Hall hall, boolean seatTaken, Date seatModified) {
 		this.seatId = seatId;
-	//	this.segment = segment;
-		this.seatModified = seatModified;
+		this.hall = hall;
 		this.seatTaken = seatTaken;
+		this.seatModified = seatModified;
 	}
 
-	public Seat(int seatId, Segment segment, Date seatModified, Set<Ticket> tickets, boolean seatTaken) {
+	public Seat(int seatId, Hall hall, User user, boolean seatTaken,
+			Date seatModified) {
 		this.seatId = seatId;
-	//	this.segment = segment;
-		this.seatModified = seatModified;
-		this.tickets = tickets;
+		this.hall = hall;
+		this.user = user;
 		this.seatTaken = seatTaken;
+		this.seatModified = seatModified;
 	}
 
 	@Id
@@ -65,15 +62,34 @@ public class Seat implements java.io.Serializable {
 		this.seatId = seatId;
 	}
 
-	/*@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SEG_ID", nullable = false)
-	public Segment getSegment() {
-		return this.segment;
-	}*/
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "HALL_ID", nullable = false)
+	public Hall getHall() {
+		return this.hall;
+	}
 
-	/*public void setSegment(Segment segment) {
-		this.segment = segment;
-	}*/
+	public void setHall(Hall hall) {
+		this.hall = hall;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID")
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Column(name = "SEAT_TAKEN", nullable = false)
+	public boolean isSeatTaken() {
+		return this.seatTaken;
+	}
+
+	public void setSeatTaken(boolean seatTaken) {
+		this.seatTaken = seatTaken;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SEAT_MODIFIED", nullable = false, length = 19)
@@ -83,34 +99,6 @@ public class Seat implements java.io.Serializable {
 
 	public void setSeatModified(Date seatModified) {
 		this.seatModified = seatModified;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
-	public Set<Ticket> getTickets() {
-		return this.tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
-	}
-	
-	@Column(name = "SEAT_TAKEN", nullable = false)
-	public boolean isSeatTaken() {
-		return seatTaken;
-	}
-
-	public void setSeatTaken(boolean seatTaken) {
-		this.seatTaken = seatTaken;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HALL_ID", nullable = false)
-	public Hall getHall() {
-		return this.hall;
-	}
-
-	public void setHall(Hall hall) {
-		this.hall = hall;
 	}
 
 }

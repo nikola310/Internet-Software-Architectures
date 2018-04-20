@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.management.entities.Props;
 import com.management.entities.Reservation;
 import com.management.repositories.ReservationRepository;
 
@@ -189,6 +190,11 @@ public class ReservationRepositoryFake implements ReservationRepository {
 	 */
 	public <S extends Reservation> boolean exists(Example<S> example) {
 		return false;
+	}
+
+	public List<Reservation> findByProps(Props p) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

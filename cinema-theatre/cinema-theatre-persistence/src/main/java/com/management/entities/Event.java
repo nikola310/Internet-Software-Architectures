@@ -1,9 +1,11 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +32,6 @@ public class Event implements java.io.Serializable {
 	private Hall hall;
 	private Performance performance;
 	private Date eventDate;
-	private Set<Ticket> tickets = new HashSet<Ticket>(0);
 	private Set<History> histories = new HashSet<History>(0);
 
 	public Event() {
@@ -43,13 +44,12 @@ public class Event implements java.io.Serializable {
 		this.eventDate = eventDate;
 	}
 
-	public Event(int eventId, Hall hall, Performance performance, Date eventDate, Set<Ticket> tickets,
-			Set<History> histories) {
+	public Event(int eventId, Hall hall, Performance performance,
+			Date eventDate, Set<History> histories) {
 		this.eventId = eventId;
 		this.hall = hall;
 		this.performance = performance;
 		this.eventDate = eventDate;
-		this.tickets = tickets;
 		this.histories = histories;
 	}
 
@@ -93,15 +93,6 @@ public class Event implements java.io.Serializable {
 
 	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
-	public Set<Ticket> getTickets() {
-		return this.tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "event")

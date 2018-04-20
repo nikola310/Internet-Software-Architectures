@@ -65,7 +65,7 @@ function loadBids() {
 					id : "edit-" + data[i].bidId,
 					html : "Edit",
 					class : "ui-btn ui-shadow ui-corner-all",
-					onclick: "setBid(this)"
+					onclick : "setBid(this)"
 				});
 
 				var kol3 = $("<td/>", {
@@ -83,9 +83,9 @@ function loadBids() {
 			var paragraf = $("<p/>", {
 				html : "There are no bids yet"
 			});
-			
+
 			var kol = $("<td/>", {
-				html: paragraf[0].outerHTML
+				html : paragraf[0].outerHTML
 			});
 
 			var red = $("<tr/>", {
@@ -99,42 +99,13 @@ function loadBids() {
 	});
 }
 
-function loadOffers(){
-	//prvo ucitavamo odobrene rekvizite koje je postavio korisnik
-	$.get("/props/byuser/1", function(data){
-		if(data.length > 0){
-			for(i = 0; i < data.length; i++){
-				loadBids(data[i].propsId);
-				
-			}
-		}else{
-			
-		}
-	});
-}
-
-function loadBidsByUserId(id){
-	$.get("bid/not-accepted/" + id, function(data){
-		console.log("bid not accepted response: " + data);
-	});
-}
-
-function setBid(e){
-	var bidID =  e.id.split(/-(.+)/)[1];
-	$.post("bid/set/" + bidID, function(data){
-		window.location.replace("editbid.html");
-	});
-}
-
-/*
- * function loadBids() {
-	$.get("bid/byuser/1", function(data) {
-
+function loadOffers() {
+	$.get("bid/offers", function(data) {
 		if (data.length > 0) {
 			for (i = 0; i < data.length; i++) {
 
 				var kol1 = $("<td/>", {
-					html : data[i].propsId
+					html : data[i].propsName
 				});
 
 				var kol2 = $("<td/>", {
@@ -142,15 +113,15 @@ function setBid(e){
 				});
 
 				var accept = $("<button/>", {
-					id : "accept-" + data[i].propsId + "-byuser-"
-							+ data[i].userId,
-					html : "Accept"
+					id : "accept-" + data[i].bidId,
+					html : "Accept",
+					onclick : "acceptOffer(this)"
 				});
 
 				var reject = $("<button/>", {
-					id : "reject-" + data[i].propsId + "-byuser-"
-							+ data[i].userId,
-					html : "Reject"
+					id : "reject-" + data[i].propsId,
+					html : "Reject",
+					onclick : "rejectOffer(this)"
 				});
 
 				var kol3 = $("<td/>", {
@@ -168,9 +139,9 @@ function setBid(e){
 			var paragraf = $("<p/>", {
 				html : "There are no bids yet"
 			});
-			
+
 			var kol = $("<td/>", {
-				html: paragraf[0].outerHTML
+				html : paragraf[0].outerHTML
 			});
 
 			var red = $("<tr/>", {
@@ -180,9 +151,54 @@ function setBid(e){
 			$('#pick-offers-table thead').remove();
 			$('#pick-offers-table tbody').append(red[0].outerHTML);
 		}
-
 	});
 }
- * 
- * 
- */
+
+function loadBidsByUserId(id) {
+	$.get("bid/not-accepted/" + id, function(data) {
+		console.log("bid not accepted response: " + data);
+	});
+}
+
+function setBid(e) {
+	var bidID = e.id.split(/-(.+)/)[1];
+	$.post("bid/set/" + bidID, function(data) {
+		window.location.replace("editbid.html");
+	});
+}
+
+function acceptOffer(e){
+	var bidID = parseInt(e.id.split(/-+/)[1]);
+	$.ajax({
+		type : "POST",
+		url : "bid/accept",
+		data : { "bidId" : bidID },
+		success : function(data) {
+			alert("Bid rejected.");
+		},
+		fail : function(data) {
+			console.log(data);
+		},
+		error : function(data) {
+			console.log(data);
+		}
+	});
+}
+
+function rejectOffer(e){
+	var bidID = parseInt(e.id.split(/-+/)[1]);
+	$.ajax({
+		type : "POST",
+		url : "bid/reject",
+		data : { "bidId" : bidID },
+		success : function(data) {
+			alert("Bid rejected.");
+		},
+		fail : function(data) {
+			console.log(data);
+		},
+		error : function(data) {
+			console.log(data);
+		}
+	});
+}

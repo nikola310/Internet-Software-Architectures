@@ -166,4 +166,36 @@ public class BidManager implements BidManagerInterface {
 
 		return listDTO;
 	}
+
+	public boolean acceptBid(BidDTO dto) {
+		ModelMapper mapper = new ModelMapper();
+		Bid tmp;
+
+		try {
+			tmp = mapper.map(dto, Bid.class);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			return false;
+		}
+		tmp.setBidAccepted(true);
+		bidRepository.save(tmp);
+
+		return true;
+	}
+
+	public boolean rejectBid(BidDTO dto) {
+		ModelMapper mapper = new ModelMapper();
+		Bid tmp;
+
+		try {
+			tmp = mapper.map(dto, Bid.class);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			return false;
+		}
+		tmp.setBidAccepted(false);
+		bidRepository.save(tmp);
+
+		return true;
+	}
 }

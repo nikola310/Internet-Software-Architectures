@@ -28,7 +28,6 @@ function loadNotCheckedOffers() {
 						var cell3 = row.insertCell(2);
 						var cell4 = row.insertCell(3);
 						var cell5 = row.insertCell(4);
-						
 
 						cell1.innerHTML = data[i].propsName;
 
@@ -69,7 +68,6 @@ function loadNotCheckedOffers() {
 }
 
 function acceptOffer(e) {
-	console.log(e.id);
 	var propsID = e.id.split(/-+/)[2];
 
 	$.ajax({
@@ -129,7 +127,6 @@ function add_official() {
 		url : "props/official",
 		data : dt,
 		contentType : "application/json; charset=utf-8",
-		dataType : "json",
 		success : function(data) {
 			alert("Prop succesfully registered");
 			// window.location = "fanzone.html";
@@ -163,8 +160,10 @@ function official_props() {
 				if (data[i].propsImage != null) {
 					img.attr("src", "data:application/unknown;base64, "
 							+ data[i].propsImage);
+					img.attr("alt", data[i].propsDesc);
 				} else {
-					img.attr("src", "");
+					img.attr("src", "images/no-img.png");
+					img.attr("alt", "No image.");
 				}
 
 				var kol3 = $("<td/>", {
@@ -176,17 +175,17 @@ function official_props() {
 				});
 
 				var edit = $("<button/>", {
-					id: "props-" + data[i].propsId,
-					html: "Edit"
+					id : "props-" + data[i].propsId,
+					html : "Edit"
 				});
-				edit.attr("onclick", "edit_official(this)");
-				
+				edit.attr("onclick", "set_official(this)");
+
 				var del = $("<button/>", {
-					id: "props-delete-" + data[i].propsId,
-					html: "Delete"
+					id : "props-delete-" + data[i].propsId,
+					html : "Delete"
 				});
 				del.attr("onclick", "delete_official(this)");
-				
+
 				var kol5 = $("<td/>", {
 					html : edit[0].outerHTML + del[0].outerHTML
 				});
@@ -204,12 +203,12 @@ function official_props() {
 	});
 }
 
-function delete_official(e){
+function delete_official(e) {
 	var propsID = e.id.split(/-+/)[2];
-	
+
 	$.ajax({
 		type : "DELETE",
-		url : "props/" + propsID,
+		url : "props/delete/" + propsID,
 		contentType : "application/json; charset=utf-8",
 		success : function(data) {
 			$("#props-delete-" + propsID).parent().parent()[0].remove();
@@ -218,8 +217,24 @@ function delete_official(e){
 		fail : function(data) {
 			console.log(data);
 		},
-		error: function(data){
+		error : function(data) {
 			console.log(data);
 		}
 	});
+}
+
+function set_official(e) {
+	var propsID = parseInt(e.id.split(/-+/)[1]);
+	var to_send = {
+		"propsId" : propsID
+	};
+	$.post("props/set", to_send, function(data) {
+		console.log(data);
+		window.location.replace("editprops.html");
+	}).fail(function(response) {
+		console.log(response);
+	}).error(function(response) {
+		console.log(response);
+	});
+	return false;
 }

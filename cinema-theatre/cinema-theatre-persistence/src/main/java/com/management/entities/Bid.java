@@ -1,5 +1,6 @@
 package com.management.entities;
-// Generated Apr 18, 2018 12:50:36 AM by Hibernate Tools 5.2.8.Final
+
+// Generated Apr 20, 2018 9:30:21 AM by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,8 @@ public class Bid implements java.io.Serializable {
 		this.bidPrice = bidPrice;
 	}
 
-	public Bid(int bidId, Props props, User user, float bidPrice, Boolean bidAccepted) {
+	public Bid(int bidId, Props props, User user, float bidPrice,
+			Boolean bidAccepted) {
 		this.bidId = bidId;
 		this.props = props;
 		this.user = user;

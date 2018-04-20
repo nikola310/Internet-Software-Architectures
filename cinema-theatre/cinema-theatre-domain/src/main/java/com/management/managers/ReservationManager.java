@@ -4,6 +4,7 @@
 package com.management.managers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.management.dto.ReservationDTO;
+import com.management.entities.Props;
 import com.management.entities.Reservation;
 import com.management.interfaces.ReservationManagerInterface;
 import com.management.repositories.ReservationRepository;
@@ -117,6 +119,10 @@ public class ReservationManager implements ReservationManagerInterface {
 		}
 		
 		return true;
+	}
+
+	public List<Reservation> getByProps(Props p) {
+		return reservationRepository.findByProps(p);
 	}
 
 }
