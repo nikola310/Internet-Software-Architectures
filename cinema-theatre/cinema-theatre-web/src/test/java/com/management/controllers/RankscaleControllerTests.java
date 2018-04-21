@@ -48,7 +48,7 @@ public class RankscaleControllerTests {
 		// Act and assert
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.addRankscale(cr),
-				new ResponseEntity<RankscaleDTO>(dto, HttpStatus.OK));
+				new ResponseEntity<CreateRankscaleDTO>(cr, HttpStatus.OK));
 	}
 
 	@Test

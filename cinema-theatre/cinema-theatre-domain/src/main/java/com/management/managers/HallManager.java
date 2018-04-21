@@ -122,4 +122,31 @@ public class HallManager implements HallManagerInterface {
 
 		return true;
 	}
+
+	public HallRepository getHallRepository() {
+		return hallRepository;
+	}
+
+	public void setHallRepository(HallRepository hallRepository) {
+		this.hallRepository = hallRepository;
+	}
+
+	public SeatRepository getSeatRepository() {
+		return seatRepository;
+	}
+
+	public void setSeatRepository(SeatRepository seatRepository) {
+		this.seatRepository = seatRepository;
+	}
+
+	public CinemaTheatreRepository getCinemaTheatreRepository() {
+		return cinemaTheatreRepository;
+	}
+
+	public void setCinemaTheatreRepository(
+			CinemaTheatreRepository cinemaTheatreRepository) {
+		this.cinemaTheatreRepository = cinemaTheatreRepository;
+	}
+	
+	
 }

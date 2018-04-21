@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
 import com.management.fake.FriendsListRepositoryFake;
+import com.management.fake.UserRepositoryFake;
 import com.management.repositories.FriendsListRepository;
 
 /**
@@ -29,6 +30,8 @@ public class FriendsListManagerTest {
 		dto.setFriendsStatus('P');
 
 		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
+		manager.setUserRepository(new UserRepositoryFake());
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -55,6 +58,8 @@ public class FriendsListManagerTest {
 
 		// Act and assert
 		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
+		
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -78,6 +83,7 @@ public class FriendsListManagerTest {
 		});
 
 		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
 
 		// Act
 		FriendslistDTO dto = manager.Read(1);
@@ -115,6 +121,7 @@ public class FriendsListManagerTest {
 		});
 
 		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
 
 		// Act
 		ArrayList<FriendslistDTO> listDTO = manager.ReadAll();

@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
+import com.management.fake.CinemaTheatreRepositoryFake;
 import com.management.fake.HallRepositoryFake;
+import com.management.fake.SeatRepositoryFake;
 import com.management.repositories.HallRepository;
 
 /**
@@ -26,8 +28,14 @@ public class HallManagerTests {
 		hallRepository = new HallRepositoryFake();
 
 		HallDTO dto = new HallDTO();
+		dto.setCtId(1);
+		dto.setHallId(1);
+		dto.setLen(20);
 		dto.setHallName("A1");
 		HallManager manager = new HallManager();
+		manager.setHallRepository(hallRepository);
+		manager.setSeatRepository(new SeatRepositoryFake());
+		manager.setCinemaTheatreRepository(new CinemaTheatreRepositoryFake());
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -54,6 +62,7 @@ public class HallManagerTests {
 
 		// Act and assert
 		HallManager manager = new HallManager();
+		manager.setHallRepository(hallRepository);
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -77,6 +86,7 @@ public class HallManagerTests {
 		});
 
 		HallManager manager = new HallManager();
+		manager.setHallRepository(hallRepository);
 
 		// Act
 		HallDTO dto = manager.Read(1);
@@ -115,6 +125,7 @@ public class HallManagerTests {
 		});
 
 		HallManager manager = new HallManager();
+		manager.setHallRepository(hallRepository);
 
 		// Act
 		ArrayList<HallDTO> listDTO = manager.ReadAll();

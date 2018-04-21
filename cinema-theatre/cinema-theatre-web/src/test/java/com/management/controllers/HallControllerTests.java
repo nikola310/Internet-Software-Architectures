@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 
 import com.management.dto.HallDTO;
 import com.management.entities.Hall;
+import com.management.fake.CinemaTheatreRepositoryFake;
 import com.management.fake.HallRepositoryFake;
+import com.management.fake.SeatRepositoryFake;
 import com.management.managers.HallManager;
 import com.management.repositories.HallRepository;
 
@@ -32,6 +34,10 @@ public class HallControllerTests {
 		HallDTO dto = new HallDTO();
 		dto.setHallName("A1");
 		HallManager manager = new HallManager();
+		manager.setCinemaTheatreRepository(new CinemaTheatreRepositoryFake());
+		manager.setHallRepository(new HallRepositoryFake());
+		manager.setSeatRepository(new SeatRepositoryFake());
+		
 		HallController controller = new HallController(manager);
 
 		// Act and assert
@@ -54,6 +60,10 @@ public class HallControllerTests {
 
 		// Act and assert
 		HallManager manager = new HallManager();
+		manager.setCinemaTheatreRepository(new CinemaTheatreRepositoryFake());
+		manager.setHallRepository(hallRepository);
+		manager.setSeatRepository(new SeatRepositoryFake());
+		
 		HallController controller = new HallController(manager);
 
 		Assert.assertNotNull(controller);
@@ -79,6 +89,10 @@ public class HallControllerTests {
 		});
 
 		HallManager manager = new HallManager();
+		manager.setCinemaTheatreRepository(new CinemaTheatreRepositoryFake());
+		manager.setHallRepository(hallRepository);
+		manager.setSeatRepository(new SeatRepositoryFake());
+		
 		HallController controller = new HallController(manager);
 
 		// Act
@@ -117,6 +131,10 @@ public class HallControllerTests {
 		});
 
 		HallManager manager = new HallManager();
+		manager.setCinemaTheatreRepository(new CinemaTheatreRepositoryFake());
+		manager.setHallRepository(hallRepository);
+		manager.setSeatRepository(new SeatRepositoryFake());
+		
 		HallController controller = new HallController(manager);
 
 		// Act

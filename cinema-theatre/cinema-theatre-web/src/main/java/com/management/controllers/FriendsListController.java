@@ -175,4 +175,21 @@ public class FriendsListController {
 
 		return new ResponseEntity<FriendslistDTO>(HttpStatus.OK);
 	}
+
+	public FriendsListManagerInterface getManager() {
+		return manager;
+	}
+
+	public void setManager(FriendsListManagerInterface manager) {
+		this.manager = manager;
+	}
+
+	public MailingInterface getMailManager() {
+		return mailManager;
+	}
+
+	public void setMailManager(MailingInterface mailManager) {
+		this.mailManager = mailManager;
+	}
+	
 }

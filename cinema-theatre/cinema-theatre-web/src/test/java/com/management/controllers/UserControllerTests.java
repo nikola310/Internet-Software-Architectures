@@ -50,7 +50,7 @@ public class UserControllerTests {
 
 		// Act and assert
 		Assert.assertNotNull(controller);
-		Assert.assertEquals(controller.addUser(dto), new ResponseEntity<UserDTO>(HttpStatus.OK));
+		Assert.assertEquals(controller.addUser(dto), new ResponseEntity<RegistrationDTO>(dto,HttpStatus.OK));
 	}
 
 	@Test

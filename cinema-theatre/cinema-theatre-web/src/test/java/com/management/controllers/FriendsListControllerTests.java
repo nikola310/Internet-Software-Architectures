@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import com.management.dto.FriendslistDTO;
 import com.management.entities.Friendslist;
 import com.management.fake.FriendsListRepositoryFake;
+import com.management.fake.UserRepositoryFake;
+import com.management.mail.Mailing;
+import com.management.managers.FriendsListManager;
 import com.management.repositories.FriendsListRepository;
 
 /**
@@ -31,9 +34,13 @@ public class FriendsListControllerTests {
 		FriendslistDTO dto = new FriendslistDTO();
 		dto.setFriendsStatus('P');
 
-		//FriendsListManager manager = new FriendsListManager();
+		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(new FriendsListRepositoryFake());
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		FriendsListController controller = new FriendsListController();
-
+		controller.setManager(manager);
+		controller.setMailManager(new Mailing());
 		// Act and assert
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.addFriendslist(dto), new ResponseEntity<FriendslistDTO>(dto, HttpStatus.OK));
@@ -54,8 +61,13 @@ public class FriendsListControllerTests {
 		});
 
 		// Act and assert
-		//FriendsListManager manager = new FriendsListManager();
+		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		FriendsListController controller = new FriendsListController();
+		controller.setManager(manager);
+		controller.setMailManager(new Mailing());
 
 		Assert.assertNotNull(controller);
 		Assert.assertEquals(controller.deleteFriendsList(1), new ResponseEntity<FriendslistDTO>(HttpStatus.OK));
@@ -79,8 +91,13 @@ public class FriendsListControllerTests {
 			}
 		});
 
-		//FriendsListManager manager = new FriendsListManager();
+		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		FriendsListController controller = new FriendsListController();
+		controller.setManager(manager);
+		controller.setMailManager(new Mailing());
 
 		// Act
 		ResponseEntity<FriendslistDTO> response = controller.getFriendslist(1);
@@ -117,8 +134,13 @@ public class FriendsListControllerTests {
 			}
 		});
 
-		//FriendsListManager manager = new FriendsListManager();
+		FriendsListManager manager = new FriendsListManager();
+		manager.setFriendsListRepository(friendsListRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		FriendsListController controller = new FriendsListController();
+		controller.setManager(manager);
+		controller.setMailManager(new Mailing());
 
 		// Act
 		ResponseEntity<List<FriendslistDTO>> response = controller.getFriendslists();

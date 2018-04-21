@@ -146,4 +146,22 @@ public class SeatManager implements SeatManagerInterface {
 
 		return false;
 	}
+
+	public SeatRepository getSeatRepository() {
+		return seatRepository;
+	}
+
+	public void setSeatRepository(SeatRepository seatRepository) {
+		this.seatRepository = seatRepository;
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	
 }

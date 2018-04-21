@@ -49,7 +49,7 @@ public class UserManagerTest {
 		Assert.assertEquals(dto.getUserName(), user.getUserName());
 		Assert.assertEquals(dto.getUserPassword(), user.getUserPassword());
 		Assert.assertEquals(dto.getUserSurname(), user.getUserSurname());
-		Assert.assertEquals(dto.getUserPhone(), user.getUserPhone());
+		Assert.assertEquals(dto.getUserPhone(), user.getUserPhone().toString());
 		Assert.assertEquals(dto.getUserStateid(), user.getUserStateid());
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
 import com.management.fake.SeatRepositoryFake;
+import com.management.fake.UserRepositoryFake;
 import com.management.managers.SeatManager;
 import com.management.repositories.SeatRepository;
 
@@ -33,6 +34,9 @@ public class SeatControllerTests {
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(new SeatRepositoryFake());
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		SeatController controller = new SeatController(manager);
 
 		// Act and assert
@@ -55,6 +59,9 @@ public class SeatControllerTests {
 
 		// Act and assert
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		SeatController controller = new SeatController(manager);
 
 		Assert.assertNotNull(controller);
@@ -80,6 +87,9 @@ public class SeatControllerTests {
 		});
 
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		SeatController controller = new SeatController(manager);
 
 		// Act
@@ -118,6 +128,9 @@ public class SeatControllerTests {
 		});
 
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
+		manager.setUserRepository(new UserRepositoryFake());
+		
 		SeatController controller = new SeatController(manager);
 
 		// Act

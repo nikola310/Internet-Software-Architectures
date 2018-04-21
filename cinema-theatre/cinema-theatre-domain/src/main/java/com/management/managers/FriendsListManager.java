@@ -268,4 +268,22 @@ public class FriendsListManager implements FriendsListManagerInterface {
 		return true;
 	}
 
+	public FriendsListRepository getFriendsListRepository() {
+		return friendsListRepository;
+	}
+
+	public void setFriendsListRepository(FriendsListRepository friendsListRepository) {
+		this.friendsListRepository = friendsListRepository;
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	
+
 }

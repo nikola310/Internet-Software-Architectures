@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.management.dto.SeatDTO;
 import com.management.entities.Seat;
 import com.management.fake.SeatRepositoryFake;
+import com.management.fake.UserRepositoryFake;
 import com.management.repositories.SeatRepository;
 
 /**
@@ -25,10 +26,13 @@ public class SeatManagerTests {
 	public void AddingNewSeat_ReturnsBoolean() {
 		// Arrange
 		seatRepository = new SeatRepositoryFake();
+		UserRepositoryFake userRepository = new UserRepositoryFake();
 
 		SeatDTO dto = new SeatDTO();
 		dto.setSeatModified(new Date());
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
+		manager.setUserRepository(userRepository);
 
 		// Act and assert
 		Assert.assertNotNull(manager);
@@ -55,6 +59,7 @@ public class SeatManagerTests {
 
 		// Act and assert
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
 		Assert.assertNotNull(manager);
 		Assert.assertTrue(manager.Delete(1));
 
@@ -78,6 +83,7 @@ public class SeatManagerTests {
 		});
 
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
 
 		// Act
 		SeatDTO dto = manager.Read(1);
@@ -116,6 +122,7 @@ public class SeatManagerTests {
 		});
 
 		SeatManager manager = new SeatManager();
+		manager.setSeatRepository(seatRepository);
 
 		// Act
 		ArrayList<SeatDTO> listDTO = manager.ReadAll();

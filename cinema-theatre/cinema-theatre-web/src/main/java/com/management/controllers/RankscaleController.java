@@ -58,10 +58,10 @@ public class RankscaleController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<RankscaleDTO> addRankscale(
+	public ResponseEntity<CreateRankscaleDTO> addRankscale(
 			@Validated @RequestBody CreateRankscaleDTO dto) {
 		if (dto == null) {
-			return new ResponseEntity<RankscaleDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<CreateRankscaleDTO>(HttpStatus.NOT_FOUND);
 		} else {
 			RankscaleDTO tmp = new RankscaleDTO(dto.getBronze(),
 					dto.getSilver(), dto.getGold());
@@ -69,7 +69,7 @@ public class RankscaleController {
 			int userId = 1; //((User)request.getSession().getAttribute("user")).getUserId();
 			tmp.setUserId(userId);
 			manager.Create(tmp);
-			return new ResponseEntity<RankscaleDTO>(tmp, HttpStatus.OK);
+			return new ResponseEntity<CreateRankscaleDTO>(dto, HttpStatus.OK);
 		}
 	}
 
